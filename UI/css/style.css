@@ -1,25 +1,29 @@
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 html {
   color: #555;
   font-family: 'Lato', 'Arial', sans-serif;
-  font-weight: 300;
   font-size: 62.5%;
+  font-weight: 300;
   text-rendering: optimizeLegibility;
 }
 
+.btn,
 input[type=submit] {
+  color: #fff;
   display: inline-block;
+  font-weight: 300;
+  padding: 10px 30px;
+  transition: background-color 0.2s, border 0.2s, color 0.2s;
+}
+
+input[type=submit] {
   background-color: #00a8bb;
   border: 1px solid #00a8bb;
-  color: #fff;
-  padding: 10px 30px;
-  font-weight: 300;
-  transition: background-color 0.2s, border 0.2s, color 0.2s;
 }
 
 input[type=submit]:hover,
@@ -35,37 +39,43 @@ input[type=submit]:active {
   text-align: center;
 }
 
+.section-heading {
+  color: #fff;
+  margin-bottom: 3.0rem;
+  text-align: center;
+}
+
 .container {
-  width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
+  margin-left: auto;
   margin-right: auto;
-  margin-left: auto; 
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 100%;
 }
 
 .content,
 .auth-content {
+  background-position: center;
+  background-size: cover;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   font-size: 1.6rem;
-  background-size: cover;
-  background-position: center;
+  justify-content: space-between;
 }
 
 .content {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.705), rgba(0, 0, 0, 0.705)), url(../img/repairs2.jpg);
+  background-image: linear-gradient(#000000b4, #000000b4), url(../img/repairs2.jpg);
   height: 100vh;
 }
 
 .auth-content {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.705), rgba(0, 0, 0, 0.705)), url(../img/repairs1.jpg);
+  background-image: linear-gradient(#000000b4, #000000b4), url(../img/repairs1.jpg);
   height: 120vh;
 }
 
 .row {
-  max-width: 1240px;
   margin: 0 auto;
+  max-width: 1240px;
 }
 
 header {
@@ -75,33 +85,40 @@ header {
 }
 
 .header-logo {
+  align-items: center;
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
 .header-logo .user {
+  color: #e6b530;
+  font-size: 1.7rem;
+  font-weight: 600;
   margin-left: 1.6rem;
+}
+
+.header-logo .user {
+  color: #e6b530;
   font-weight: 600;
   font-size: 1.7rem;
-  color: #e6b530;
+  margin-left: 1.6rem;
 }
 
 .logo {
   height: 5.0rem;
   max-width: 170px;
-  padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
 }
 
 /* ----------------------------------------------- */
 /* Navigation */
 /* ----------------------------------------------- */
 .nav-toggle .mdi-view-sequential {
-  font-size: 2.5rem;
+  color: #ddf3ff;
   background: #00a8bb;
   border: 1px solid #ddf3ff;
-  color: #ddf3ff;
+  font-size: 2.5rem;
 }
 
 nav .row {
@@ -117,27 +134,26 @@ nav .row:after
 }
 
 .main-nav {
-  list-style: none;
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: space-evenly;
-  width: 20.0rem;
+  list-style: none;
   margin: 2.5rem auto 0;
-  display: none;
+  width: 20.0rem;
 }
 
 .main-nav li {
-  width: fit-content;
   margin: 0 auto 2.3rem;
+  width: fit-content;
 }
 
 .main-nav li a:link,
 .main-nav li a:visited {
-  padding: 8px 0;
+  border-bottom: 2px solid transparent;
   color: #fff;
+  padding: 8px 0;
   text-decoration: none;
   text-transform: uppercase;
-  border-bottom: 2px solid transparent;
   transition: border-bottom 0.2s;
 }
 
@@ -158,8 +174,8 @@ nav .row:after
 /* SignUp and SignIn Form */
 /* ----------------------------------------------- */
 .signup-form {
-  width: 60%;
   margin: 0 auto;
+  width: 60%;
 }
 
 .signup-form .row {
@@ -176,8 +192,8 @@ nav .row:after
 
 .label {
   color: #fff;
-  padding-bottom: 1.2rem;
   font-size: 1.9rem;
+  padding-bottom: 1.2rem;
 }
 
 .form-title {
@@ -188,10 +204,10 @@ nav .row:after
 input[type=password],
 input[type=email]
  {
+    border: 1px solid #ccc;
+    border-radius: 3px;
     width: 100%;
     padding: 10px;
-    border-radius: 3px;
-    border: 1px solid #ccc;
 }
 
 .form-info {
@@ -208,19 +224,19 @@ input[type=email]
 /* VIEW ALL REQUEST */
 /* ----------------------------------------------- */
 .requests-list {
-  list-style: none;
   color: #494949;
   font-size: 1.2rem;
+  list-style: none;
 }
 
 .request-item {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
   background-color: #f1f1f1;
   border-bottom: 2px solid #555;
-  max-width: 855px;
+  display: flex;
+  justify-content: space-between;
   margin: 0 auto;
+  max-width: 855px;
 }
 
 .request-item.resolved {
@@ -241,36 +257,36 @@ input[type=email]
 
 .status-resolved {
   background-color: #44bd32;
-  padding: 1.5rem 0 1.5rem 0.4rem;
   color: #fff;
+  padding: 1.5rem 0 1.5rem 0.4rem;
   width: 70px;
 }
 
 .status-pending {
   background-color: #d1a429;
-  padding: 1.5rem 0 1.5rem 0.7rem;
   color: #fff;
+  padding: 1.5rem 0 1.5rem 0.7rem;
   width: 70px;
 }
 
 .status-rejected {
   background-color: #e84118;
-  padding: 1.5rem 0 1.5rem 0.7rem;
   color: #fff;
+  padding: 1.5rem 0 1.5rem 0.7rem;
   width: 70px;
 }
 
 .status-new {
   background-color: #dcdde1;
-  padding: 1.5rem 0 1.5rem 1.7rem;
   color: #555;
+  padding: 1.5rem 0 1.5rem 1.7rem;
   width: 70px;
 }
 
 .pagination {
   text-align: center;
-  margin-top: 2.3rem;
-  margin-bottom: -11.0rem;  
+  margin-bottom: -11.0rem; 
+  margin-top: 2.3rem; 
 }
 
 .pagination a {
@@ -303,17 +319,108 @@ input[type=email]
 
 select[name=filter]
  {
-    width: 250px;
-    padding: 10px;
-    border-radius: 3px;
     border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 10px;
+    width: 250px;
+}
+
+/* ----------------------------------------------- */
+/* REQUEST DETAILS */
+/* ----------------------------------------------- */
+.card-details {
+  background-color: #fcfcfce5;
+  color: #333333;
+  display: flex;
+  flex-direction: column;
+  max-width: 650px;
+}
+
+.request-user {
+  display: flex;
+  font-size: 2.2rem;
+  font-weight: 400;
+  justify-content: space-between;
+  padding: 1.0rem;
+}
+
+.request-user span {
+  color: #a7a4a4;
+  font-size: 70%;
+  font-style: italic;
+}
+
+.admin-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 1.6rem;
+}
+
+.btn-approve,
+.btn-reject,
+.btn-resolve {
+  border: none; 
+  font-size: 1.8rem;
+  margin-bottom: 1.6rem;
+}
+
+.btn-approve {
+  background-color: #d1a429;
+}
+
+.btn-approve:hover {
+  background-color: #b48e24;
+  cursor: pointer;
+}
+
+.btn-reject {
+  background-color: #e84118;
+}
+
+.btn-reject:hover {
+  background-color: #bb3615;
+  cursor: pointer;
+}
+
+.btn-resolve {
+  background-color: #44bd32;
+}
+
+.btn-resolve:hover {
+  background-color: #328825;
+  cursor: pointer;
+}
+
+.details p {
+  font-size: 1.9rem;
+  font-weight: 400;
+  padding: 1.0rem;
+}
+
+.details p {
+  align-items: baseline;
+  display: flex;
+  justify-content: space-between;
+  max-width: 480px;
+}
+
+.details .detail {
+  display: inline-block;
+  width: 170px;
+}
+
+.details .details-heading {
+  font-style: italic;
+  font-weight: 600;
+  padding-right: 1.0rem;
 }
 
 footer p {
-  text-align: center;
-  margin-bottom: 2.6rem;
   color: #00a8ff;
   font-weight: 600;
+  margin-bottom: 2.6rem;
+  text-align: center;
 }
 
 /* ----------------------------------------------- */
@@ -328,14 +435,18 @@ footer p {
   nav .main-nav {
     display: flex;
     flex-direction: row;
+    font-weight: 400;
+    font-size: 1.4rem;
     margin-left: 0;
     margin-right: 0; 
-    font-size: 1.4rem;
-    font-weight: 400;
   }
 
   .nav-toggle {
     display: none;
+  }
+
+  .auth-content {
+    height: 100vh;
   }
 }
 
@@ -349,13 +460,31 @@ footer p {
   }
 
   .section-title {
-    margin-top: -11.0rem;
-    margin-left: auto;
+    margin-left: auto;    
     margin-right: auto;
+    margin-top: -11.0rem;
   }
 
   .filter {
     margin-top: -7.0rem;
+  }
+
+  .admin-btn {
+    flex-direction: row;
+  }
+
+  .request-user {
+    margin-left: 3.5rem;
+    width: 395px;
+  }
+
+  .details {
+    margin-bottom: 4.0rem;
+    margin-left: 3.5rem;
+  }
+
+  .details .detail {
+    width: 250px;
   }
 }
 
@@ -365,13 +494,8 @@ footer p {
     padding-top: 1.0rem;
   }
 
-  /* .section-title {
-    padding-left: 150px;
-  } */
 }
 
 @media (min-width: 1200px) {
-  /* .section-title {
-    padding-left: 250px; 
-  } */
+
 }
