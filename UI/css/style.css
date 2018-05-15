@@ -208,7 +208,10 @@ footer p {
 }
 
 @media (min-width: 992px) {
-
+  .label {
+    padding-left: 9.0rem;
+    padding-top: 1.0rem;
+  }
 }
 
 @media (min-width: 1200px) {
