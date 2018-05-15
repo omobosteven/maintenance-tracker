@@ -1,0 +1,216 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  color: #555;
+  font-family: 'Lato', 'Arial', sans-serif;
+  font-weight: 300;
+  font-size: 62.5%;
+  text-rendering: optimizeLegibility;
+}
+
+input[type=submit] {
+  display: inline-block;
+  background-color: #00a8bb;
+  border: 1px solid #00a8bb;
+  color: #fff;
+  padding: 10px 30px;
+  font-weight: 300;
+  transition: background-color 0.2s, border 0.2s, color 0.2s;
+}
+
+input[type=submit]:hover,
+input[type=submit]:active {
+    background-color: #004e77;
+}
+
+.container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto; 
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 1.6rem;
+  height: 100vh;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.705), rgba(0, 0, 0, 0.705)), url(../img/repairs2.jpg);
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+}
+
+.row {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+header {
+  background-color: #00a8bb;
+}
+
+.header-logo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  height: 5.0rem;
+  max-width: 170px;
+}
+
+.nav-toggle .mdi-view-sequential {
+  font-size: 2.5rem;
+  background: #00a8bb;
+  border: 1px solid #ddf3ff;
+  color: #ddf3ff;
+}
+
+nav .row {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+nav .row:before,
+nav .row:after
+ {
+  content: none;
+}
+
+.main-nav {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 20.0rem;
+  margin: 2.5rem auto 0;
+  display: none;
+}
+
+.main-nav li {
+  width: fit-content;
+  margin: 0 auto 2.3rem;
+}
+
+.main-nav li a:link,
+.main-nav li a:visited {
+  padding: 8px 0;
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-bottom: 2px solid transparent;
+  transition: border-bottom 0.2s;
+}
+
+.main-nav li a.active {
+  border-bottom: 2px solid #99dcff;
+}
+
+.main-nav li a:hover,
+.main-nav li a:active {
+  border-bottom: 2px solid #e1b12c;
+}
+
+.navbar-show {
+  display: block;
+}
+
+section {
+  
+}
+
+.signup-form {
+  width: 60%;
+  margin: 0 auto;
+}
+
+.signup-form .row {
+  margin-top: 2.3rem;
+}
+
+.signup-form .submit-btn {
+  text-align: center;
+}
+
+.form-title {
+  color: #fff;
+}
+
+.label {
+  color: #fff;
+  padding-bottom: 1.2rem;
+  font-size: 1.9rem;
+}
+
+.form-title {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+input[type=password],
+input[type=email]
+ {
+    width: 100%;
+    padding: 10px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+}
+
+.form-info {
+  color: #fff;
+  margin-top: 1.0rem;
+}
+
+.form-info  a {
+  color: #e1b12c;
+  margin-top: 1.0rem;
+}
+
+footer p {
+  text-align: center;
+  margin-bottom: 2.6rem;
+  color: #00a8ff;
+  font-weight: 600;
+}
+
+@media (min-width: 576px) {
+  nav .row {
+    flex-direction: row;
+  }
+
+  nav .main-nav {
+    display: flex;
+    flex-direction: row;
+    margin-left: 0;
+    margin-right: 0; 
+    font-size: 1.4rem;
+    font-weight: 400;
+  }
+
+  .nav-toggle {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .logo {
+    height: 6.0rem;
+  }
+}
+
+@media (min-width: 992px) {
+
+}
+
+@media (min-width: 1200px) {
+
+}
