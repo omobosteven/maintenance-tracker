@@ -31,17 +31,8 @@ input[type=submit]:active {
     background-color: #004e77;
 }
 
-.section-title {
-  color: #fff;
-  font-size: 2.5rem;
-  margin-top: -20.0rem;
-  max-width: fit-content;
-  text-align: center;
-}
-
 .section-heading {
   color: #fff;
-  margin-bottom: 3.0rem;
   text-align: center;
 }
 
@@ -70,7 +61,7 @@ input[type=submit]:active {
 
 .auth-content {
   background-image: linear-gradient(#000000b4, #000000b4), url(../img/repairs1.jpg);
-  height: 120vh;
+  height: 110vh;
 }
 
 .row {
@@ -94,13 +85,6 @@ header {
   color: #e6b530;
   font-size: 1.7rem;
   font-weight: 600;
-  margin-left: 1.6rem;
-}
-
-.header-logo .user {
-  color: #e6b530;
-  font-weight: 600;
-  font-size: 1.7rem;
   margin-left: 1.6rem;
 }
 
@@ -223,6 +207,14 @@ input[type=email]
 /* ----------------------------------------------- */
 /* VIEW ALL REQUEST */
 /* ----------------------------------------------- */
+.section-requests {
+  margin-top: -39.5rem;
+}
+
+.view .section-requests {
+  margin-top: -25.0rem;
+}
+
 .requests-list {
   color: #494949;
   font-size: 1.2rem;
@@ -232,10 +224,9 @@ input[type=email]
 .request-item {
   align-items: center;
   background-color: #f1f1f1;
-  border-bottom: 2px solid #555;
   display: flex;
   justify-content: space-between;
-  margin: 0 auto;
+  margin: 0 auto 0.5rem;
   max-width: 855px;
 }
 
@@ -258,34 +249,34 @@ input[type=email]
 .status-resolved {
   background-color: #44bd32;
   color: #fff;
-  padding: 1.5rem 0 1.5rem 0.4rem;
+  padding: 1.2rem 0 1.2rem 1.1rem;
   width: 70px;
 }
 
 .status-pending {
   background-color: #d1a429;
   color: #fff;
-  padding: 1.5rem 0 1.5rem 0.7rem;
+  padding: 1.2rem 0 1.2rem 1.2rem;
   width: 70px;
 }
 
 .status-rejected {
   background-color: #e84118;
   color: #fff;
-  padding: 1.5rem 0 1.5rem 0.7rem;
+  padding: 1.2rem 0 1.2rem 1.2rem;
   width: 70px;
 }
 
 .status-new {
   background-color: #dcdde1;
   color: #555;
-  padding: 1.5rem 0 1.5rem 1.7rem;
+  padding: 1.2rem 0 1.2rem 2.3rem;
   width: 70px;
 }
 
 .pagination {
   text-align: center;
-  margin-bottom: -11.0rem; 
+  margin-bottom: -35.0rem; 
   margin-top: 2.3rem; 
 }
 
@@ -308,7 +299,7 @@ input[type=email]
 
 .filter {
   margin-bottom: 2.3rem;
-  margin-top: -13.0rem;
+  margin-top: 2.6rem;
   max-width: 855px;
   width: 100%;
 }
@@ -325,14 +316,23 @@ select[name=filter]
     width: 250px;
 }
 
+.maint {
+  margin-right: -3.5rem;
+}
+
 /* ----------------------------------------------- */
 /* REQUEST DETAILS */
 /* ----------------------------------------------- */
+.section-details {
+  margin-top: 2.3rem;
+}
+
 .card-details {
   background-color: #fcfcfce5;
   color: #333333;
   display: flex;
   flex-direction: column;
+  margin-top: 2.6rem;
   max-width: 650px;
 }
 
@@ -445,7 +445,7 @@ footer p {
     display: none;
   }
 
-  .auth-content {
+  .auth-content.view {
     height: 100vh;
   }
 }
@@ -465,10 +465,6 @@ footer p {
     margin-top: -11.0rem;
   }
 
-  .filter {
-    margin-top: -7.0rem;
-  }
-
   .admin-btn {
     flex-direction: row;
   }
@@ -485,6 +481,22 @@ footer p {
 
   .details .detail {
     width: 250px;
+  }
+
+  .status-resolved {
+    padding-left: 0.3rem;
+  }
+
+  .status-pending {
+    padding-left: 0.7rem;
+  }
+  
+  .status-rejected {
+    padding-left: 0.5rem;
+  }
+  
+  .status-new {
+    padding-left: 1.9rem;
   }
 }
 
