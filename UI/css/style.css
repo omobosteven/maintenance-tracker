@@ -357,6 +357,18 @@ select[name=filter]
   padding: 1.6rem;
 }
 
+.request-status {
+  margin: 0 auto;
+  padding: 2.0rem;
+}
+
+.resolved {
+  background-color: #44bd32;
+  padding: 2.0rem 5.0rem;
+  color: #fff;
+  font-size: 2.0rem;
+}
+
 .btn-approve,
 .btn-reject,
 .btn-resolve {
@@ -408,6 +420,19 @@ select[name=filter]
 .details .detail {
   display: inline-block;
   width: 170px;
+}
+
+.user-details {
+  margin-top: 2.6rem;
+}
+
+.user-details p {
+  border-bottom: 1px dashed #b48e24;
+  margin: 0 auto;
+}
+
+.user-details p:last-child {
+  border-bottom: none;
 }
 
 .details .details-heading {
