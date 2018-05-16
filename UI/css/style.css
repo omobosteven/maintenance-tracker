@@ -13,7 +13,8 @@ html {
 }
 
 .btn,
-input[type=submit] {
+input[type=submit],
+input[type=button] {
   color: #fff;
   display: inline-block;
   font-weight: 300;
@@ -29,6 +30,17 @@ input[type=submit] {
 input[type=submit]:hover,
 input[type=submit]:active {
     background-color: #004e77;
+}
+
+
+input[type=button] {
+  background-color: #bb3615;
+  border: 1px solid #bb3615;
+}
+
+input[type=button]:hover,
+input[type=button]:active {
+  background-color: #882810;
 }
 
 .section-heading {
@@ -224,6 +236,10 @@ textarea {
 
 .request-form .submit-btn {
   margin-top: 2.9rem;
+}
+
+.update-btn input[type=button]{
+  margin-top: 1.6rem;
 }
 
 /* ----------------------------------------------- */
@@ -475,7 +491,18 @@ footer p {
 /* ----------------------------------------------- */
 
 @media (min-width: 576px) {
+  .btn-update {
+    display: flex;
+    justify-content: space-between;
+  }
 
+  .update-btn input[type=button]{
+    margin-top: 0;
+  }
+
+  .update-btn {
+    max-width: 495px; 
+  }
 }
 
 @media (min-width: 768px) {
@@ -563,8 +590,11 @@ footer p {
     padding-top: 1.0rem;
   }
 
+
 }
 
 @media (min-width: 1200px) {
-
+  .update-btn {
+    margin-right: 0px; 
+  }
 }
