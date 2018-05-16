@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Maintenance tracker | Signup</title>
+  <link rel="stylesheet" href="vendors/css/normalize.css" type="text/css">
+  <link rel="stylesheet" href="vendors/css/grid.css" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.3.54/css/materialdesignicons.min.css" type="text/css">
+  <link rel="stylesheet" href="css/style.css" type="text/css">
+</head>
+<body>
+  <div class="auth-content">
+    <header>
+      <nav class="container">
+        <div class="row">
+          <div class="header-logo">
+            <img src="img/logo-white.png" alt="maintanace-tracker logo" class="logo">
+            <p class="user">Admin Dashboard</p>
+            <button type="button" id="navbar-toggler" class="nav-toggle"><i class="mdi mdi-view-sequential"></i></button>
+          </div>
+          <ul class="main-nav" id="navbar-collapse">
+            <li><a href="admin-view-requests.html" class="active">View Requests</a></li>
+            <li><a href="signup.html">Logout</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <section class="section-details container">
+      <div class="row">
+        <h2 class="section-heading">Request Details</h2>
+      </div>
+      <div class="row card-details">
+        <div class="request-user">
+          <p><span>id:</span> #124</p>
+          <p><span>user:</span> omobosteven</p>
+        </div>
+        <div class="details">
+          <p><span class="details-heading">Type:</span> <span class="detail">Repairs</span></p>
+          <p><span class="details-heading">Category:</span> <span class="detail">Computers</span></p>
+          <p><span class="details-heading">Item:</span> <span class="detail">Laptop</span></p>
+          <p><span class="details-heading">Description:</span> <span class="detail">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptates, impedit.</span></p>
+        </div>
+        <div class="admin-btn">
+          <button class="btn btn-approve">Approve <i class="mdi mdi-thumb-up-outline"></i></button>
+          <button class="btn btn-reject">Disapprove <i class="mdi mdi-window-close"></i></button>
+          <button class="btn btn-resolve">Resolve <i class="mdi mdi-check"></i></button>
+        </div>
+      </div>
+    </section>
+    <footer>
+      <p>Operations department &copy; 2018</p>
+    </footer>
+  </div>
+  
+  <script src="js/main.js"></script>
+</body>
+</html>
