@@ -5,6 +5,10 @@
 }
 
 html {
+  background-attachment: fixed;
+  background-image: linear-gradient(#000000b4, #000000b4), url(../img/repairs2.jpg);
+  background-position: center;
+  background-size: cover;
   color: #555;
   font-family: 'Lato', 'Arial', sans-serif;
   font-size: 62.5%;
@@ -56,28 +60,11 @@ input[type=button]:active {
   width: 100%;
 }
 
-.content,
-.auth-content {
-  background-position: center;
-  background-size: cover;
+.content {
   display: flex;
   flex-direction: column;
   font-size: 1.6rem;
   justify-content: space-between;
-}
-
-.content {
-  background-image: linear-gradient(#000000b4, #000000b4), url(../img/repairs2.jpg);
-  height: 100vh;
-}
-
-.auth-content {
-  background-image: linear-gradient(#000000b4, #000000b4), url(../img/repairs1.jpg);
-  height: 110vh;
-}
-
-.request-view {
-  height: 120vh;
 }
 
 .row {
@@ -173,6 +160,11 @@ nav .row:after
 /* ----------------------------------------------- */
 /* SignUp and SignIn Form */
 /* ----------------------------------------------- */
+.section-form {
+  margin-top: 7.0rem;
+  margin-bottom: 7.0rem; 
+}
+
 .signup-form,
 .request-form {
   margin: 0 auto;
@@ -246,11 +238,7 @@ textarea {
 /* VIEW ALL REQUEST */
 /* ----------------------------------------------- */
 .section-requests {
-  margin-top: -39.5rem;
-}
-
-.view .section-requests {
-  margin-top: -25.0rem;
+  margin-top: 4.5rem;
 }
 
 .requests-list {
@@ -266,6 +254,13 @@ textarea {
   justify-content: space-between;
   margin: 0 auto 0.5rem;
   max-width: 855px;
+  transition: background-color 0.2s;
+}
+
+.request-item:hover,
+.request-item:active {
+  background-color: #8d8d8d;
+  color: #eceaea;
 }
 
 .request-item.resolved {
@@ -288,33 +283,58 @@ textarea {
   background-color: #44bd32;
   color: #fff;
   padding: 1.2rem 0 1.2rem 1.1rem;
+  text-decoration: none;
+  transition: background-color 0.2s;
   width: 70px;
+}
+
+.status-resolved:hover {
+  background-color: #348d26;
 }
 
 .status-pending {
   background-color: #d1a429;
   color: #fff;
   padding: 1.2rem 0 1.2rem 1.2rem;
+  text-decoration: none;
+  transition: background-color 0.2s;
   width: 70px;
+}
+
+.status-pending:hover {
+  background-color: #a38121;
 }
 
 .status-rejected {
   background-color: #e84118;
   color: #fff;
   padding: 1.2rem 0 1.2rem 1.2rem;
+  text-decoration: none;
+  transition: background-color 0.2s;
   width: 70px;
+}
+
+.status-rejected:hover {
+  background-color: #b13314;
 }
 
 .status-new {
   background-color: #dcdde1;
   color: #555;
   padding: 1.2rem 0 1.2rem 2.3rem;
+  text-decoration: none;
+  transition: background-color 0.2s;
   width: 70px;
+}
+
+.status-new:hover {
+  background-color: #b0b0b1;
+  color: #fff;
 }
 
 .pagination {
   text-align: center;
-  margin-bottom: -35.0rem; 
+  margin-bottom: 5.0rem; 
   margin-top: 2.3rem; 
 }
 
@@ -362,7 +382,8 @@ select[name=filter]
 /* REQUEST DETAILS */
 /* ----------------------------------------------- */
 .section-details {
-  margin-top: 2.3rem;
+  margin-top: 4.5rem;
+  margin-bottom: 5.0rem;
 }
 
 .card-details {
@@ -372,6 +393,25 @@ select[name=filter]
   flex-direction: column;
   margin-top: 2.6rem;
   max-width: 650px;
+}
+
+.card-details .edit-link {
+  border: 1px solid #e1b12c;
+  border-radius: 3px;
+  color: #e1b12c;
+  font-size: 1.9rem;
+  font-weight: 500;
+  margin: 2.3rem auto 0;
+  padding: 1.0rem;
+  text-decoration: none;
+  width: fit-content;
+  transition: background-color 0.2s;
+}
+
+.card-details .edit-link:hover,
+.card-details .edit-link:active {
+  background-color: #e1b12c;
+  color: #555;
 }
 
 .request-user {
@@ -482,7 +522,6 @@ select[name=filter]
 footer p {
   color: #00a8ff;
   font-weight: 600;
-  margin-bottom: 2.6rem;
   text-align: center;
 }
 
@@ -525,14 +564,6 @@ footer p {
 
   .nav-toggle {
     display: none;
-  }
-
-  .auth-content.view {
-    height: 100vh;
-  }
-
-  .request-view {
-    height: 100vh;
   }
 
   .main-nav {
