@@ -27,6 +27,14 @@ input[type=submit]:active {
     background-color: #004e77;
 }
 
+.section-title {
+  color: #fff;
+  font-size: 2.5rem;
+  margin-top: -20.0rem;
+  max-width: fit-content;
+  text-align: center;
+}
+
 .container {
   width: 100%;
   padding-right: 15px;
@@ -35,16 +43,24 @@ input[type=submit]:active {
   margin-left: auto; 
 }
 
-.content {
+.content,
+.auth-content {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   font-size: 1.6rem;
-  height: 100vh;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.705), rgba(0, 0, 0, 0.705)), url(../img/repairs2.jpg);
   background-size: cover;
   background-position: center;
+}
+
+.content {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.705), rgba(0, 0, 0, 0.705)), url(../img/repairs2.jpg);
   height: 100vh;
+}
+
+.auth-content {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.705), rgba(0, 0, 0, 0.705)), url(../img/repairs1.jpg);
+  height: 120vh;
 }
 
 .row {
@@ -54,6 +70,8 @@ input[type=submit]:active {
 
 header {
   background-color: #00a8bb;
+  position: sticky;
+  top: 0;
 }
 
 .header-logo {
@@ -62,11 +80,23 @@ header {
   align-items: center;
 }
 
+.header-logo .user {
+  margin-left: 1.6rem;
+  font-weight: 600;
+  font-size: 1.7rem;
+  color: #e6b530;
+}
+
 .logo {
   height: 5.0rem;
   max-width: 170px;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
+/* ----------------------------------------------- */
+/* Navigation */
+/* ----------------------------------------------- */
 .nav-toggle .mdi-view-sequential {
   font-size: 2.5rem;
   background: #00a8bb;
@@ -124,10 +154,9 @@ nav .row:after
   display: block;
 }
 
-section {
-  
-}
-
+/* ----------------------------------------------- */
+/* SignUp and SignIn Form */
+/* ----------------------------------------------- */
 .signup-form {
   width: 60%;
   margin: 0 auto;
@@ -175,12 +204,121 @@ input[type=email]
   margin-top: 1.0rem;
 }
 
+/* ----------------------------------------------- */
+/* VIEW ALL REQUEST */
+/* ----------------------------------------------- */
+.requests-list {
+  list-style: none;
+  color: #494949;
+  font-size: 1.2rem;
+}
+
+.request-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f1f1f1;
+  border-bottom: 2px solid #555;
+  max-width: 855px;
+  margin: 0 auto;
+}
+
+.request-item.resolved {
+  border-left: 4px solid #44bd32;
+}
+
+.request-item.pending {
+  border-left: 4px solid #d1a429;
+}
+
+.request-item.rejected {
+  border-left: 4px solid #e84118;
+}
+
+.request-item.new-request {
+  border-left: 4px solid #dcdde1;
+}
+
+.status-resolved {
+  background-color: #44bd32;
+  padding: 1.5rem 0 1.5rem 0.4rem;
+  color: #fff;
+  width: 70px;
+}
+
+.status-pending {
+  background-color: #d1a429;
+  padding: 1.5rem 0 1.5rem 0.7rem;
+  color: #fff;
+  width: 70px;
+}
+
+.status-rejected {
+  background-color: #e84118;
+  padding: 1.5rem 0 1.5rem 0.7rem;
+  color: #fff;
+  width: 70px;
+}
+
+.status-new {
+  background-color: #dcdde1;
+  padding: 1.5rem 0 1.5rem 1.7rem;
+  color: #555;
+  width: 70px;
+}
+
+.pagination {
+  text-align: center;
+  margin-top: 2.3rem;
+  margin-bottom: -11.0rem;  
+}
+
+.pagination a {
+  color: #fff;
+  padding: 8px 12px;
+  text-decoration: none;
+  transition: background-color .3s;
+}
+
+.pagination a.active {
+  background-color: dodgerblue;
+  color: white;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: #ddd;
+  color: #555;
+}
+
+.filter {
+  margin-bottom: 2.3rem;
+  margin-top: -13.0rem;
+  max-width: 855px;
+  width: 100%;
+}
+
+.filter .label {
+  padding-bottom: 0.5rem;
+}
+
+select[name=filter]
+ {
+    width: 250px;
+    padding: 10px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+}
+
 footer p {
   text-align: center;
   margin-bottom: 2.6rem;
   color: #00a8ff;
   font-weight: 600;
 }
+
+/* ----------------------------------------------- */
+/* MEDIA QUERIES */
+/* ----------------------------------------------- */
 
 @media (min-width: 576px) {
   nav .row {
@@ -205,6 +343,20 @@ footer p {
   .logo {
     height: 6.0rem;
   }
+
+  .requests-list {
+    font-size: 1.6rem;
+  }
+
+  .section-title {
+    margin-top: -11.0rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .filter {
+    margin-top: -7.0rem;
+  }
 }
 
 @media (min-width: 992px) {
@@ -212,8 +364,14 @@ footer p {
     padding-left: 9.0rem;
     padding-top: 1.0rem;
   }
+
+  /* .section-title {
+    padding-left: 150px;
+  } */
 }
 
 @media (min-width: 1200px) {
-
+  /* .section-title {
+    padding-left: 250px; 
+  } */
 }
