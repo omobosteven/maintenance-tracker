@@ -64,6 +64,10 @@ input[type=submit]:active {
   height: 110vh;
 }
 
+.request-view {
+  height: 120vh;
+}
+
 .row {
   margin: 0 auto;
   max-width: 1240px;
@@ -157,7 +161,8 @@ nav .row:after
 /* ----------------------------------------------- */
 /* SignUp and SignIn Form */
 /* ----------------------------------------------- */
-.signup-form {
+.signup-form,
+.request-form {
   margin: 0 auto;
   width: 60%;
 }
@@ -166,7 +171,8 @@ nav .row:after
   margin-top: 2.3rem;
 }
 
-.signup-form .submit-btn {
+.signup-form .submit-btn,
+.request-form .submit-btn {
   text-align: center;
 }
 
@@ -177,7 +183,7 @@ nav .row:after
 .label {
   color: #fff;
   font-size: 1.9rem;
-  padding-bottom: 1.2rem;
+  padding-bottom: 0.9rem;
 }
 
 .form-title {
@@ -186,12 +192,20 @@ nav .row:after
 }
 
 input[type=password],
-input[type=email]
+input[type=email],
+input[type=text],
+select[name=type],
+select[name=category],
+textarea
  {
     border: 1px solid #ccc;
     border-radius: 3px;
     width: 100%;
     padding: 10px;
+}
+
+textarea {
+  resize: none;
 }
 
 .form-info {
@@ -202,6 +216,14 @@ input[type=email]
 .form-info  a {
   color: #e1b12c;
   margin-top: 1.0rem;
+}
+
+.request-form .row {
+  margin-top: 1.3rem;
+}
+
+.request-form .submit-btn {
+  margin-top: 2.9rem;
 }
 
 /* ----------------------------------------------- */
@@ -362,7 +384,7 @@ select[name=filter]
   padding: 2.0rem;
 }
 
-.resolved {
+.req-resolved {
   background-color: #44bd32;
   padding: 2.0rem 5.0rem;
   color: #fff;
@@ -453,6 +475,14 @@ footer p {
 /* ----------------------------------------------- */
 
 @media (min-width: 576px) {
+
+}
+
+@media (min-width: 768px) {
+  .logo {
+    height: 6.0rem;
+  }
+
   nav .row {
     flex-direction: row;
   }
@@ -473,11 +503,13 @@ footer p {
   .auth-content.view {
     height: 100vh;
   }
-}
 
-@media (min-width: 768px) {
-  .logo {
-    height: 6.0rem;
+  .request-view {
+    height: 100vh;
+  }
+
+  .main-nav {
+    width: 35.0rem;
   }
 
   .requests-list {
