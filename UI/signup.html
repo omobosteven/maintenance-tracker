@@ -6,7 +6,6 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Maintenance tracker | Signup</title>
   <link rel="stylesheet" href="vendors/css/normalize.css" type="text/css">
-  <link rel="stylesheet" href="vendors/css/grid.css" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.3.54/css/materialdesignicons.min.css" type="text/css">
   <link rel="stylesheet" href="css/style.css" type="text/css">
@@ -17,7 +16,7 @@
       <nav class="container">
         <div class="row">
           <div class="header-logo">
-            <img src="img/logo-white.png" alt="maintanace-tracker logo" class="logo">
+            <a href="signup.html"><img src="img/logo-white.png" alt="maintanace-tracker logo" class="logo"></a>
             <button type="button" id="navbar-toggler" class="nav-toggle"><i class="mdi mdi-view-sequential"></i></button>
           </div>
           <ul class="main-nav" id="navbar-collapse">
@@ -30,51 +29,36 @@
       </nav>
     </header>
 
-    <section class="section-form">
-      <div class="row">
+    <section class="section-form container">
+      <div class="row card-form">
         <form method="post" class="signup-form">
           <h2 class="form-title">Create an account</h2>
-          <div class="row">
-            <div class="col span-1-of-3 label">
-                <label for="email">Email</label>
-            </div>
-            <div class="col span-2-of-3">
-                <input type="email" name="email" id="email" placeholder="Your email address" required>
-            </div>
+          <div class="form-group">
+              <label for="email">Email</label>
+              <input class="form-control" type="email" name="email" id="email" placeholder="Your email address" required>
           </div>
-          <div class="row">
-            <div class="col span-1-of-3 label">
-                <label for="password">Password</label>
-            </div>
-            <div class="col span-2-of-3">
-                <input type="password" name="password" id="password" placeholder="Your password" required>
-            </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input class="form-control" type="password" name="password" id="password" placeholder="Your password" required>
           </div>
-          <div class="row">
-            <div class="col span-1-of-3 label">
-                <label for="confirm-password">Confirm Password</label>
-            </div>
-            <div class="col span-2-of-3">
-                <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm your password" required>
-            </div>
+          <div class="form-group">
+            <label for="confirm-password">Confirm Password</label>
+            <input class="form-control" type="password" name="confirm-password" id="confirm-password" placeholder="Confirm your password" required>
           </div>
 
-          <div class="row submit-btn">
-            <div class="col span-3-of-3">
-                <input type="submit" value="Create account">
-            </div>
-            <div class="col span-3-of-3">
-                <p class="form-info">Already have an account ? <a href="signin.html"> Login</a></p>
-            </div>
+          <div class="submit-btn">
+            <input type="submit" value="Create account">
+            <p class="form-info">Already have an account ? <a href="signin.html"> Login</a></p>
+          </div>
         </div>
         </form>
       </div>
     </section>
-    <footer>
-      <p>Operations department &copy; 2018</p>
-    </footer>
   </div>
   
+  <footer>
+    <p>Operations department &copy; 2018</p>
+  </footer>
   <script src="js/main.js"></script>
 </body>
 </html>
