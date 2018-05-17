@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.com/omobosteven/maintenance-tracker.svg?branch=ft-get-requests-endpoint-157612278)](https://travis-ci.com/omobosteven/maintenance-tracker)
+[![Coverage Status](https://coveralls.io/repos/github/omobosteven/maintenance-tracker/badge.svg?branch=ft-get-requests-endpoint-157612278)](https://coveralls.io/github/omobosteven/maintenance-tracker?branch=ft-get-requests-endpoint-157612278)
+[![Maintainability](https://api.codeclimate.com/v1/badges/a6fde1bb2915cec5032e/maintainability)](https://codeclimate.com/github/omobosteven/maintenance-tracker/maintainability)
+
 # Maintenance-tracker
 Maintenance Tracker App is an application that provides users with the ability to reach out to operations or repairs department regarding repair or maintenance requests and monitor the status of their request.
 
@@ -14,6 +18,21 @@ Maintenance Tracker App is an application that provides users with the ability t
 
 ### Folder Structure
 * UI: contains the UI design with HTML/CSS/JAVASCRIPT
+
+<h3>API Endpoints</h3>
+<hr>
+<table>
+  <tr>
+      <th>Request</th>
+      <th>End Point</th>
+      <th>Action</th>
+  </tr>
+    <tr>
+      <td>GET</td>
+      <td>/api/v1/requests</td>
+      <td>Fetch all the requests of a logged in user</td>
+  </tr>
+</table>
 
 ## Contributing
 
