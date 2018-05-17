@@ -17,11 +17,12 @@
       <nav class="container">
         <div class="row">
           <div class="header-logo">
-            <img src="img/logo-white.png" alt="maintanace-tracker logo" class="logo">   
+            <a href="signup.html"><img src="img/logo-white.png" alt="maintanace-tracker logo" class="logo"></a>  
             <p class="user">omobosteven <br> Dashboard</p>
             <button type="button" id="navbar-toggler" class="nav-toggle"><i class="mdi mdi-view-sequential"></i></button>
           </div>
           <ul class="main-nav" id="navbar-collapse">
+            <li><a href="create-request.html">Make Request</a></li>
             <li><a href="user-view-requests.html" class="active">View Requests</a></li>
             <li><a href="signup.html">Logout</a></li>
           </ul>
@@ -29,7 +30,7 @@
       </nav>
     </header>
 
-    <section class="section-requests container">
+    <section class="section-requests user-requests container">
       <div class="row">
         <h2 class="section-heading">My Requests</h2>
       </div>
@@ -46,59 +47,59 @@
       </div>
       <div class="row">
         <ul class="requests-list">
-          <li class="request-item resolved">
-            <p>#123</p>
-            <p>Repairs</p>
-            <div>
-              <p>Computers</p>
-              <p>Laptop</p>
-            </div>
-            <a href="user-request-details.html" class="status-resolved">
-              Resolved
+          <li class= "resolved">
+            <a class="request-item" href="user-request-details.html">
+              <p>#123</p>
+              <p>Repairs</p>
+              <div>
+                <p>Computers</p>
+                <p>Laptop</p>
+              </div>
+              <p class="status-resolved">Resolved</p>
             </a>
           </li>
-          <li class="request-item pending">
-            <p>#124</p>
-            <p>Repairs</p>
-            <div>
-              <p>Electronics</p>
-              <p>Monitor</p>
-            </div>
-            <a href="user-request-details.html" class="status-pending">
-              Pending
+          <li class="pending">
+            <a class="request-item" href="user-request-details.html">
+              <p>#124</p>
+              <p>Repairs</p>
+              <div>
+                <p>Electronics</p>
+                <p>Monitor</p>
+              </div>
+              <p class="status-pending">Pending</p>
             </a>
           </li>
-          <li class="request-item rejected">
-            <p>#124</p>
-            <p>Repairs</p>
-            <div>
-              <p>Electronics</p>
-              <p>Monitor</p>
-            </div>
-            <a  href="user-request-details.html" class="status-rejected">
-              Rejected
+          <li class="rejected">
+            <a class="request-item" href="user-request-details.html">
+              <p>#124</p>
+              <p>Repairs</p>
+              <div>
+                <p>Electronics</p>
+                <p>Monitor</p>
+              </div>
+              <p class="status-rejected">Rejected</p>
             </a>
           </li>
-          <li class="request-item new-request">
-            <p>#124</p>
-            <p class="maint">Maintenance</p>
-            <div>
-              <p>Electronics</p>
-              <p>Monitor</p>
-            </div>
-            <a href="user-request-details.html" class="status-new">
-              new
+          <li class="new-request">
+            <a class="request-item" href="user-request-details.html">
+              <p>#124</p>
+              <p class="maint">Maintenance</p>
+              <div>
+                <p>Electronics</p>
+                <p>Monitor</p>
+              </div>
+              <p class="status-new">new</p>
             </a>
           </li>
-          <li class="request-item new-request">
-            <p>#124</p>
-            <p class="maint">Maintenance</p>
-            <div>
-              <p>Electronics</p>
-              <p>Monitor</p>
-            </div>
-            <a href="user-request-details.html" class="status-new">
-              new
+          <li class="new-request">
+            <a class="request-item" href="user-request-details.html">
+              <p>#124</p>
+              <p class="maint">Maintenance</p>
+              <div>
+                <p>Electronics</p>
+                <p>Monitor</p>
+              </div>
+              <p class="status-new">new</p>
             </a>
           </li>
         </ul>
@@ -114,11 +115,11 @@
         </div>
       </div>
     </section>
-    <footer>
-      <p>Operations department &copy; 2018</p>
-    </footer>
   </div>
-  
-  <script src="js/main.js"></script>
+
+  <footer>
+    <p>Operations department &copy; 2018</p>
+  </footer>
+    <script src="js/main.js"></script>
 </body>
 </html>

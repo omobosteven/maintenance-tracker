@@ -4,6 +4,16 @@
   padding: 0;
 }
 
+html, 
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
 html {
   background-attachment: fixed;
   background-image: linear-gradient(#000000b4, #000000b4), url(../img/repairs2.jpg);
@@ -33,7 +43,7 @@ input[type=submit] {
 
 input[type=submit]:hover,
 input[type=submit]:active {
-    background-color: #004e77;
+  background-color: #004e77;
 }
 
 
@@ -62,6 +72,7 @@ input[type=button]:active {
 
 .content {
   display: flex;
+  flex: 1 0 auto;
   flex-direction: column;
   font-size: 1.6rem;
   justify-content: space-between;
@@ -102,9 +113,9 @@ header {
 /* Navigation */
 /* ----------------------------------------------- */
 .nav-toggle .mdi-view-sequential {
-  color: #ddf3ff;
   background: #00a8bb;
   border: 1px solid #ddf3ff;
+  color: #ddf3ff;
   font-size: 2.5rem;
 }
 
@@ -112,12 +123,6 @@ nav .row {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
-
-nav .row:before,
-nav .row:after
- {
-  content: none;
 }
 
 .main-nav {
@@ -158,49 +163,46 @@ nav .row:after
 }
 
 /* ----------------------------------------------- */
-/* SignUp and SignIn Form */
+/* Forms */
 /* ----------------------------------------------- */
 .section-form {
   margin-top: 7.0rem;
   margin-bottom: 7.0rem; 
 }
 
-.signup-form,
-.request-form {
-  margin: 0 auto;
-  width: 60%;
+.signup-form {
+  padding: 1.6rem;
+  width: 100%;
 }
 
-.signup-form .row {
+.signup-form .form-group {
+  display: flex;
+  flex-direction: column;
   margin-top: 2.3rem;
 }
 
-.signup-form .submit-btn,
-.request-form .submit-btn {
-  text-align: center;
+.card-form {
+  background-color: #6c9a9e91;
+  max-width: 600px;
+  padding-top: 1.6rem;
+  padding-bottom: 1.6rem;
 }
 
 .form-title {
   color: #fff;
-}
-
-.label {
-  color: #fff;
-  font-size: 1.9rem;
-  padding-bottom: 0.9rem;
-}
-
-.form-title {
+  margin-bottom: 4.0rem;
   text-align: center;
   text-transform: uppercase;
 }
 
-input[type=password],
-input[type=email],
-input[type=text],
-select[name=type],
-select[name=category],
-textarea
+.form-group label {
+  color: #fff;
+  font-size: 1.9rem;
+  font-weight: 400;
+  padding-bottom: 0.9rem;
+}
+
+.form-control
  {
     border: 1px solid #ccc;
     border-radius: 3px;
@@ -208,11 +210,18 @@ textarea
     padding: 10px;
 }
 
+.signup-form .submit-btn {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2.6rem;
+}
+
 textarea {
   resize: none;
 }
 
 .form-info {
+  align-self: center;
   color: #fff;
   margin-top: 1.0rem;
 }
@@ -220,14 +229,6 @@ textarea {
 .form-info  a {
   color: #e1b12c;
   margin-top: 1.0rem;
-}
-
-.request-form .row {
-  margin-top: 1.3rem;
-}
-
-.request-form .submit-btn {
-  margin-top: 2.9rem;
 }
 
 .update-btn input[type=button]{
@@ -241,41 +242,51 @@ textarea {
   margin-top: 4.5rem;
 }
 
+.user-requests {
+  margin-bottom: 4.6rem;
+}
+
 .requests-list {
   color: #494949;
   font-size: 1.2rem;
   list-style: none;
 }
 
+.requests-list li {
+  margin: 0 auto 0.5rem;
+  max-width: 855px;
+}
+
 .request-item {
   align-items: center;
   background-color: #f1f1f1;
+  color: #494949;
   display: flex;
   justify-content: space-between;
-  margin: 0 auto 0.5rem;
-  max-width: 855px;
+  padding-left: 1.0rem;
+  text-decoration: none;
   transition: background-color 0.2s;
 }
 
 .request-item:hover,
 .request-item:active {
-  background-color: #8d8d8d;
+  background-color: #a1a1a1;
   color: #eceaea;
 }
 
-.request-item.resolved {
+.requests-list .resolved {
   border-left: 4px solid #44bd32;
 }
 
-.request-item.pending {
+.requests-list .pending {
   border-left: 4px solid #d1a429;
 }
 
-.request-item.rejected {
+.requests-list .rejected {
   border-left: 4px solid #e84118;
 }
 
-.request-item.new-request {
+.requests-list .new-request {
   border-left: 4px solid #dcdde1;
 }
 
@@ -284,25 +295,16 @@ textarea {
   color: #fff;
   padding: 1.2rem 0 1.2rem 1.1rem;
   text-decoration: none;
-  transition: background-color 0.2s;
   width: 70px;
-}
-
-.status-resolved:hover {
-  background-color: #348d26;
 }
 
 .status-pending {
   background-color: #d1a429;
   color: #fff;
-  padding: 1.2rem 0 1.2rem 1.2rem;
+  padding: 1.2rem 0 1.2rem 1.1rem;
   text-decoration: none;
   transition: background-color 0.2s;
   width: 70px;
-}
-
-.status-pending:hover {
-  background-color: #a38121;
 }
 
 .status-rejected {
@@ -314,10 +316,6 @@ textarea {
   width: 70px;
 }
 
-.status-rejected:hover {
-  background-color: #b13314;
-}
-
 .status-new {
   background-color: #dcdde1;
   color: #555;
@@ -327,15 +325,10 @@ textarea {
   width: 70px;
 }
 
-.status-new:hover {
-  background-color: #b0b0b1;
-  color: #fff;
-}
-
 .pagination {
   text-align: center;
   margin-bottom: 5.0rem; 
-  margin-top: 2.3rem; 
+  margin-top: 5.0rem; 
 }
 
 .pagination a {
@@ -362,16 +355,11 @@ textarea {
   width: 100%;
 }
 
-.filter .label {
-  padding-bottom: 0.5rem;
-}
-
-select[name=filter]
- {
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    padding: 10px;
-    width: 250px;
+select[name=filter] {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 10px;
+  width: 250px;
 }
 
 .maint {
@@ -442,8 +430,8 @@ select[name=filter]
 
 .req-resolved {
   background-color: #44bd32;
-  padding: 2.0rem 5.0rem;
   color: #fff;
+  padding: 2.0rem 5.0rem;
   font-size: 2.0rem;
 }
 
@@ -521,8 +509,14 @@ select[name=filter]
 
 footer p {
   color: #00a8ff;
+  font-size: 1.6rem;
   font-weight: 600;
+  padding-bottom: 1.6rem;
   text-align: center;
+}
+
+footer {
+  flex-shrink: 0;
 }
 
 /* ----------------------------------------------- */
@@ -530,18 +524,7 @@ footer p {
 /* ----------------------------------------------- */
 
 @media (min-width: 576px) {
-  .btn-update {
-    display: flex;
-    justify-content: space-between;
-  }
 
-  .update-btn input[type=button]{
-    margin-top: 0;
-  }
-
-  .update-btn {
-    max-width: 495px; 
-  }
 }
 
 @media (min-width: 768px) {
@@ -568,6 +551,37 @@ footer p {
 
   .main-nav {
     width: 35.0rem;
+  }
+
+  .signup-form .form-group {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .signup-form .submit-btn {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  .update-btn input[type=button]{
+    margin-top: 0;
+    margin-left: 5.9rem;
+  }
+
+  .signin-form {
+    margin-bottom: 11.0rem; 
+  }
+
+  .signup-form .create-btn {
+    justify-content: center;
+  }
+
+  .form-control {
+    width: 70%;
+  }
+
+  .signup-form .form-info {
+    margin-left: 1.6rem;
   }
 
   .requests-list {
@@ -603,11 +617,11 @@ footer p {
   }
 
   .status-pending {
-    padding-left: 0.7rem;
+    padding-left: 0.6rem;
   }
   
   .status-rejected {
-    padding-left: 0.5rem;
+    padding-left: 0.6rem;
   }
   
   .status-new {
@@ -616,16 +630,9 @@ footer p {
 }
 
 @media (min-width: 992px) {
-  .label {
-    padding-left: 9.0rem;
-    padding-top: 1.0rem;
-  }
-
 
 }
 
 @media (min-width: 1200px) {
-  .update-btn {
-    margin-right: 0px; 
-  }
+
 }
