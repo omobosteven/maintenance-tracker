@@ -22,6 +22,33 @@ class RequestController extends Controller {
       requests,
     });
   }
+
+  /**
+   * @description Fetch a request of a logged in user
+   *
+   * @param {Object} req - HTTP Request
+   * @param {Object} res - HTTP Response
+   *
+   * @return {(json)}JSON object
+   */
+  static getRequest(req, res) {
+    const requestDetails = requests.find(request =>
+      parseInt(request.id, 10) === parseInt(req.params.id, 10));
+
+    if (!requestDetails) {
+      return res.status(404).json({
+        status: 'fail',
+        message: 'Request not found',
+      });
+    }
+
+    return res.status(200).json({
+      status: 'success',
+      data: {
+        request: requestDetails,
+      },
+    });
+  }
 }
 
 export default RequestController;

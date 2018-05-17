@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.com/omobosteven/maintenance-tracker.svg?branch=ft-get-requests-endpoint-157612278)](https://travis-ci.com/omobosteven/maintenance-tracker)
-[![Coverage Status](https://coveralls.io/repos/github/omobosteven/maintenance-tracker/badge.svg?branch=ft-get-requests-endpoint-157612278)](https://coveralls.io/github/omobosteven/maintenance-tracker?branch=ft-get-requests-endpoint-157612278)
+[![Build Status](https://travis-ci.com/omobosteven/maintenance-tracker.svg?branch=ft-get-request-endpoint-157613994)](https://travis-ci.com/omobosteven/maintenance-tracker)
+[![Coverage Status](https://coveralls.io/repos/github/omobosteven/maintenance-tracker/badge.svg?branch=ft-get-request-endpoint-157613994)](https://coveralls.io/github/omobosteven/maintenance-tracker?branch=ft-get-request-endpoint-157613994)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a6fde1bb2915cec5032e/maintainability)](https://codeclimate.com/github/omobosteven/maintenance-tracker/maintainability)
 
 # Maintenance-tracker
@@ -18,19 +18,33 @@ Maintenance Tracker App is an application that provides users with the ability t
 
 ### Folder Structure
 * UI: contains the UI design with HTML/CSS/JAVASCRIPT
+* server: contains the project API endpoints created using Node/express, and tests using mocha/chai
+
+## Technologies used
+
+#### Core Technology Stacks
+* Front-end: HTML, CSS and Javascript
+* Back-end: Expressjs
+* Libraries: Babel, eslint, Mocha/Chai + chai-http
+* System Dependencies: Node
 
 <h3>API Endpoints</h3>
 <hr>
 <table>
   <tr>
-      <th>Request</th>
-      <th>End Point</th>
-      <th>Action</th>
+    <th>Request</th>
+    <th>End Point</th>
+    <th>Action</th>
   </tr>
-    <tr>
-      <td>GET</td>
-      <td>/api/v1/requests</td>
-      <td>Fetch all the requests of a logged in user</td>
+  <tr>
+    <td>GET</td>
+    <td>/api/v1/requests</td>
+    <td>Fetch all the requests of a logged in user</td>
+  </tr>
+  <tr>
+    <td>GET</td>
+    <td>/api/v1/requests/:id</td>
+    <td>Fetch a request that belongs to a logged in user</td>
   </tr>
 </table>
 
