@@ -88,6 +88,57 @@ class RequestsController extends Controller {
       data: { request },
     });
   }
+
+  /**
+   * @description Modify a request
+   *
+   * @param {Object} req - HTTP Request
+   * @param {Object} res - HTTP Response
+   *
+   * @return {(json)}JSON object
+   */
+  static modifyRequest(req, res) {
+    const { body } = req;
+
+    const requestIndex = requests
+      .findIndex(request => request.id === parseInt(req.params.id, 10));
+
+    if (requestIndex < 0) {
+      return res.status(404).json({
+        status: 'fail',
+        message: 'Request was not found',
+      });
+    }
+
+    const {
+      id, userId, type, category, item, description, status,
+    } = requests[requestIndex];
+
+    const requestUpdate = {
+      type: body.type || type,
+      category: body.category || category,
+      item: body.item || item,
+      description: body.description || description,
+    };
+
+    requests[requestIndex] = {
+      id,
+      userId,
+      type: requestUpdate.type.trim().toLowerCase(),
+      category: requestUpdate.category.trim().toLowerCase(),
+      item: requestUpdate.item.trim().toLowerCase(),
+      description: requestUpdate.description.trim().toLowerCase(),
+      status,
+    };
+
+    return res.status(200).json({
+      status: 'success',
+      message: 'request updated successfully',
+      data: {
+        request: requests[requestIndex],
+      },
+    });
+  }
 }
 
 export default RequestsController;

@@ -1,7 +1,7 @@
 <img src="logoSmall.png" alt='logo'/>
 
-[![Build Status](https://travis-ci.com/omobosteven/maintenance-tracker.svg?branch=ft-create-request-endpoint-157614157)](https://travis-ci.com/omobosteven/maintenance-tracker)
-[![Coverage Status](https://coveralls.io/repos/github/omobosteven/maintenance-tracker/badge.svg?branch=ft-create-request-endpoint-157614157)](https://coveralls.io/github/omobosteven/maintenance-tracker?branch=ft-create-request-endpoint-157614157)
+[![Build Status](https://travis-ci.com/omobosteven/maintenance-tracker.svg?branch=ft-modify-request-157614272)](https://travis-ci.com/omobosteven/maintenance-tracker)
+[![Coverage Status](https://coveralls.io/repos/github/omobosteven/maintenance-tracker/badge.svg?branch=ft-modify-request-157614272)](https://coveralls.io/github/omobosteven/maintenance-tracker?branch=ft-modify-request-157614272)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a6fde1bb2915cec5032e/maintainability)](https://codeclimate.com/github/omobosteven/maintenance-tracker/maintainability)
 
 # Maintenance-tracker
@@ -53,6 +53,11 @@ Maintenance Tracker App is an application that provides users with the ability t
     <td>/api/v1/users/requests</td>
     <td>Create a request</td>
   </tr>
+  <tr>
+    <td>PUT</td>
+    <td>/api/v1/users/requests/:id</td>
+    <td>Modify a request</td>
+  </tr>
 </table>
 <hr>
 
@@ -64,6 +69,20 @@ To create a request, send the following parameters
 {
    type: 'repairs',
    category: 'computers',
+   item: 'printer',
+   description: 'faulty',
+}
+```
+<hr>
+
+### Modify a Request: `/api/v1/users/requests/:id`
+To modify a request, send the following parameters
+##### NB: description field is optional
+
+```
+{
+   type: 'repairs',
+   category: 'electronic',
    item: 'printer',
    description: 'faulty',
 }
