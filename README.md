@@ -1,5 +1,7 @@
-[![Build Status](https://travis-ci.com/omobosteven/maintenance-tracker.svg?branch=ft-get-request-endpoint-157613994)](https://travis-ci.com/omobosteven/maintenance-tracker)
-[![Coverage Status](https://coveralls.io/repos/github/omobosteven/maintenance-tracker/badge.svg?branch=ft-get-request-endpoint-157613994)](https://coveralls.io/github/omobosteven/maintenance-tracker?branch=ft-get-request-endpoint-157613994)
+<img src="logoSmall.png" alt='logo'/>
+
+[![Build Status](https://travis-ci.com/omobosteven/maintenance-tracker.svg?branch=ft-create-request-endpoint-157614157)](https://travis-ci.com/omobosteven/maintenance-tracker)
+[![Coverage Status](https://coveralls.io/repos/github/omobosteven/maintenance-tracker/badge.svg?branch=ft-create-request-endpoint-157614157)](https://coveralls.io/github/omobosteven/maintenance-tracker?branch=ft-create-request-endpoint-157614157)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a6fde1bb2915cec5032e/maintainability)](https://codeclimate.com/github/omobosteven/maintenance-tracker/maintainability)
 
 # Maintenance-tracker
@@ -9,7 +11,7 @@ Maintenance Tracker App is an application that provides users with the ability t
 * User can create an account and log in
 * User can make maintenance or repairs request
 * User can modify their maintenance or repairs request
-* User can view all his/her request
+* User can view all his/her requests
 * User can view the details/status of his/her request
 * Admin can do the following
     * Approve or disapprove a repair/maintenance request
@@ -38,15 +40,35 @@ Maintenance Tracker App is an application that provides users with the ability t
   </tr>
   <tr>
     <td>GET</td>
-    <td>/api/v1/requests</td>
+    <td>/api/v1/users/requests</td>
     <td>Fetch all the requests of a logged in user</td>
   </tr>
   <tr>
     <td>GET</td>
-    <td>/api/v1/requests/:id</td>
+    <td>/api/v1/users/requests/:id</td>
     <td>Fetch a request that belongs to a logged in user</td>
   </tr>
+  <tr>
+    <td>POST</td>
+    <td>/api/v1/users/requests</td>
+    <td>Create a request</td>
+  </tr>
 </table>
+<hr>
+
+### Create a Request: `/api/v1/users/requests`
+To create a request, send the following parameters
+##### NB: description field is optional
+
+```
+{
+   type: 'repairs',
+   category: 'computers',
+   item: 'printer',
+   description: 'faulty',
+}
+```
+<hr>
 
 ## Contributing
 

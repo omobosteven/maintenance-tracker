@@ -1,10 +1,18 @@
 import express from 'express';
 import RequestsController from '../controllers/RequestsController';
-import validation from '../validations/validateId';
+import ValidateRequest from '../validations/ValidateRequest';
+import Validation from '../validations/Validation';
 
 const router = express.Router();
 
-router.get('/requests', RequestsController.getRequests);
-router.get('/requests/:id', validation.validateId, RequestsController.getRequest);
+router.get('/users/requests', RequestsController.getRequests);
+router.get(
+  '/users/requests/:id',
+  Validation.validateId, RequestsController.getRequest,
+);
+router.post(
+  '/users/requests',
+  ValidateRequest.create, RequestsController.createRequest,
+);
 
 export default router;
