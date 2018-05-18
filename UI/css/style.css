@@ -1,0 +1,638 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, 
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+html {
+  background-attachment: fixed;
+  background-image: linear-gradient(#000000b4, #000000b4), url(../img/repairs2.jpg);
+  background-position: center;
+  background-size: cover;
+  color: #555;
+  font-family: 'Lato', 'Arial', sans-serif;
+  font-size: 62.5%;
+  font-weight: 300;
+  text-rendering: optimizeLegibility;
+}
+
+.btn,
+input[type=submit],
+input[type=button] {
+  color: #fff;
+  display: inline-block;
+  font-weight: 300;
+  padding: 10px 30px;
+  transition: background-color 0.2s, border 0.2s, color 0.2s;
+}
+
+input[type=submit] {
+  background-color: #00a8bb;
+  border: 1px solid #00a8bb;
+}
+
+input[type=submit]:hover,
+input[type=submit]:active {
+  background-color: #004e77;
+}
+
+
+input[type=button] {
+  background-color: #bb3615;
+  border: 1px solid #bb3615;
+}
+
+input[type=button]:hover,
+input[type=button]:active {
+  background-color: #882810;
+}
+
+.section-heading {
+  color: #fff;
+  text-align: center;
+}
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 100%;
+}
+
+.content {
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+  font-size: 1.6rem;
+  justify-content: space-between;
+}
+
+.row {
+  margin: 0 auto;
+  max-width: 1240px;
+}
+
+header {
+  background-color: #00a8bb;
+  position: sticky;
+  top: 0;
+}
+
+.header-logo {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-logo .user {
+  color: #e6b530;
+  font-size: 1.7rem;
+  font-weight: 600;
+  margin-left: 1.6rem;
+}
+
+.logo {
+  height: 5.0rem;
+  max-width: 170px;
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+/* ----------------------------------------------- */
+/* Navigation */
+/* ----------------------------------------------- */
+.nav-toggle .mdi-view-sequential {
+  background: #00a8bb;
+  border: 1px solid #ddf3ff;
+  color: #ddf3ff;
+  font-size: 2.5rem;
+}
+
+nav .row {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.main-nav {
+  display: none;
+  flex-direction: column;
+  justify-content: space-evenly;
+  list-style: none;
+  margin: 2.5rem auto 0;
+  width: 20.0rem;
+}
+
+.main-nav li {
+  margin: 0 auto 2.3rem;
+  width: fit-content;
+}
+
+.main-nav li a:link,
+.main-nav li a:visited {
+  border-bottom: 2px solid transparent;
+  color: #fff;
+  padding: 8px 0;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: border-bottom 0.2s;
+}
+
+.main-nav li a.active {
+  border-bottom: 2px solid #99dcff;
+}
+
+.main-nav li a:hover,
+.main-nav li a:active {
+  border-bottom: 2px solid #e1b12c;
+}
+
+.navbar-show {
+  display: block;
+}
+
+/* ----------------------------------------------- */
+/* Forms */
+/* ----------------------------------------------- */
+.section-form {
+  margin-top: 7.0rem;
+  margin-bottom: 7.0rem; 
+}
+
+.signup-form {
+  padding: 1.6rem;
+  width: 100%;
+}
+
+.signup-form .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2.3rem;
+}
+
+.card-form {
+  background-color: #6c9a9e91;
+  max-width: 600px;
+  padding-top: 1.6rem;
+  padding-bottom: 1.6rem;
+}
+
+.form-title {
+  color: #fff;
+  margin-bottom: 4.0rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.form-group label {
+  color: #fff;
+  font-size: 1.9rem;
+  font-weight: 400;
+  padding-bottom: 0.9rem;
+}
+
+.form-control
+ {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    width: 100%;
+    padding: 10px;
+}
+
+.signup-form .submit-btn {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2.6rem;
+}
+
+textarea {
+  resize: none;
+}
+
+.form-info {
+  align-self: center;
+  color: #fff;
+  margin-top: 1.0rem;
+}
+
+.form-info  a {
+  color: #e1b12c;
+  margin-top: 1.0rem;
+}
+
+.update-btn input[type=button]{
+  margin-top: 1.6rem;
+}
+
+/* ----------------------------------------------- */
+/* VIEW ALL REQUEST */
+/* ----------------------------------------------- */
+.section-requests {
+  margin-top: 4.5rem;
+}
+
+.user-requests {
+  margin-bottom: 4.6rem;
+}
+
+.requests-list {
+  color: #494949;
+  font-size: 1.2rem;
+  list-style: none;
+}
+
+.requests-list li {
+  margin: 0 auto 0.5rem;
+  max-width: 855px;
+}
+
+.request-item {
+  align-items: center;
+  background-color: #f1f1f1;
+  color: #494949;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 1.0rem;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.request-item:hover,
+.request-item:active {
+  background-color: #a1a1a1;
+  color: #eceaea;
+}
+
+.requests-list .resolved {
+  border-left: 4px solid #44bd32;
+}
+
+.requests-list .pending {
+  border-left: 4px solid #d1a429;
+}
+
+.requests-list .rejected {
+  border-left: 4px solid #e84118;
+}
+
+.requests-list .new-request {
+  border-left: 4px solid #dcdde1;
+}
+
+.status-resolved {
+  background-color: #44bd32;
+  color: #fff;
+  padding: 1.2rem 0 1.2rem 1.1rem;
+  text-decoration: none;
+  width: 70px;
+}
+
+.status-pending {
+  background-color: #d1a429;
+  color: #fff;
+  padding: 1.2rem 0 1.2rem 1.1rem;
+  text-decoration: none;
+  transition: background-color 0.2s;
+  width: 70px;
+}
+
+.status-rejected {
+  background-color: #e84118;
+  color: #fff;
+  padding: 1.2rem 0 1.2rem 1.2rem;
+  text-decoration: none;
+  transition: background-color 0.2s;
+  width: 70px;
+}
+
+.status-new {
+  background-color: #dcdde1;
+  color: #555;
+  padding: 1.2rem 0 1.2rem 2.3rem;
+  text-decoration: none;
+  transition: background-color 0.2s;
+  width: 70px;
+}
+
+.pagination {
+  text-align: center;
+  margin-bottom: 5.0rem; 
+  margin-top: 5.0rem; 
+}
+
+.pagination a {
+  color: #fff;
+  padding: 8px 12px;
+  text-decoration: none;
+  transition: background-color .3s;
+}
+
+.pagination a.active {
+  background-color: dodgerblue;
+  color: white;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: #ddd;
+  color: #555;
+}
+
+.filter {
+  margin-bottom: 2.3rem;
+  margin-top: 2.6rem;
+  max-width: 855px;
+  width: 100%;
+}
+
+select[name=filter] {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 10px;
+  width: 250px;
+}
+
+.maint {
+  margin-right: -3.5rem;
+}
+
+/* ----------------------------------------------- */
+/* REQUEST DETAILS */
+/* ----------------------------------------------- */
+.section-details {
+  margin-top: 4.5rem;
+  margin-bottom: 5.0rem;
+}
+
+.card-details {
+  background-color: #fcfcfce5;
+  color: #333333;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2.6rem;
+  max-width: 650px;
+}
+
+.card-details .edit-link {
+  border: 1px solid #e1b12c;
+  border-radius: 3px;
+  color: #e1b12c;
+  font-size: 1.9rem;
+  font-weight: 500;
+  margin: 2.3rem auto 0;
+  padding: 1.0rem;
+  text-decoration: none;
+  width: fit-content;
+  transition: background-color 0.2s;
+}
+
+.card-details .edit-link:hover,
+.card-details .edit-link:active {
+  background-color: #e1b12c;
+  color: #555;
+}
+
+.request-user {
+  display: flex;
+  font-size: 2.2rem;
+  font-weight: 400;
+  justify-content: space-between;
+  padding: 1.0rem;
+}
+
+.request-user span {
+  color: #a7a4a4;
+  font-size: 70%;
+  font-style: italic;
+}
+
+.admin-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 1.6rem;
+}
+
+.request-status {
+  margin: 0 auto;
+  padding: 2.0rem;
+}
+
+.req-resolved {
+  background-color: #44bd32;
+  color: #fff;
+  padding: 2.0rem 5.0rem;
+  font-size: 2.0rem;
+}
+
+.btn-approve,
+.btn-reject,
+.btn-resolve {
+  border: none; 
+  font-size: 1.8rem;
+  margin-bottom: 1.6rem;
+}
+
+.btn-approve {
+  background-color: #d1a429;
+}
+
+.btn-approve:hover {
+  background-color: #b48e24;
+  cursor: pointer;
+}
+
+.btn-reject {
+  background-color: #e84118;
+}
+
+.btn-reject:hover {
+  background-color: #bb3615;
+  cursor: pointer;
+}
+
+.btn-resolve {
+  background-color: #44bd32;
+}
+
+.btn-resolve:hover {
+  background-color: #328825;
+  cursor: pointer;
+}
+
+.details p {
+  font-size: 1.9rem;
+  font-weight: 400;
+  padding: 1.0rem;
+}
+
+.details p {
+  align-items: baseline;
+  display: flex;
+  justify-content: space-between;
+  max-width: 480px;
+}
+
+.details .detail {
+  display: inline-block;
+  width: 170px;
+}
+
+.user-details {
+  margin-top: 2.6rem;
+}
+
+.user-details p {
+  border-bottom: 1px dashed #b48e24;
+  margin: 0 auto;
+}
+
+.user-details p:last-child {
+  border-bottom: none;
+}
+
+.details .details-heading {
+  font-style: italic;
+  font-weight: 600;
+  padding-right: 1.0rem;
+}
+
+footer p {
+  color: #00a8ff;
+  font-size: 1.6rem;
+  font-weight: 600;
+  padding-bottom: 1.6rem;
+  text-align: center;
+}
+
+footer {
+  flex-shrink: 0;
+}
+
+/* ----------------------------------------------- */
+/* MEDIA QUERIES */
+/* ----------------------------------------------- */
+
+@media (min-width: 576px) {
+
+}
+
+@media (min-width: 768px) {
+  .logo {
+    height: 6.0rem;
+  }
+
+  nav .row {
+    flex-direction: row;
+  }
+
+  nav .main-nav {
+    display: flex;
+    flex-direction: row;
+    font-weight: 400;
+    font-size: 1.4rem;
+    margin-left: 0;
+    margin-right: 0; 
+  }
+
+  .nav-toggle {
+    display: none;
+  }
+
+  .main-nav {
+    width: 35.0rem;
+  }
+
+  .signup-form .form-group {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .signup-form .submit-btn {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  .update-btn input[type=button]{
+    margin-top: 0;
+    margin-left: 5.9rem;
+  }
+
+  .signin-form {
+    margin-bottom: 11.0rem; 
+  }
+
+  .signup-form .create-btn {
+    justify-content: center;
+  }
+
+  .form-control {
+    width: 70%;
+  }
+
+  .signup-form .form-info {
+    margin-left: 1.6rem;
+  }
+
+  .requests-list {
+    font-size: 1.6rem;
+  }
+
+  .section-title {
+    margin-left: auto;    
+    margin-right: auto;
+    margin-top: -11.0rem;
+  }
+
+  .admin-btn {
+    flex-direction: row;
+  }
+
+  .request-user {
+    margin-left: 3.5rem;
+    width: 395px;
+  }
+
+  .details {
+    margin-bottom: 4.0rem;
+    margin-left: 3.5rem;
+  }
+
+  .details .detail {
+    width: 250px;
+  }
+
+  .status-resolved {
+    padding-left: 0.3rem;
+  }
+
+  .status-pending {
+    padding-left: 0.6rem;
+  }
+  
+  .status-rejected {
+    padding-left: 0.6rem;
+  }
+  
+  .status-new {
+    padding-left: 1.9rem;
+  }
+}
+
+@media (min-width: 992px) {
+
+}
+
+@media (min-width: 1200px) {
+
+}

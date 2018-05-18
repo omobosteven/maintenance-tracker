@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Maintenance tracker | Signup</title>
+  <link rel="stylesheet" href="vendors/css/normalize.css" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.3.54/css/materialdesignicons.min.css" type="text/css">
+  <link rel="stylesheet" href="css/style.css" type="text/css">
+</head>
+<body>
+  <div class="content">
+    <header>
+      <nav class="container">
+        <div class="row">
+          <div class="header-logo">
+            <a href="signup.html"><img src="img/logo-white.png" alt="maintanace-tracker logo" class="logo"></a>
+            <p class="user">Admin Dashboard</p>
+            <button type="button" id="navbar-toggler" class="nav-toggle"><i class="mdi mdi-view-sequential"></i></button>
+          </div>
+          <ul class="main-nav" id="navbar-collapse">
+            <li><a href="admin-view-requests.html" class="active">View Requests</a></li>
+            <li><a href="signup.html">Logout</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <section class="section-requests container">
+      <div class="row">
+        <h2 class="section-heading">All Requests</h2>
+      </div>
+      <div class="row filter">
+        <div class="col">
+            <select name="filter" id="filter">
+              <option value="new">Filter by...</option>
+              <option value="new">New</option>
+              <option value="new">Pending</option>
+              <option value="new">Rejected</option>
+              <option value="new">Resolved</option>
+            </select>
+        </div>
+      </div>
+      <div class="row">
+        <ul class="requests-list">
+            <li class= "resolved">
+              <a class="request-item" href="admin-request-details.html">
+                <p>#123</p>
+                <p>Repairs</p>
+                <div>
+                  <p>Computers</p>
+                  <p>Laptop</p>
+                </div>
+                <p class="status-resolved">Resolved</p>
+              </a>
+            </li>
+            <li class="pending">
+              <a class="request-item" href="admin-request-details.html">
+                <p>#124</p>
+                <p>Repairs</p>
+                <div>
+                  <p>Electronics</p>
+                  <p>Monitor</p>
+                </div>
+                <p class="status-pending">Pending</p>
+              </a>
+            </li>
+            <li class="rejected">
+              <a class="request-item" href="admin-request-details.html">
+                <p>#124</p>
+                <p>Repairs</p>
+                <div>
+                  <p>Electronics</p>
+                  <p>Monitor</p>
+                </div>
+                <p class="status-rejected">Rejected</p>
+              </a>
+            </li>
+            <li class="new-request">
+              <a class="request-item" href="admin-request-details.html">
+                <p>#124</p>
+                <p class="maint">Maintenance</p>
+                <div>
+                  <p>Electronics</p>
+                  <p>Monitor</p>
+                </div>
+                <p class="status-new">new</p>
+              </a>
+            </li>
+            <li class="new-request">
+              <a class="request-item" href="admin-request-details.html">
+                <p>#124</p>
+                <p class="maint">Maintenance</p>
+                <div>
+                  <p>Electronics</p>
+                  <p>Monitor</p>
+                </div>
+                <p class="status-new">new</p>
+              </a>
+            </li>
+            <li class="pending">
+              <a class="request-item" href="admin-request-details.html">
+                <p>#124</p>
+                <p>Repairs</p>
+                <div>
+                  <p>Electronics</p>
+                  <p>Monitor</p>
+                </div>
+                <p class="status-pending">Pending</p>
+              </a>
+            </li>
+            <li class="rejected">
+              <a class="request-item" href="admin-request-details.html">
+                <p>#124</p>
+                <p>Repairs</p>
+                <div>
+                  <p>Electronics</p>
+                  <p>Monitor</p>
+                </div>
+                <p class="status-rejected">Rejected</p>
+              </a>
+            </li>
+            <li class="new-request">
+              <a class="request-item" href="admin-request-details.html">
+                <p>#124</p>
+                <p class="maint">Maintenance</p>
+                <div>
+                  <p>Electronics</p>
+                  <p>Monitor</p>
+                </div>
+                <p class="status-new">new</p>
+              </a>
+            </li>
+        </ul>
+        <div class="pagination">
+          <a href="#">&laquo;</a>
+          <a href="#">1</a>
+          <a class="active" href="#">2</a>
+          <a href="#">3</a>
+          <a href="#">4</a>
+          <a href="#">5</a>
+          <a href="#">6</a>
+          <a href="#">&raquo;</a>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+  <footer>
+    <p>Operations department &copy; 2018</p>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>

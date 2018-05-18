@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Maintenance tracker | Signup</title>
+  <link rel="stylesheet" href="vendors/css/normalize.css" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.3.54/css/materialdesignicons.min.css" type="text/css">
+  <link rel="stylesheet" href="css/style.css" type="text/css">
+</head>
+<body>
+  <div class="content">
+    <header>
+      <nav class="container">
+        <div class="row">
+          <div class="header-logo">
+            <a href="signup.html"><img src="img/logo-white.png" alt="maintanace-tracker logo" class="logo"></a>
+            <button type="button" id="navbar-toggler" class="nav-toggle"><i class="mdi mdi-view-sequential"></i></button>
+          </div>
+          <ul class="main-nav" id="navbar-collapse">
+            <li><a href="admin-view-requests.html">Admin</a></li>
+            <li><a href="user-view-requests.html">User</a></li>
+            <li><a href="signup.html">SignUp</a></li>
+            <li><a href="signin.html" class="active">Login</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <section class="section-form signin-form container">
+      <div class="row card-form">
+        <form method="post" class="signup-form">
+          <h2 class="form-title">User Login</h2>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input class="form-control" type="email" name="email" id="email" placeholder="Your email address" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input class="form-control" type="password" name="password" id="password" placeholder="Your password" required>
+          </div>
+          <div class="submit-btn">
+            <input type="submit" value="Login">
+            <p class="form-info">Not registered ? create an account <a href="signup.html"> Signup</a></p>
+          </div>
+        </div>
+        </form>
+      </div>
+    </section>
+  </div>
+  
+  <footer>
+    <p>Operations department &copy; 2018</p>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>
