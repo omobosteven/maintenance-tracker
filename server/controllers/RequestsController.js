@@ -1,7 +1,7 @@
 import Controller from './Controller';
 import requests from '../dummy-data/requests';
 
-class RequestController extends Controller {
+class RequestsController extends Controller {
   /**
    * @description Fetch all the requests of a logged in user
    *
@@ -49,6 +49,45 @@ class RequestController extends Controller {
       },
     });
   }
+
+  /**
+   * @description Create a request
+   *
+   * @param {Object} req - HTTP Request
+   * @param {Object} res - HTTP Response
+   *
+   * @return {(json)}JSON object
+   */
+  static createRequest(req, res) {
+    const {
+      type, category, item, description,
+    } = req.body;
+
+    const id = requests.length + 1;
+
+    let descriptionValue = 'no-description';
+    if (description) {
+      descriptionValue = description.trim().toLowerCase();
+    }
+
+    const request = {
+      id,
+      userId: 1,
+      type: type.trim().toLowerCase(),
+      category: category.trim().toLowerCase(),
+      item: item.trim().toLowerCase(),
+      description: descriptionValue,
+      status: 'new',
+    };
+
+    requests.push(request);
+
+    return res.status(201).json({
+      status: 'success',
+      message: 'request created successfully',
+      data: { request },
+    });
+  }
 }
 
-export default RequestController;
+export default RequestsController;

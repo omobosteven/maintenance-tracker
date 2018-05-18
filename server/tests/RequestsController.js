@@ -9,7 +9,7 @@ chai.use(chaiHttp);
 describe('Tests for requests API endpoints', () => {
   it('should fetch all the requests of a logged in user', (done) => {
     chai.request(app)
-      .get('/api/v1/requests')
+      .get('/api/v1/users/requests')
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res.body.message).to.equal('My Requests');
@@ -29,7 +29,7 @@ describe('Tests for requests API endpoints', () => {
 
   it('should fetch the details of a request', (done) => {
     chai.request(app)
-      .get('/api/v1/requests/2')
+      .get('/api/v1/users/requests/2')
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res.body.data.request).to.deep.equal({
@@ -47,7 +47,7 @@ describe('Tests for requests API endpoints', () => {
 
   it('should return message if request is not found', (done) => {
     chai.request(app)
-      .get('/api/v1/requests/45')
+      .get('/api/v1/users/requests/45')
       .end((err, res) => {
         expect(res).to.have.status(404);
         expect(res.body.status).to.equal('fail');
@@ -58,10 +58,113 @@ describe('Tests for requests API endpoints', () => {
 
   it('should return message if invalid id is entered', (done) => {
     chai.request(app)
-      .get('/api/v1/requests/45yu')
+      .get('/api/v1/users/requests/45yu')
       .end((err, res) => {
         expect(res).to.have.status(400);
         expect(res.body.message).to.equal('Id is invalid');
+        done();
+      });
+  });
+
+  it('should return error if fields are empty', (done) => {
+    chai.request(app)
+      .post('/api/v1/users/requests')
+      .set('Content-type', 'application/json')
+      .send({})
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        expect(res.body.data.errors.type).to.be.equal('type is required');
+        done();
+      });
+  });
+
+  it('should return error for wrong value in type and category', (done) => {
+    chai.request(app)
+      .post('/api/v1/users/requests')
+      .set('Content-type', 'application/json')
+      .send({
+        type: 'call',
+        category: '32ew',
+        item: 'laptop',
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        expect(res.body.data.errors.type)
+          .to.be.equal('type must be either of: repairs or maintenance');
+        expect(res.body.data.errors.category)
+          .to.be.equal('Enter alphabetic letters for category');
+        done();
+      });
+  });
+
+  it('should return error if description is short', (done) => {
+    chai.request(app)
+      .post('/api/v1/users/requests')
+      .set('Content-type', 'application/json')
+      .send({
+        type: 'repairs',
+        category: 'computers',
+        item: 'laptop',
+        description: 'stop',
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        expect(res.body.data.errors.description)
+          .to.be.equal('description is too short');
+        done();
+      });
+  });
+
+  it('should return error for non-alphabetic letter in item field', (done) => {
+    chai.request(app)
+      .post('/api/v1/users/requests')
+      .set('Content-type', 'application/json')
+      .send({
+        type: 'repairs',
+        category: 'computers',
+        item: '45',
+        description: 'stop',
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        expect(res.body.data.errors.item)
+          .to.be.equal('Enter alphabetic letters for Item');
+        done();
+      });
+  });
+
+  it('should create request if description is not entered', (done) => {
+    chai.request(app)
+      .post('/api/v1/users/requests')
+      .set('Content-type', 'application/json')
+      .send({
+        type: 'repairs',
+        category: 'computers',
+        item: 'laptop',
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(201);
+        expect(res.body.message).to.equal('request created successfully');
+        expect(res.body.data.request.description).to.equal('no-description');
+        done();
+      });
+  });
+
+  it('should create request if all fields are entered', (done) => {
+    chai.request(app)
+      .post('/api/v1/users/requests')
+      .set('Content-type', 'application/json')
+      .send({
+        type: 'repairs',
+        category: 'computers',
+        item: 'laptop',
+        description: 'faulty',
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(201);
+        expect(res.body.message).to.equal('request created successfully');
+        expect(res.body.data.request.item).to.equal('laptop');
+        expect(res.body.data.request.description).to.equal('faulty');
         done();
       });
   });
