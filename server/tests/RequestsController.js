@@ -168,4 +168,102 @@ describe('Tests for requests API endpoints', () => {
         done();
       });
   });
+
+  it('should updata a request', (done) => {
+    chai.request(app)
+      .put('/api/v1/users/requests/3')
+      .set('Content-type', 'application/json')
+      .send({
+        type: 'repairs',
+        category: 'computers',
+        item: 'laptop',
+        description: 'faulty',
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body.message).to.equal('request updated successfully');
+        expect(res.body.data.request.type).to.equal('repairs');
+        done();
+      });
+  });
+
+  it('should return message if request is not found', (done) => {
+    chai.request(app)
+      .put('/api/v1/users/requests/45')
+      .set('Content-type', 'application/json')
+      .send({
+        type: 'repairs',
+        category: 'computers',
+        item: 'laptop',
+        description: 'faulty',
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(404);
+        expect(res.body.message).to.equal('Request was not found');
+        done();
+      });
+  });
+
+  it('should return error if no field to update', (done) => {
+    chai.request(app)
+      .put('/api/v1/users/requests/3')
+      .set('Content-type', 'application/json')
+      .send({})
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        expect(res.body.data.errors.message)
+          .to.equal('Enter a field to update');
+        done();
+      });
+  });
+
+  it('should return error if fields to update are not filled', (done) => {
+    chai.request(app)
+      .put('/api/v1/users/requests/3')
+      .set('Content-type', 'application/json')
+      .send({
+        type: ' ',
+        category: ' ',
+        item: ' ',
+        description: ' ',
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        expect(res.body.data.errors.type)
+          .to.equal('type must be either of: repairs or maintenance');
+        expect(res.body.data.errors.category)
+          .to.equal('Enter alphabetic letters for category');
+        done();
+      });
+  });
+
+  it('should return error if Id is invalid', (done) => {
+    chai.request(app)
+      .put('/api/v1/users/requests/three')
+      .set('Content-type', 'application/json')
+      .send({})
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        expect(res.body.message).to.equal('Id is invalid');
+        done();
+      });
+  });
+
+  it('should return error if description is short', (done) => {
+    chai.request(app)
+      .put('/api/v1/users/requests/1')
+      .set('Content-type', 'application/json')
+      .send({
+        type: 'repairs',
+        category: 'computers',
+        item: 'laptop',
+        description: 'stop',
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        expect(res.body.data.errors.description)
+          .to.be.equal('description is too short');
+        done();
+      });
+  });
 });
