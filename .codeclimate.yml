@@ -6,3 +6,10 @@ plugins:
       config: .eslintrc.json
 exclude_patterns:
   - "UI"
+checks:
+  method-complexity:
+    enabled: false
+  similar-code:
+    enabled: false
+  method-lines:
+    enabled: false
