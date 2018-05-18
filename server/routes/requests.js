@@ -14,5 +14,9 @@ router.post(
   '/users/requests',
   ValidateRequest.create, RequestsController.createRequest,
 );
+router.put(
+  '/users/requests/:id',
+  ValidateRequest.modify, RequestsController.modifyRequest,
+);
 
 export default router;
