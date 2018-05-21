@@ -71,11 +71,8 @@ input[type=button]:active {
 }
 
 .content {
-  display: flex;
   flex: 1 0 auto;
-  flex-direction: column;
   font-size: 1.6rem;
-  justify-content: space-between;
 }
 
 .row {
@@ -97,16 +94,16 @@ header {
 
 .header-logo .user {
   color: #e6b530;
+  flex-grow: 1;
   font-size: 1.7rem;
   font-weight: 600;
   margin-left: 1.6rem;
 }
 
 .logo {
-  height: 5.0rem;
-  max-width: 170px;
-  padding-bottom: 0.5rem;
+  height: 6.0rem;
   padding-top: 0.5rem;
+  width: auto;
 }
 
 /* ----------------------------------------------- */
@@ -166,8 +163,8 @@ nav .row {
 /* Forms */
 /* ----------------------------------------------- */
 .section-form {
+  margin-bottom: 5.0rem;
   margin-top: 7.0rem;
-  margin-bottom: 7.0rem; 
 }
 
 .signup-form {
@@ -247,8 +244,7 @@ textarea {
 }
 
 .requests-list {
-  color: #494949;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   list-style: none;
 }
 
@@ -260,12 +256,17 @@ textarea {
 .request-item {
   align-items: center;
   background-color: #f1f1f1;
-  color: #494949;
+  color: #4b4b4b;
   display: flex;
+  font-weight: 400;
   justify-content: space-between;
   padding-left: 1.0rem;
   text-decoration: none;
   transition: background-color 0.2s;
+}
+
+.request-item p {
+  width: 150px;
 }
 
 .request-item:hover,
@@ -290,39 +291,31 @@ textarea {
   border-left: 4px solid #dcdde1;
 }
 
-.status-resolved {
-  background-color: #44bd32;
+.request-item .status-resolved,
+.request-item .status-pending,
+.request-item .status-rejected,
+.request-item .status-new {
   color: #fff;
-  padding: 1.2rem 0 1.2rem 1.1rem;
-  text-decoration: none;
-  width: 70px;
+  padding: 1.2rem 0;
+  text-align: center;
+  width: 120px;
 }
 
-.status-pending {
+.request-item .status-resolved {
+  background-color: #44bd32;  
+}
+
+.request-item .status-pending {
   background-color: #d1a429;
-  color: #fff;
-  padding: 1.2rem 0 1.2rem 1.1rem;
-  text-decoration: none;
-  transition: background-color 0.2s;
-  width: 70px;
 }
 
-.status-rejected {
+.request-item .status-rejected {
   background-color: #e84118;
-  color: #fff;
-  padding: 1.2rem 0 1.2rem 1.2rem;
-  text-decoration: none;
-  transition: background-color 0.2s;
-  width: 70px;
 }
 
-.status-new {
+.request-item .status-new {
   background-color: #dcdde1;
   color: #555;
-  padding: 1.2rem 0 1.2rem 2.3rem;
-  text-decoration: none;
-  transition: background-color 0.2s;
-  width: 70px;
 }
 
 .pagination {
@@ -356,22 +349,20 @@ textarea {
 }
 
 select[name=filter] {
-  border: 1px solid #ccc;
+  background-color: #dcdde1;
+  color: #333333;
+  font-size: 1.8rem;
   border-radius: 3px;
   padding: 10px;
   width: 250px;
-}
-
-.maint {
-  margin-right: -3.5rem;
 }
 
 /* ----------------------------------------------- */
 /* REQUEST DETAILS */
 /* ----------------------------------------------- */
 .section-details {
-  margin-top: 4.5rem;
   margin-bottom: 5.0rem;
+  margin-top: 4.5rem;
 }
 
 .card-details {
@@ -402,18 +393,31 @@ select[name=filter] {
   color: #555;
 }
 
-.request-user {
-  display: flex;
-  font-size: 2.2rem;
-  font-weight: 400;
-  justify-content: space-between;
-  padding: 1.0rem;
+.card-details .close-link,
+.card-details .close-link-admin { 
+  border-bottom: 1px solid #d33e19;
+  color: #d33e19;
+  padding: 0.5rem 2.5rem 0.5rem 1.0rem;
+  transition: background-color 0.2s;
+  width: 5%;
 }
 
-.request-user span {
-  color: #a7a4a4;
-  font-size: 70%;
-  font-style: italic;
+.card-details .close-link {
+  border-right: 1px solid #d33e19;
+}
+
+.card-details .close-link-admin {
+  align-self: flex-end;
+  border-left: 1px solid #d33e19;
+  margin-bottom: 1.0rem;
+  text-align: center;
+}
+
+
+.card-details .close-link:hover,
+.card-details .close-link-admin:hover { 
+  background-color: #d33e19;
+  color: #dcdde1;
 }
 
 .admin-btn {
@@ -524,13 +528,12 @@ footer {
 /* ----------------------------------------------- */
 
 @media (min-width: 576px) {
-
+  .logo {
+    height: 7.0rem;
+  }
 }
 
 @media (min-width: 768px) {
-  .logo {
-    height: 6.0rem;
-  }
 
   nav .row {
     flex-direction: row;
@@ -553,6 +556,14 @@ footer {
     width: 35.0rem;
   }
 
+  .section-requests {
+    margin-top: 7.0rem;
+  }
+
+  .section-form {
+    margin-top: 12.0rem;
+  }
+
   .signup-form .form-group {
     flex-direction: row;
     justify-content: space-between;
@@ -566,10 +577,6 @@ footer {
   .update-btn input[type=button]{
     margin-top: 0;
     margin-left: 5.9rem;
-  }
-
-  .signin-form {
-    margin-bottom: 11.0rem; 
   }
 
   .signup-form .create-btn {
@@ -598,13 +605,8 @@ footer {
     flex-direction: row;
   }
 
-  .request-user {
-    margin-left: 3.5rem;
-    width: 395px;
-  }
-
   .details {
-    margin-bottom: 4.0rem;
+    margin-bottom: 3.0rem;
     margin-left: 3.5rem;
   }
 
