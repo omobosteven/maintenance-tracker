@@ -13,13 +13,17 @@ class RequestsController extends Controller {
   static getRequests(req, res) {
     if (requests.length < 1) {
       return res.status(404).json({
+        status: 'fail',
         message: 'No request was found',
       });
     }
 
     return res.status(200).json({
+      status: 'success',
       message: 'My Requests',
-      requests,
+      data: {
+        requests,
+      },
     });
   }
 

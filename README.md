@@ -1,11 +1,13 @@
 <img src="logoSmall.png" alt='logo'/>
 
-[![Build Status](https://travis-ci.com/omobosteven/maintenance-tracker.svg?branch=ft-modify-request-157614272)](https://travis-ci.com/omobosteven/maintenance-tracker)
-[![Coverage Status](https://coveralls.io/repos/github/omobosteven/maintenance-tracker/badge.svg?branch=ft-modify-request-157614272)](https://coveralls.io/github/omobosteven/maintenance-tracker?branch=ft-modify-request-157614272)
+[![Build Status](https://travis-ci.com/omobosteven/maintenance-tracker.svg?branch=ch-code-review-feedback-157715540)](https://travis-ci.com/omobosteven/maintenance-tracker)
+[![Coverage Status](https://coveralls.io/repos/github/omobosteven/maintenance-tracker/badge.svg?branch=ch-code-review-feedback-157715540)](https://coveralls.io/github/omobosteven/maintenance-tracker?branch=ch-code-review-feedback-157715540)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a6fde1bb2915cec5032e/maintainability)](https://codeclimate.com/github/omobosteven/maintenance-tracker/maintainability)
 
 # Maintenance-tracker
 Maintenance Tracker App is an application that provides users with the ability to reach out to operations or repairs department regarding repair or maintenance requests and monitor the status of their request.
+
+* [Maintenance-tracker on Heroku](https://maintenance-tracker-stv.herokuapp.com/)
 
 ## Features
 * User can create an account and log in
@@ -93,7 +95,7 @@ To modify a request, send the following parameters
 
 This project is open for contributions. All contributions must adhere to the Airbnb styleguide.
 
-* [Javascript](http://airbnb.io/javascript/)
+* [Airbnb Styleguide](http://airbnb.io/javascript/)
 
 ### Author(s)
 
