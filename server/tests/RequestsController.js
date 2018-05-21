@@ -13,8 +13,8 @@ describe('Tests for requests API endpoints', () => {
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res.body.message).to.equal('My Requests');
-        expect(res.body.requests).to.be.an('array');
-        expect(res.body.requests).to.deep.include({
+        expect(res.body.data.requests).to.be.an('array');
+        expect(res.body.data.requests).to.deep.include({
           id: 2,
           userId: 1,
           type: 'repairs',

@@ -7,7 +7,10 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => res.send('Welcome to maintenance tracker App'));
+app.get('/', (req, res) => res.json({
+  status: 'success',
+  message: 'Welcome to maintenance tracker App',
+}));
 app.use(routes);
 
 const port = parseInt(process.env.PORT, 10) || 3000;
