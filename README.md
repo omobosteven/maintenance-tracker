@@ -1,7 +1,7 @@
 <img src="logoSmall.png" alt='logo'/>
 
-[![Build Status](https://travis-ci.com/omobosteven/maintenance-tracker.svg?branch=ch-code-review-feedback-157715540)](https://travis-ci.com/omobosteven/maintenance-tracker)
-[![Coverage Status](https://coveralls.io/repos/github/omobosteven/maintenance-tracker/badge.svg?branch=ch-code-review-feedback-157715540)](https://coveralls.io/github/omobosteven/maintenance-tracker?branch=ch-code-review-feedback-157715540)
+[![Build Status](https://travis-ci.com/omobosteven/maintenance-tracker.svg?branch=ch-setup-database-157773970)](https://travis-ci.com/omobosteven/maintenance-tracker)
+[![Coverage Status](https://coveralls.io/repos/github/omobosteven/maintenance-tracker/badge.svg?branch=ch-setup-database-157773970)](https://coveralls.io/github/omobosteven/maintenance-tracker?branch=ch-setup-database-157773970)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a6fde1bb2915cec5032e/maintainability)](https://codeclimate.com/github/omobosteven/maintenance-tracker/maintainability)
 
 # Maintenance-tracker
@@ -30,7 +30,7 @@ Maintenance Tracker App is an application that provides users with the ability t
 * Front-end: HTML, CSS and Javascript
 * Back-end: Expressjs
 * Libraries: Babel, eslint, Mocha/Chai + chai-http
-* System Dependencies: Node
+* System Dependencies: Node, PostgreSQL
 
 <h3>API Endpoints</h3>
 <hr>
