@@ -1,5 +1,5 @@
 /* eslint-disable import/no-mutable-exports */
-import { Client } from 'pg';
+import { Pool } from 'pg';
 import dotenv from 'dotenv';
 import config from '../config/config';
 
@@ -8,11 +8,11 @@ const envVariables = config[env];
 
 dotenv.config();
 
-let client;
+let db;
 if (envVariables.use_env_variable) {
-  client = new Client(process.env[envVariables.use_env_variable], envVariables);
+  db = new Pool(process.env[envVariables.use_env_variable], envVariables);
 } else {
-  client = new Client({
+  db = new Pool({
     database: envVariables.database,
     user: envVariables.username,
     password: envVariables.password,
@@ -20,6 +20,4 @@ if (envVariables.use_env_variable) {
   });
 }
 
-client.connect();
-
-export default client;
+export default db;
