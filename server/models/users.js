@@ -9,14 +9,14 @@ const adminEmail = process.env.ADMIN_EMAIL;
 
 const users = (client) => {
   const queryString = `
-  DROP TABLE IF EXISTS Users;
+  DROP TABLE IF EXISTS Users CASCADE;
   DROP TYPE IF EXISTS role_allowed;
   CREATE TYPE role_allowed AS ENUM (
     'admin',
     'user'
   );
 
-  CREATE TABLE IF NOT EXISTS Users (
+  CREATE TABLE Users (
       userId serial PRIMARY KEY,
       email VARCHAR(255) UNIQUE NOT NULL,
       password VARCHAR(255) NOT NULL,
@@ -30,7 +30,7 @@ const users = (client) => {
 
   client.query(queryString)
     .then(res => res)
-    .catch(e => e.stack);
+    .catch(e => e.message);
 };
 
 users(db);

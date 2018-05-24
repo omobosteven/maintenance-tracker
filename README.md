@@ -1,7 +1,7 @@
 <img src="logoSmall.png" alt='logo'/>
 
-[![Build Status](https://travis-ci.com/omobosteven/maintenance-tracker.svg?branch=ft-create-user-157781498)](https://travis-ci.com/omobosteven/maintenance-tracker)
-[![Coverage Status](https://coveralls.io/repos/github/omobosteven/maintenance-tracker/badge.svg?branch=ft-create-user-157781498)](https://coveralls.io/github/omobosteven/maintenance-tracker?branch=ft-create-user-157781498)
+[![Build Status](https://travis-ci.com/omobosteven/maintenance-tracker.svg?branch=ch-secure-create-request-endpoint-157839425 )](https://travis-ci.com/omobosteven/maintenance-tracker)
+[![Coverage Status](https://coveralls.io/repos/github/omobosteven/maintenance-tracker/badge.svg?branch=ch-secure-create-request-endpoint-157839425 )](https://coveralls.io/github/omobosteven/maintenance-tracker?branch=ch-secure-create-request-endpoint-157839425 )
 [![Maintainability](https://api.codeclimate.com/v1/badges/a6fde1bb2915cec5032e/maintainability)](https://codeclimate.com/github/omobosteven/maintenance-tracker/maintainability)
 
 # Maintenance-tracker
@@ -97,14 +97,13 @@ To Login a user, send the following parameters
 
 ### Create a Request: `/api/v1/users/requests`
 To create a request, send the following parameters
-##### NB: description field is optional
 
 ```
 {
-   type: 'repairs',
+   type: 'repair',
    category: 'computers',
    item: 'printer',
-   description: 'faulty',
+   description: 'faulty laptop',
 }
 ```
 <hr>
