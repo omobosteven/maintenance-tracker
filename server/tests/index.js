@@ -1,2 +1,1 @@
-import './UsersController';
 import './RequestsController';
