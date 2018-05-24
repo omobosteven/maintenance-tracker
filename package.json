@@ -11,7 +11,8 @@
     "build": "babel server/ --out-dir build --copy-files --source-maps",
     "babel-node": "babel-node ./server/app.js",
     "start-dev": "nodemon --exec npm run babel-node",
-    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
+    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
+    "heroku-postbuild": "npm run db-migrate"
   },
   "dependencies": {
     "babel-cli": "^6.26.0",

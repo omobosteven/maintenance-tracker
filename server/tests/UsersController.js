@@ -68,4 +68,51 @@ describe('Tests for Users API endpoint', () => {
         done();
       });
   });
+
+  it('should signin user', (done) => {
+    chai.request(app)
+      .post('/api/v1/auth/login')
+      .set('Content-type', 'application/json')
+      .send({
+        email: 'jamesdoe@gmail.com',
+        password: 'mypassword',
+      })
+      .end((err, res) => {
+        const { token } = res.body.data;
+        expect(res).to.have.status(200);
+        expect(res.body.message).to.equal('Sign in successfully');
+        expect(res.body.data.token).to.equal(token);
+        done();
+      });
+  });
+
+  it('should return message if user is not found', (done) => {
+    chai.request(app)
+      .post('/api/v1/auth/login')
+      .set('Content-type', 'application/json')
+      .send({
+        email: 'jamedoe@gmail.com',
+        password: 'mypassword',
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(404);
+        expect(res.body.message).to.equal('User not found');
+        done();
+      });
+  });
+
+  it('should return message if user inputs wrong password', (done) => {
+    chai.request(app)
+      .post('/api/v1/auth/login')
+      .set('Content-type', 'application/json')
+      .send({
+        email: 'jamesdoe@gmail.com',
+        password: 'mypasswor',
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        expect(res.body.message).to.equal('Wrong password');
+        done();
+      });
+  });
 });
