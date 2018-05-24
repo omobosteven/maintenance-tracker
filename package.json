@@ -4,15 +4,15 @@
   "description": "Maintenance Tracker App is an application that provides users with the ability to reach out to operations or repairs department regarding repair or maintenance requests and monitor the status of their request.",
   "main": "./server/app.js",
   "scripts": {
-    "start": "npm run build && node ./build/app.js",
+    "start": "npm run build && npm run db-migrate:production && node ./build/app.js",
+    "db-migrate:production": "node ./build/models/users.js && node ./build/models/requests.js",
     "pretest": "NODE_ENV=test npm run db-migrate",
     "test": "NODE_ENV=test mocha --require babel-core/register ./server/tests/index.js --exit --timeout 10000 --colors",
     "db-migrate": "babel-node ./server/models/users.js && babel-node ./server/models/requests.js",
     "build": "babel server/ --out-dir build --copy-files --source-maps",
     "babel-node": "babel-node ./server/app.js",
     "start-dev": "nodemon --exec npm run babel-node",
-    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
-    "heroku-postbuild": "npm run db-migrate"
+    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
   },
   "dependencies": {
     "babel-cli": "^6.26.0",
