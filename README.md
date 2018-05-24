@@ -65,7 +65,34 @@ Maintenance Tracker App is an application that provides users with the ability t
     <td>/api/v1/auth/signup</td>
     <td>Register a user</td>
   </tr>
+  <tr>
+    <td>POST</td>
+    <td>/api/v1/auth/login</td>
+    <td>Login a user</td>
+  </tr>
 </table>
+<hr>
+
+### Register a user: `/api/v1/auth/signup`
+To Register a user, send the following parameters
+
+```
+{
+  email: 'jamesdoe@gmail.com',
+  password: 'mypassword',
+}
+```
+<hr>
+
+### Login a user: `/api/v1/auth/login`
+To Login a user, send the following parameters
+
+```
+{
+  email: 'jamesdoe@gmail.com',
+  password: 'mypassword',
+}
+```
 <hr>
 
 ### Create a Request: `/api/v1/users/requests`
@@ -96,16 +123,6 @@ To modify a request, send the following parameters
 ```
 <hr>
 
-### Register a user: `/api/v1/auth/signup`
-To Register a user, send the following parameters
-
-```
-{
-  email: 'jamesdoe',
-  password: 'mypassword',
-}
-```
-<hr>
 
 ## Contributing
 
