@@ -1,7 +1,7 @@
 <img src="logoSmall.png" alt='logo'/>
 
-[![Build Status](https://travis-ci.com/omobosteven/maintenance-tracker.svg?branch=ch-setup-database-157773970)](https://travis-ci.com/omobosteven/maintenance-tracker)
-[![Coverage Status](https://coveralls.io/repos/github/omobosteven/maintenance-tracker/badge.svg?branch=ch-setup-database-157773970)](https://coveralls.io/github/omobosteven/maintenance-tracker?branch=ch-setup-database-157773970)
+[![Build Status](https://travis-ci.com/omobosteven/maintenance-tracker.svg?branch=ft-create-user-157781498)](https://travis-ci.com/omobosteven/maintenance-tracker)
+[![Coverage Status](https://coveralls.io/repos/github/omobosteven/maintenance-tracker/badge.svg?branch=ft-create-user-157781498)](https://coveralls.io/github/omobosteven/maintenance-tracker?branch=ft-create-user-157781498)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a6fde1bb2915cec5032e/maintainability)](https://codeclimate.com/github/omobosteven/maintenance-tracker/maintainability)
 
 # Maintenance-tracker
@@ -60,6 +60,11 @@ Maintenance Tracker App is an application that provides users with the ability t
     <td>/api/v1/users/requests/:id</td>
     <td>Modify a request</td>
   </tr>
+  <tr>
+    <td>POST</td>
+    <td>/api/v1/auth/signup</td>
+    <td>Register a user</td>
+  </tr>
 </table>
 <hr>
 
@@ -87,6 +92,17 @@ To modify a request, send the following parameters
    category: 'electronic',
    item: 'printer',
    description: 'faulty',
+}
+```
+<hr>
+
+### Register a user: `/api/v1/auth/signup`
+To Register a user, send the following parameters
+
+```
+{
+  email: 'jamesdoe',
+  password: 'mypassword',
 }
 ```
 <hr>
