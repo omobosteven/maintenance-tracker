@@ -3,18 +3,6 @@ language: node_js
 node_js:
   - "node"
 
-dist: trusty
-
-services:
-  - postgresql
-
-env:
-  global:
-  - NODE_ENV=test
-
-before_script:
-  - psql -c 'create database maint_tracker_test' -U postgres
-
 script:
   - npm install
   - npm test
