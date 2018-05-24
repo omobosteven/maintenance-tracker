@@ -1,4 +1,5 @@
 import Controller from './Controller';
+import db from '../models/db';
 import requests from '../dummy-data/requests';
 
 class RequestsController extends Controller {
@@ -63,34 +64,38 @@ class RequestsController extends Controller {
    * @return {(json)}JSON object
    */
   static createRequest(req, res) {
-    const {
+    let {
       type, category, item, description,
     } = req.body;
 
-    const id = requests.length + 1;
+    const { userid } = req.decoded;
+    type = type.trim().toLowerCase();
+    category = category.trim().toLowerCase();
+    item = item.trim().toLowerCase();
+    description = description.trim().toLowerCase();
 
-    let descriptionValue = 'no-description';
-    if (description) {
-      descriptionValue = description.trim().toLowerCase();
-    }
+    const queryCreateRequest =
+    `INSERT INTO requests
+    (userId, type, category, item, description)
+    VALUES
+    (${userid}, '${type}', '${category}', '${item}', '${description}')
+    RETURNING *`;
 
-    const request = {
-      id,
-      userId: 1,
-      type: type.trim().toLowerCase(),
-      category: category.trim().toLowerCase(),
-      item: item.trim().toLowerCase(),
-      description: descriptionValue,
-      status: 'new',
-    };
-
-    requests.push(request);
-
-    return res.status(201).json({
-      status: 'success',
-      message: 'request created successfully',
-      data: { request },
-    });
+    db.connect()
+      .then((client) => {
+        client.query(queryCreateRequest)
+          .then((requestsSaved) => {
+            res.status(201).json({
+              status: 'success',
+              message: 'request created successfully',
+              data: { request: requestsSaved.rows[0] },
+            });
+          })
+          .catch(() => res.status(500).json({
+            status: 'fail',
+            message: 'Requests could not be created',
+          }));
+      });
   }
 
   /**

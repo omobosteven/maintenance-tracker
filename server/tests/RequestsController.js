@@ -5,8 +5,25 @@ import app from '../app';
 
 chai.use(chaiHttp);
 
+let userToken;
 
 describe('Tests for requests API endpoints', () => {
+  it('should signin user', (done) => {
+    chai.request(app)
+      .post('/api/v1/auth/login')
+      .set('Content-type', 'application/json')
+      .send({
+        email: 'jamesdoe@gmail.com',
+        password: 'mypassword',
+      })
+      .end((err, res) => {
+        userToken = res.body.data.token;
+        expect(res).to.have.status(200);
+        expect(res.body.message).to.equal('Sign in successfully');
+        done();
+      });
+  });
+
   it('should fetch all the requests of a logged in user', (done) => {
     chai.request(app)
       .get('/api/v1/users/requests')
@@ -69,18 +86,21 @@ describe('Tests for requests API endpoints', () => {
   it('should return error if fields are empty', (done) => {
     chai.request(app)
       .post('/api/v1/users/requests')
+      .set('x-access-token', userToken)
       .set('Content-type', 'application/json')
       .send({})
       .end((err, res) => {
         expect(res).to.have.status(400);
-        expect(res.body.data.errors.type).to.be.equal('type is required');
+        expect(res.body.data.errors.type[0]).to
+          .equal('The type field is required.');
         done();
       });
   });
 
-  it('should return error for wrong value in type and category', (done) => {
+  it('should return error for wrong value in type', (done) => {
     chai.request(app)
       .post('/api/v1/users/requests')
+      .set('x-access-token', userToken)
       .set('Content-type', 'application/json')
       .send({
         type: 'call',
@@ -89,10 +109,8 @@ describe('Tests for requests API endpoints', () => {
       })
       .end((err, res) => {
         expect(res).to.have.status(400);
-        expect(res.body.data.errors.type)
-          .to.be.equal('type must be either of: repairs or maintenance');
-        expect(res.body.data.errors.category)
-          .to.be.equal('Enter alphabetic letters for category');
+        expect(res.body.data.errors.type[0]).to
+          .equal('The selected type is invalid.');
         done();
       });
   });
@@ -100,52 +118,18 @@ describe('Tests for requests API endpoints', () => {
   it('should return error if description is short', (done) => {
     chai.request(app)
       .post('/api/v1/users/requests')
+      .set('x-access-token', userToken)
       .set('Content-type', 'application/json')
       .send({
-        type: 'repairs',
+        type: 'repair',
         category: 'computers',
         item: 'laptop',
         description: 'stop',
       })
       .end((err, res) => {
         expect(res).to.have.status(400);
-        expect(res.body.data.errors.description)
-          .to.be.equal('description is too short');
-        done();
-      });
-  });
-
-  it('should return error for non-alphabetic letter in item field', (done) => {
-    chai.request(app)
-      .post('/api/v1/users/requests')
-      .set('Content-type', 'application/json')
-      .send({
-        type: 'repairs',
-        category: 'computers',
-        item: '45',
-        description: 'stop',
-      })
-      .end((err, res) => {
-        expect(res).to.have.status(400);
-        expect(res.body.data.errors.item)
-          .to.be.equal('Enter alphabetic letters for Item');
-        done();
-      });
-  });
-
-  it('should create request if description is not entered', (done) => {
-    chai.request(app)
-      .post('/api/v1/users/requests')
-      .set('Content-type', 'application/json')
-      .send({
-        type: 'repairs',
-        category: 'computers',
-        item: 'laptop',
-      })
-      .end((err, res) => {
-        expect(res).to.have.status(201);
-        expect(res.body.message).to.equal('request created successfully');
-        expect(res.body.data.request.description).to.equal('no-description');
+        expect(res.body.data.errors.description[0]).to
+          .equal('The description must be at least 10 characters.');
         done();
       });
   });
@@ -153,18 +137,19 @@ describe('Tests for requests API endpoints', () => {
   it('should create request if all fields are entered', (done) => {
     chai.request(app)
       .post('/api/v1/users/requests')
+      .set('x-access-token', userToken)
       .set('Content-type', 'application/json')
       .send({
-        type: 'repairs',
+        type: 'repair',
         category: 'computers',
         item: 'laptop',
-        description: 'faulty',
+        description: 'faulty battery',
       })
       .end((err, res) => {
         expect(res).to.have.status(201);
         expect(res.body.message).to.equal('request created successfully');
         expect(res.body.data.request.item).to.equal('laptop');
-        expect(res.body.data.request.description).to.equal('faulty');
+        expect(res.body.data.request.description).to.equal('faulty battery');
         done();
       });
   });
