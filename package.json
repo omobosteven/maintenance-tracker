@@ -7,7 +7,7 @@
     "start": "npm run build && node ./build/app.js",
     "pretest": "NODE_ENV=test npm run db-migrate",
     "test": "NODE_ENV=test mocha --require babel-core/register ./server/tests/index.js --exit --timeout 10000 --colors",
-    "db-migrate": "babel-node ./server/models/users.js",
+    "db-migrate": "babel-node ./server/models/users.js && babel-node ./server/models/requests.js",
     "build": "babel server/ --out-dir build --copy-files --source-maps",
     "babel-node": "babel-node ./server/app.js",
     "start-dev": "nodemon --exec npm run babel-node",
