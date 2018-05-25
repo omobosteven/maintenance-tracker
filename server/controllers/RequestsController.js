@@ -104,49 +104,75 @@ class RequestsController extends Controller {
    * @param {Object} req - HTTP Request
    * @param {Object} res - HTTP Response
    *
-   * @return {(json)}JSON object
+   * @return {Object} Returned object
    */
   static modifyRequest(req, res) {
-    const { body } = req;
+    const { userid } = req.decoded;
+    const { id } = req.params;
 
-    const requestIndex = requests
-      .findIndex(request => request.id === parseInt(req.params.id, 10));
+    const queryGetRequest =
+   `SELECT * FROM requests
+    WHERE userid = '${userid}' AND
+    requestid = '${id}'`;
 
-    if (requestIndex < 0) {
-      return res.status(404).json({
-        status: 'fail',
-        message: 'Request was not found',
+    db.connect()
+      .then((client) => {
+        client.query(queryGetRequest)
+          .then((request) => {
+            if (!request.rows[0]) {
+              return res.status(404).json({
+                status: 'fail',
+                message: 'Request was not found',
+              });
+            }
+
+            const requestUpdate = {
+              ...request.rows[0],
+              ...req.body,
+            };
+
+            let {
+              type, category, item, description,
+            } = requestUpdate;
+
+            type = type.trim().toLowerCase();
+            category = category.trim().toLowerCase();
+            item = item.trim().toLowerCase();
+            description = description.trim().toLowerCase();
+
+            const queryUpdateRequest =
+            `UPDATE requests 
+             SET type = '${type}', category= '${category}',
+             item = '${item}', description = '${description}'
+             WHERE requestid = '${id}'
+             RETURNING *`;
+
+            return client.query(queryUpdateRequest)
+              .then((updatedRequest) => {
+                res.status(200).json({
+                  status: 'success',
+                  message: 'request updated successfully',
+                  data: {
+                    request: updatedRequest.rows[0],
+                  },
+                });
+              })
+              .catch(() => {
+                client.release();
+                res.status(500).json({
+                  status: 'fail',
+                  message: 'Failed to update request, Internal server error',
+                });
+              });
+          })
+          .catch(() => {
+            client.release();
+            res.status(500).json({
+              status: 'fail',
+              message: 'Failed to retrieve request, Internal server error',
+            });
+          });
       });
-    }
-
-    const {
-      id, userId, type, category, item, description, status,
-    } = requests[requestIndex];
-
-    const requestUpdate = {
-      type: body.type || type,
-      category: body.category || category,
-      item: body.item || item,
-      description: body.description || description,
-    };
-
-    requests[requestIndex] = {
-      id,
-      userId,
-      type: requestUpdate.type.trim().toLowerCase(),
-      category: requestUpdate.category.trim().toLowerCase(),
-      item: requestUpdate.item.trim().toLowerCase(),
-      description: requestUpdate.description.trim().toLowerCase(),
-      status,
-    };
-
-    return res.status(200).json({
-      status: 'success',
-      message: 'request updated successfully',
-      data: {
-        request: requests[requestIndex],
-      },
-    });
   }
 }
 

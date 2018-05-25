@@ -1,7 +1,7 @@
 <img src="logoSmall.png" alt='logo'/>
 
-[![Build Status](https://travis-ci.com/omobosteven/maintenance-tracker.svg?branch=ch-secure-create-request-endpoint-157839425 )](https://travis-ci.com/omobosteven/maintenance-tracker)
-[![Coverage Status](https://coveralls.io/repos/github/omobosteven/maintenance-tracker/badge.svg?branch=ch-secure-create-request-endpoint-157839425 )](https://coveralls.io/github/omobosteven/maintenance-tracker?branch=ch-secure-create-request-endpoint-157839425 )
+[![Build Status](https://travis-ci.com/omobosteven/maintenance-tracker.svg?branch=ch-modify-a-request-enpoint-157839434)](https://travis-ci.com/omobosteven/maintenance-tracker)
+[![Coverage Status](https://coveralls.io/repos/github/omobosteven/maintenance-tracker/badge.svg?branch=ch-modify-a-request-enpoint-157839434)](https://coveralls.io/github/omobosteven/maintenance-tracker?branch=ch-modify-a-request-enpoint-157839434)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a6fde1bb2915cec5032e/maintainability)](https://codeclimate.com/github/omobosteven/maintenance-tracker/maintainability)
 
 # Maintenance-tracker
@@ -110,14 +110,13 @@ To create a request, send the following parameters
 
 ### Modify a Request: `/api/v1/users/requests/:id`
 To modify a request, send the following parameters
-##### NB: description field is optional
 
 ```
 {
-   type: 'repairs',
+   type: 'repair',
    category: 'electronic',
    item: 'printer',
-   description: 'faulty',
+   description: 'faulty keyboard',
 }
 ```
 <hr>
