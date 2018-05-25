@@ -6,11 +6,13 @@ import config from '../config/config';
 const env = process.env.NODE_ENV || 'development';
 const envVariables = config[env];
 
+const connectionString = process.env.DATABASE_URL;
+
 dotenv.config();
 
 let db;
-if (envVariables.use_env_variable) {
-  db = new Pool(process.env[envVariables.use_env_variable], envVariables);
+if (process.env.NODE_ENV === 'production') {
+  db = new Pool({ connectionString });
 } else {
   db = new Pool({
     database: envVariables.database,
