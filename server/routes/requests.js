@@ -22,7 +22,9 @@ router.post(
 
 router.put(
   '/users/requests/:id',
-  ValidateRequest.modify, RequestsController.modifyRequest,
+  Authorization.verifyUser,
+  ValidateRequest.modify,
+  RequestsController.modifyRequest,
 );
 
 export default router;

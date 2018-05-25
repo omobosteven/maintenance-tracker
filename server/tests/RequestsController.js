@@ -156,18 +156,19 @@ describe('Tests for requests API endpoints', () => {
 
   it('should updata a request', (done) => {
     chai.request(app)
-      .put('/api/v1/users/requests/3')
+      .put('/api/v1/users/requests/1')
+      .set('x-access-token', userToken)
       .set('Content-type', 'application/json')
       .send({
-        type: 'repairs',
+        type: 'repair',
         category: 'computers',
         item: 'laptop',
-        description: 'faulty',
+        description: 'faulty keyboard',
       })
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res.body.message).to.equal('request updated successfully');
-        expect(res.body.data.request.type).to.equal('repairs');
+        expect(res.body.data.request.description).to.equal('faulty keyboard');
         done();
       });
   });
@@ -175,12 +176,13 @@ describe('Tests for requests API endpoints', () => {
   it('should return message if request is not found', (done) => {
     chai.request(app)
       .put('/api/v1/users/requests/45')
+      .set('x-access-token', userToken)
       .set('Content-type', 'application/json')
       .send({
-        type: 'repairs',
+        type: 'repair',
         category: 'computers',
         item: 'laptop',
-        description: 'faulty',
+        description: 'faulty keyboard',
       })
       .end((err, res) => {
         expect(res).to.have.status(404);
@@ -191,12 +193,13 @@ describe('Tests for requests API endpoints', () => {
 
   it('should return error if no field to update', (done) => {
     chai.request(app)
-      .put('/api/v1/users/requests/3')
+      .put('/api/v1/users/requests/1')
+      .set('x-access-token', userToken)
       .set('Content-type', 'application/json')
       .send({})
       .end((err, res) => {
         expect(res).to.have.status(400);
-        expect(res.body.data.errors.message)
+        expect(res.body.message)
           .to.equal('Enter a field to update');
         done();
       });
@@ -204,20 +207,21 @@ describe('Tests for requests API endpoints', () => {
 
   it('should return error if fields to update are not filled', (done) => {
     chai.request(app)
-      .put('/api/v1/users/requests/3')
+      .put('/api/v1/users/requests/1')
+      .set('x-access-token', userToken)
       .set('Content-type', 'application/json')
       .send({
         type: ' ',
         category: ' ',
-        item: ' ',
-        description: ' ',
+        item: 'laptop',
+        description: 'faulty keyboard',
       })
       .end((err, res) => {
         expect(res).to.have.status(400);
-        expect(res.body.data.errors.type)
-          .to.equal('type must be either of: repairs or maintenance');
-        expect(res.body.data.errors.category)
-          .to.equal('Enter alphabetic letters for category');
+        expect(res.body.data.errors.type[0])
+          .to.equal('The type field cannot be empty');
+        expect(res.body.data.errors.category[0])
+          .to.equal('The category field cannot be empty');
         done();
       });
   });
@@ -225,29 +229,18 @@ describe('Tests for requests API endpoints', () => {
   it('should return error if Id is invalid', (done) => {
     chai.request(app)
       .put('/api/v1/users/requests/three')
-      .set('Content-type', 'application/json')
-      .send({})
-      .end((err, res) => {
-        expect(res).to.have.status(400);
-        expect(res.body.message).to.equal('Id is invalid');
-        done();
-      });
-  });
-
-  it('should return error if description is short', (done) => {
-    chai.request(app)
-      .put('/api/v1/users/requests/1')
+      .set('x-access-token', userToken)
       .set('Content-type', 'application/json')
       .send({
-        type: 'repairs',
+        type: 'repair',
         category: 'computers',
         item: 'laptop',
-        description: 'stop',
+        description: 'faulty keyboard',
       })
       .end((err, res) => {
         expect(res).to.have.status(400);
-        expect(res.body.data.errors.description)
-          .to.be.equal('description is too short');
+        expect(res.body.data.errors.id[0]).to
+          .equal('The request id must be a number');
         done();
       });
   });

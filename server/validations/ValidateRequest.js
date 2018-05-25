@@ -1,6 +1,3 @@
-import validator from 'validator/';
-import isEmpty from 'lodash/isEmpty';
-import isNumber from 'is-number';
 import Validator from 'validatorjs';
 
 class ValidateRequest {
@@ -56,62 +53,49 @@ class ValidateRequest {
    * @return {Function} next
    */
   static modify(req, res, next) {
-    const { body } = req;
-    const errors = {};
+    const {
+      type, category, description, item,
+    } = req.body;
+    const { id } = req.params;
 
-    if (!isNumber(req.params.id)) {
+    if (!type && !category && !item && !description) {
       return res.status(400).json({
         status: 'fail',
-        message: 'Id is invalid',
+        message: 'Enter a field to update',
       });
     }
 
-    if (!body.type && !body.category && !body.item && !body.description) {
-      errors.message = 'Enter a field to update';
+    const data = {
+      id, type, category, item, description,
+    };
+
+    const rules = {
+      id: 'required|integer',
+      type: ['required_with:type', { in: ['repair', 'maintenance'] }],
+      category: 'required_with:category|max:50',
+      description: 'required_with:description|min:8|max:100',
+      item: 'required_with:item|min:2|max:50',
+    };
+
+    const validation = new Validator(data, rules, {
+      'required_with.type': 'The :attribute field cannot be empty',
+      'required_with.category': 'The :attribute field cannot be empty',
+      'required_with.item': 'The :attribute field cannot be empty',
+      'required_with.description': 'The :attribute field cannot be empty',
+      'integer.id': 'The request :attribute must be a number',
+      'in.type': ':attribute must be either of repair or maintenance',
+    });
+
+    if (validation.passes()) {
+      return next();
     }
 
-    if (body.type && validator.isEmpty(body.type.trim())) {
-      errors.type = 'type is required';
-    }
-
-    if (body.type &&
-      !validator.isIn(
-        body.type.trim().toLowerCase(),
-        ['repairs', 'maintenance'],
-      )) {
-      errors.type = 'type must be either of: repairs or maintenance';
-    }
-
-    if (body.category && validator.isEmpty(body.category.trim())) {
-      errors.category = 'category is required';
-    }
-
-    if (body.category && !validator.isAlpha(body.category.trim())) {
-      errors.category = 'Enter alphabetic letters for category';
-    }
-
-    if (body.item && validator.isEmpty(body.item.trim())) {
-      errors.item = 'item is required';
-    }
-
-    if (body.item && !validator.isAlpha(body.item.trim())) {
-      errors.item = 'Enter alphabetic letters for Item';
-    }
-
-    if (body.description &&
-      !validator.isLength(body.description.trim(), { min: 5 })) {
-      errors.description = 'description is too short';
-    }
-
-    const isValid = isEmpty(errors);
-    if (!isValid) {
-      return res.status(400).json({
-        status: 'fail',
-        data: { errors },
-      });
-    }
-
-    return next();
+    return res.status(400).json({
+      status: 'fail',
+      data: {
+        errors: validation.errors.all(),
+      },
+    });
   }
 }
 

@@ -6,8 +6,8 @@
   "scripts": {
     "start": "npm run build && npm run db-migrate:production && node ./build/app.js",
     "db-migrate:production": "node ./build/models/users.js && node ./build/models/requests.js",
-    "pretest": "NODE_ENV=test npm run db-migrate",
-    "test": "NODE_ENV=test mocha --require babel-core/register ./server/tests/index.js --exit --timeout 10000 --colors",
+    "pretest": "cross-env NODE_ENV=test npm run db-migrate",
+    "test": " cross-env NODE_ENV=test mocha --require babel-core/register ./server/tests/index.js --exit --timeout 10000 --colors",
     "db-migrate": "babel-node ./server/models/users.js && babel-node ./server/models/requests.js",
     "build": "babel server/ --out-dir build --copy-files --source-maps",
     "babel-node": "babel-node ./server/app.js",
@@ -23,6 +23,7 @@
     "body-parser": "^1.18.3",
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
+    "cross-env": "^5.1.6",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
     "is-number": "^6.0.0",
@@ -34,6 +35,7 @@
     "validatorjs": "^3.14.2"
   },
   "devDependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "coveralls": "^3.0.1",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
