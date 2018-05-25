@@ -14,8 +14,8 @@ const validateUser = (req, res, next) => {
   const { email, password } = req.body;
 
   const data = {
-    emailAddress: email.trim(),
-    password: password.trim(),
+    emailAddress: email,
+    password,
   };
 
   const rules = {
