@@ -11,21 +11,42 @@ class RequestsController extends Controller {
    *
    * @return {Object} Returned object
    */
-  static getRequests(req, res) {
-    if (requests.length < 1) {
-      return res.status(404).json({
-        status: 'fail',
-        message: 'No request was found',
-      });
-    }
+  static getAllRequests(req, res) {
+    const { userid } = req.decoded;
 
-    return res.status(200).json({
-      status: 'success',
-      message: 'My Requests',
-      data: {
-        requests,
-      },
-    });
+    const queryGetAllRequestsForUser =
+    `SELECT * FROM requests
+    WHERE userid = '${userid}';`;
+
+    db.connect()
+      .then((client) => {
+        client.query(queryGetAllRequestsForUser)
+          .then((userRequests) => {
+            if (userRequests.rows.length < 1) {
+              return res.status(404).json({
+                status: 'fail',
+                message: 'No request was found',
+              });
+            }
+
+            client.release();
+            return res.status(200).json({
+              status: 'success',
+              message: 'My Requests',
+              data: {
+                user: req.decoded.email,
+                requests: userRequests.rows,
+              },
+            });
+          })
+          .catch(() => {
+            client.release();
+            return res.status(500).json({
+              status: 'error',
+              message: 'Failed to fetch requests',
+            });
+          });
+      });
   }
 
   /**

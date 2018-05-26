@@ -24,22 +24,13 @@ describe('Tests for requests API endpoints', () => {
       });
   });
 
-  it('should fetch all the requests of a logged in user', (done) => {
+  it('should return message if no request is found for user', (done) => {
     chai.request(app)
       .get('/api/v1/users/requests')
+      .set('x-access-token', userToken)
       .end((err, res) => {
-        expect(res).to.have.status(200);
-        expect(res.body.message).to.equal('My Requests');
-        expect(res.body.data.requests).to.be.an('array');
-        expect(res.body.data.requests).to.deep.include({
-          id: 2,
-          userId: 1,
-          type: 'repairs',
-          category: 'electronics',
-          item: 'monitor',
-          description: 'blank',
-          status: 'resolved',
-        });
+        expect(res).to.have.status(404);
+        expect(res.body.message).to.equal('No request was found');
         done();
       });
   });
@@ -58,17 +49,6 @@ describe('Tests for requests API endpoints', () => {
           description: 'blank',
           status: 'resolved',
         });
-        done();
-      });
-  });
-
-  it('should return message if request is not found', (done) => {
-    chai.request(app)
-      .get('/api/v1/users/requests/45')
-      .end((err, res) => {
-        expect(res).to.have.status(404);
-        expect(res.body.status).to.equal('fail');
-        expect(res.body.message).to.equal('Request not found');
         done();
       });
   });
@@ -154,26 +134,28 @@ describe('Tests for requests API endpoints', () => {
       });
   });
 
-  it('should updata a request', (done) => {
+  it('should fetch all the requests of a logged in user', (done) => {
     chai.request(app)
-      .put('/api/v1/users/requests/1')
+      .get('/api/v1/users/requests')
       .set('x-access-token', userToken)
-      .set('Content-type', 'application/json')
-      .send({
-        type: 'repair',
-        category: 'computers',
-        item: 'laptop',
-        description: 'faulty keyboard',
-      })
       .end((err, res) => {
         expect(res).to.have.status(200);
-        expect(res.body.message).to.equal('request updated successfully');
-        expect(res.body.data.request.description).to.equal('faulty keyboard');
+        expect(res.body.message).to.equal('My Requests');
+        expect(res.body.data.requests).to.be.an('array');
+        expect(res.body.data.requests[0]).to.deep.include({
+          requestid: 1,
+          userid: 2,
+          type: 'repair',
+          category: 'computers',
+          item: 'laptop',
+          description: 'faulty battery',
+          status: 'processing',
+        });
         done();
       });
   });
 
-  it('should return message if request is not found', (done) => {
+  it('should return message if request to be updated is not found', (done) => {
     chai.request(app)
       .put('/api/v1/users/requests/45')
       .set('x-access-token', userToken)
@@ -241,6 +223,28 @@ describe('Tests for requests API endpoints', () => {
         expect(res).to.have.status(400);
         expect(res.body.data.errors.id[0]).to
           .equal('The request id must be a number');
+        done();
+      });
+  });
+
+  it('should updata a request', (done) => {
+    chai.request(app)
+      .put('/api/v1/users/requests/1')
+      .set('x-access-token', userToken)
+      .set('Content-type', 'application/json')
+      .send({
+        type: 'repair',
+        category: 'computers',
+        item: 'laptop',
+        description: 'faulty keyboard',
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body.message).to.equal('request updated successfully');
+        expect(res.body.data.request.description).to.equal('faulty keyboard');
+        expect(res.body.data.request.type).to.equal('repair');
+        expect(res.body.data.request.category).to.equal('computers');
+        expect(res.body.data.request.item).to.equal('laptop');
         done();
       });
   });
