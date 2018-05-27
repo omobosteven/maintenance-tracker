@@ -1,4 +1,5 @@
 import express from 'express';
+import AdminRequestsController from '../controllers/AdminRequestsController';
 import Authorization from '../middlewares/Authorization';
 import RequestsController from '../controllers/RequestsController';
 import ValidateRequest from '../validations/ValidateRequest';
@@ -10,6 +11,13 @@ requests.get(
   '/users/requests',
   Authorization.verifyUser,
   RequestsController.getAllRequests,
+);
+
+requests.get(
+  '/requests',
+  Authorization.verifyUser,
+  Authorization.verifyAdmin,
+  AdminRequestsController.getAllRequests,
 );
 
 requests.get(
