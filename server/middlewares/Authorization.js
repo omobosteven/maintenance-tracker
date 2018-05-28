@@ -1,7 +1,6 @@
 /* eslint-disable class-methods-use-this, consistent-return */
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
-import { fail } from 'assert';
 
 dotenv.config();
 const secret = process.env.JWT_SECRET;
@@ -33,8 +32,28 @@ class Authorization {
       });
     } else {
       return res.status(401).json({
-        status: fail,
+        status: 'fail',
         message: 'No Token provided',
+      });
+    }
+  }
+
+  /**
+   * @description Verify if user is an admin
+   *
+   * @param {Object} req - HTTP Request
+   * @param {Object} res - HTTP Response
+   * @param {Function} next
+   *
+   * @return {Function} next
+   */
+  static verifyAdmin(req, res, next) {
+    if (req.decoded.role === 'admin') {
+      next();
+    } else {
+      res.status(403).json({
+        status: 'fail',
+        message: 'Unauthorized',
       });
     }
   }

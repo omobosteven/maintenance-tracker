@@ -5,8 +5,8 @@ class RequestsController extends Controller {
   /**
    * @description Fetch all the requests of a logged in user
    *
-   * @param {Object} req - HTTP Request
-   * @param {Object} res - HTTP Response
+   * @param {Object} request - HTTP Request
+   * @param {Object} response - HTTP Response
    *
    * @return {Object} Returned object
    */
@@ -51,10 +51,10 @@ class RequestsController extends Controller {
   /**
    * @description Fetch a request of a logged in user
    *
-   * @param {Object} req - HTTP Request
-   * @param {Object} res - HTTP Response
+   * @param {Object} request - HTTP Request
+   * @param {Object} response - HTTP Response
    *
-   * @return {(json)}JSON object
+   * @return {Object} Returned object
    */
   static getRequest(req, res) {
     const { userid, email } = req.decoded;
@@ -99,10 +99,10 @@ class RequestsController extends Controller {
   /**
    * @description Create a request
    *
-   * @param {Object} req - HTTP Request
-   * @param {Object} res - HTTP Response
+   * @param {Object} request - HTTP Request
+   * @param {Object} response - HTTP Response
    *
-   * @return {(json)}JSON object
+   * @return {Object} Returned object
    */
   static createRequest(req, res) {
     let {

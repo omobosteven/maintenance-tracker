@@ -1,7 +1,7 @@
 <img src="logoSmall.png" alt='logo'/>
 
-[![Build Status](https://travis-ci.com/omobosteven/maintenance-tracker.svg?branch=ft-fetch-a-request-157839531)](https://travis-ci.com/omobosteven/maintenance-tracker)
-[![Coverage Status](https://coveralls.io/repos/github/omobosteven/maintenance-tracker/badge.svg?branch=ft-fetch-a-request-157839531)](https://coveralls.io/github/omobosteven/maintenance-tracker?branch=ft-fetch-a-request-157839531)
+[![Build Status](https://travis-ci.com/omobosteven/maintenance-tracker.svg?branch=ft-admin-get-requests-157900878)](https://travis-ci.com/omobosteven/maintenance-tracker)
+[![Coverage Status](https://coveralls.io/repos/github/omobosteven/maintenance-tracker/badge.svg?branch=ft-admin-get-requests-157900878)](https://coveralls.io/github/omobosteven/maintenance-tracker?branch=ft-admin-get-requests-157900878)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a6fde1bb2915cec5032e/maintainability)](https://codeclimate.com/github/omobosteven/maintenance-tracker/maintainability)
 
 # Maintenance-tracker
@@ -49,6 +49,11 @@ Maintenance Tracker App is an application that provides users with the ability t
     <td>GET</td>
     <td>/api/v1/users/requests/:id</td>
     <td>Fetch a request that belongs to a logged in user</td>
+  </tr>
+  <tr>
+    <td>GET</td>
+    <td>/api/v1/requests</td>
+    <td>Fetch all requests</td>
   </tr>
   <tr>
     <td>POST</td>
