@@ -85,7 +85,8 @@ class RequestsController extends Controller {
       .then((client) => {
         client.query(queryCreateRequest)
           .then((requestsSaved) => {
-            res.status(201).json({
+            client.release();
+            return res.status(201).json({
               status: 'success',
               message: 'request created successfully',
               data: { request: requestsSaved.rows[0] },
@@ -120,6 +121,7 @@ class RequestsController extends Controller {
         client.query(queryGetRequest)
           .then((request) => {
             if (!request.rows[0]) {
+              client.release();
               return res.status(404).json({
                 status: 'fail',
                 message: 'Request was not found',
@@ -149,7 +151,8 @@ class RequestsController extends Controller {
 
             return client.query(queryUpdateRequest)
               .then((updatedRequest) => {
-                res.status(200).json({
+                client.release();
+                return res.status(200).json({
                   status: 'success',
                   message: 'request updated successfully',
                   data: {
@@ -159,7 +162,7 @@ class RequestsController extends Controller {
               })
               .catch(() => {
                 client.release();
-                res.status(500).json({
+                return res.status(500).json({
                   status: 'fail',
                   message: 'Failed to update request, Internal server error',
                 });
@@ -167,7 +170,7 @@ class RequestsController extends Controller {
           })
           .catch(() => {
             client.release();
-            res.status(500).json({
+            return res.status(500).json({
               status: 'fail',
               message: 'Failed to retrieve request, Internal server error',
             });
