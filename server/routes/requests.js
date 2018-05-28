@@ -41,4 +41,12 @@ requests.put(
   RequestsController.modifyRequest,
 );
 
+requests.put(
+  '/requests/:id/approve',
+  Authorization.verifyUser,
+  Authorization.verifyAdmin,
+  Validation.validateId,
+  AdminRequestsController.updateRequestStatus,
+);
+
 export default requests;
