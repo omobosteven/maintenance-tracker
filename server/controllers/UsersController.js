@@ -29,6 +29,7 @@ class UsersController extends Controller {
         client.query(queryEmailCheck)
           .then((emailExist) => {
             if (emailExist.rows[0]) {
+              client.release();
               return res.status(409).json({
                 status: 'fail',
                 message: 'User with this email already exist',
@@ -38,6 +39,7 @@ class UsersController extends Controller {
             return client.query(queryCreateUser)
               .then((savedUser) => {
                 const authToken = Util.token(savedUser.rows[0]);
+                client.release();
                 return res.status(201).json({
                   status: 'success',
                   message: 'User created successfully',
@@ -85,6 +87,7 @@ class UsersController extends Controller {
         client.query(queryGetUser)
           .then((user) => {
             if (!user.rows[0]) {
+              client.release();
               return res.status(404).json({
                 status: 'fail',
                 message: 'User not found',
@@ -94,6 +97,7 @@ class UsersController extends Controller {
             const checkPassword = bcrypt
               .compareSync(body.password.trim(), user.rows[0].password);
             if (!checkPassword) {
+              client.release();
               return res.status(400).json({
                 status: 'fail',
                 message: 'Wrong password',
@@ -101,6 +105,7 @@ class UsersController extends Controller {
             }
 
             const authToken = Util.token(user.rows[0]);
+            client.release();
             return res.status(200).json({
               status: 'success',
               message: 'Sign in successfully',
