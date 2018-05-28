@@ -35,20 +35,14 @@ describe('Tests for requests API endpoints', () => {
       });
   });
 
-  it('should fetch the details of a request', (done) => {
+  it('should return message if request is not found', (done) => {
     chai.request(app)
-      .get('/api/v1/users/requests/2')
+      .get('/api/v1/users/requests/45')
+      .set('x-access-token', userToken)
       .end((err, res) => {
-        expect(res).to.have.status(200);
-        expect(res.body.data.request).to.deep.equal({
-          id: 2,
-          userId: 1,
-          type: 'repairs',
-          category: 'electronics',
-          item: 'monitor',
-          description: 'blank',
-          status: 'resolved',
-        });
+        expect(res).to.have.status(404);
+        expect(res.body.status).to.equal('fail');
+        expect(res.body.message).to.equal('Request not found');
         done();
       });
   });
@@ -56,9 +50,11 @@ describe('Tests for requests API endpoints', () => {
   it('should return message if invalid id is entered', (done) => {
     chai.request(app)
       .get('/api/v1/users/requests/45yu')
+      .set('x-access-token', userToken)
       .end((err, res) => {
         expect(res).to.have.status(400);
-        expect(res.body.message).to.equal('Id is invalid');
+        expect(res.body.data.errors)
+          .to.equal('The request id must be a number');
         done();
       });
   });
@@ -71,8 +67,8 @@ describe('Tests for requests API endpoints', () => {
       .send({})
       .end((err, res) => {
         expect(res).to.have.status(400);
-        expect(res.body.data.errors.type[0]).to
-          .equal('The type field is required.');
+        expect(res.body.data.errors.type[0])
+          .to.equal('The type field is required.');
         done();
       });
   });
@@ -108,8 +104,8 @@ describe('Tests for requests API endpoints', () => {
       })
       .end((err, res) => {
         expect(res).to.have.status(400);
-        expect(res.body.data.errors.description[0]).to
-          .equal('The description must be at least 10 characters.');
+        expect(res.body.data.errors.description[0])
+          .to.equal('The description must be at least 10 characters.');
         done();
       });
   });
@@ -221,8 +217,21 @@ describe('Tests for requests API endpoints', () => {
       })
       .end((err, res) => {
         expect(res).to.have.status(400);
-        expect(res.body.data.errors.id[0]).to
-          .equal('The request id must be a number');
+        expect(res.body.data.errors.id[0])
+          .to.equal('The request id must be a number');
+        done();
+      });
+  });
+
+  it('should fetch a request of a logged in user', (done) => {
+    chai.request(app)
+      .get('/api/v1/users/requests/1')
+      .set('x-access-token', userToken)
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body.data.request.item).to.equal('laptop');
+        expect(res.body.data.request.category).to.equal('computers');
+        expect(res.body.data.request.status).to.equal('processing');
         done();
       });
   });

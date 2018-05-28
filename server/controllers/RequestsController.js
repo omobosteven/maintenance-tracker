@@ -1,6 +1,5 @@
 import Controller from './Controller';
 import db from '../models/db';
-import requests from '../dummy-data/requests';
 
 class RequestsController extends Controller {
   /**
@@ -58,22 +57,43 @@ class RequestsController extends Controller {
    * @return {(json)}JSON object
    */
   static getRequest(req, res) {
-    const requestDetails = requests.find(request =>
-      parseInt(request.id, 10) === parseInt(req.params.id, 10));
+    const { userid, email } = req.decoded;
+    const { id } = req.params;
 
-    if (!requestDetails) {
-      return res.status(404).json({
-        status: 'fail',
-        message: 'Request not found',
+    const queryFetchRequest =
+    `SELECT * FROM requests
+    WHERE requestid = '${id}' 
+    AND userid = '${userid}';`;
+
+    db.connect()
+      .then((client) => {
+        client.query(queryFetchRequest)
+          .then((request) => {
+            if (request.rows.length < 1) {
+              client.release();
+              return res.status(404).json({
+                status: 'fail',
+                message: 'Request not found',
+              });
+            }
+
+            client.release();
+            return res.status(200).json({
+              status: 'success',
+              data: {
+                user: email,
+                request: request.rows[0],
+              },
+            });
+          })
+          .catch(() => {
+            client.release();
+            return res.status(500).json({
+              status: 'error',
+              message: 'Failed to fetch requests',
+            });
+          });
       });
-    }
-
-    return res.status(200).json({
-      status: 'success',
-      data: {
-        request: requestDetails,
-      },
-    });
   }
 
   /**

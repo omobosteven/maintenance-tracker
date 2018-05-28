@@ -14,7 +14,9 @@ requests.get(
 
 requests.get(
   '/users/requests/:id',
-  Validation.validateId, RequestsController.getRequest,
+  Authorization.verifyUser,
+  Validation.validateId,
+  RequestsController.getRequest,
 );
 
 requests.post(
