@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import Util from './Util';
+import Util from '../utility/Util';
 import Controller from './Controller';
 import db from '../models/db';
 

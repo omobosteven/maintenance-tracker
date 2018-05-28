@@ -29,7 +29,9 @@ class ValidateRequest {
       item: 'required|max:50',
     };
 
-    const validation = new Validator(data, rules);
+    const validation = new Validator(data, rules, {
+      'in.type': ':attribute must be either of repair or maintenance',
+    });
 
     if (validation.passes()) {
       return next();

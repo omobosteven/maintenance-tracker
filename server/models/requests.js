@@ -13,7 +13,7 @@ const requests = (client) => {
   CREATE TYPE status_allowed AS ENUM (
     'processing',
     'pending',
-    'disapproved'
+    'disapproved',
     'resolved'
   );
 
