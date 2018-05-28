@@ -110,7 +110,7 @@ describe('Tests for requests API endpoints', () => {
       .end((err, res) => {
         expect(res).to.have.status(400);
         expect(res.body.data.errors.type[0]).to
-          .equal('The selected type is invalid.');
+          .equal('type must be either of repair or maintenance');
         done();
       });
   });

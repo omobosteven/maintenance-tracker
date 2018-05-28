@@ -7,7 +7,7 @@
     "start": "npm run build && npm run db-migrate:production && node ./build/app.js",
     "db-migrate:production": "node ./build/models/users.js && node ./build/models/requests.js",
     "pretest": "cross-env NODE_ENV=test npm run db-migrate",
-    "test": " cross-env NODE_ENV=test mocha --require babel-core/register ./server/tests/index.js --exit --timeout 10000 --colors",
+    "test": " cross-env NODE_ENV=test mocha --require babel-core/register ./server/tests/index.spec.js --exit --timeout 5000 --colors",
     "db-migrate": "babel-node ./server/models/users.js && babel-node ./server/models/requests.js",
     "build": "babel server/ --out-dir build --copy-files --source-maps",
     "babel-node": "babel-node ./server/app.js",

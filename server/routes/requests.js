@@ -4,27 +4,27 @@ import ValidateRequest from '../validations/ValidateRequest';
 import Authorization from '../middlewares/Authorization';
 import Validation from '../validations/Validation';
 
-const router = express.Router();
+const requests = express.Router();
 
-router.get('/users/requests', RequestsController.getRequests);
+requests.get('/users/requests', RequestsController.getRequests);
 
-router.get(
+requests.get(
   '/users/requests/:id',
   Validation.validateId, RequestsController.getRequest,
 );
 
-router.post(
+requests.post(
   '/users/requests',
   Authorization.verifyUser,
   ValidateRequest.create,
   RequestsController.createRequest,
 );
 
-router.put(
+requests.put(
   '/users/requests/:id',
   Authorization.verifyUser,
   ValidateRequest.modify,
   RequestsController.modifyRequest,
 );
 
-export default router;
+export default requests;
