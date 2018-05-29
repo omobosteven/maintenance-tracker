@@ -11,7 +11,9 @@ class AdminRequestsController extends Controller {
    * @return {Object} Returned object
    */
   static getAllRequests(req, res) {
-    const queryFetchAllRequests = 'SELECT * FROM requests';
+    const queryFetchAllRequests =
+    `SELECT * FROM requests
+    ORDER BY requestid DESC`;
 
     db.connect()
       .then((client) => {
