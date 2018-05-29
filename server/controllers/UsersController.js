@@ -7,8 +7,8 @@ class UsersController extends Controller {
   /**
    * @description Method to create a new user
    *
-   * @param {Object} req - HTTP Request
-   * @param {Object} res - HTTP Response
+   * @param {Object} request - HTTP Request
+   * @param {Object} response - HTTP Response
    *
    * @return {Object} Returned object
    */
@@ -70,8 +70,8 @@ class UsersController extends Controller {
   /**
    * @description Method to login a new user
    *
-   * @param {Object} req - HTTP Request
-   * @param {Object} res - HTTP Response
+   * @param {Object} request - HTTP Request
+   * @param {Object} response - HTTP Response
    *
    * @return {Object} Returned object
    */

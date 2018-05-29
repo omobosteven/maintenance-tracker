@@ -44,6 +44,30 @@ describe('Tests for admin requests API endpoints', () => {
       });
   });
 
+  it('should fetch a request', (done) => {
+    chai.request(app)
+      .get('/api/v1/requests/2')
+      .set('x-access-token', userToken)
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body.data.request.item).to.equal('laptop');
+        expect(res.body.data.request.category).to.equal('computers');
+        expect(res.body.data.request.status).to.equal('pending');
+        done();
+      });
+  });
+
+  it('should return error if request is not found', (done) => {
+    chai.request(app)
+      .get('/api/v1/requests/45')
+      .set('x-access-token', userToken)
+      .end((err, res) => {
+        expect(res).to.have.status(404);
+        expect(res.body.message).to.equal('Request not found');
+        done();
+      });
+  });
+
   it('should fetch all the requests in the system', (done) => {
     chai.request(app)
       .get('/api/v1/requests')

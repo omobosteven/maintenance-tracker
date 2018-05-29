@@ -46,6 +46,52 @@ class AdminRequestsController extends Controller {
       });
   }
 
+
+  /**
+   * @description Fetch a request in the system
+   *
+   * @param {Object} request - HTTP Request
+   * @param {Object} response - HTTP Response
+   *
+   * @return {Object} Returned object
+   */
+  static getRequest(req, res) {
+    const { id } = req.params;
+
+    const queryFetchRequest =
+    `SELECT * FROM requests
+    WHERE requestid = '${id}';`;
+
+    db.connect()
+      .then((client) => {
+        client.query(queryFetchRequest)
+          .then((request) => {
+            if (request.rows.length < 1) {
+              client.release();
+              return res.status(404).json({
+                status: 'fail',
+                message: 'Request not found',
+              });
+            }
+
+            client.release();
+            return res.status(200).json({
+              status: 'success',
+              data: {
+                request: request.rows[0],
+              },
+            });
+          })
+          .catch(() => {
+            client.release();
+            return res.status(500).json({
+              status: 'error',
+              message: 'Failed to fetch requests',
+            });
+          });
+      });
+  }
+
   /**
    * @description Update a request status
    *
