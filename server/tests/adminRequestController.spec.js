@@ -52,10 +52,10 @@ describe('Tests for admin requests API endpoints', () => {
         expect(res).to.have.status(200);
         expect(res.body.message).to.equal('All Requests');
         expect(res.body.data.requests).to.be.an('array');
-        expect(res.body.data.requests[0].requestid).to.equal(1);
+        expect(res.body.data.requests[0].requestid).to.equal(2);
         expect(res.body.data.requests[0].description).to
-          .equal('faulty keyboard');
-        expect(res.body.data.requests[0].type).to.equal('repair');
+          .equal('faulty screen');
+        expect(res.body.data.requests[0].type).to.equal('maintenance');
         expect(res.body.data.requests[0].category).to.equal('computers');
         expect(res.body.data.requests[0].item).to.equal('laptop');
         done();
@@ -94,6 +94,18 @@ describe('Tests for admin requests API endpoints', () => {
         expect(res).to.have.status(404);
         expect(res.body.status).to.equal('fail');
         expect(res.body.message).to.equal('Request was not found');
+        done();
+      });
+  });
+
+  it('should resolve a request', (done) => {
+    chai.request(app)
+      .put('/api/v1/requests/1/resolve')
+      .set('x-access-token', userToken)
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body.message).to.equal('Request resolved');
+        expect(res.body.data.request.status).to.equal('resolved');
         done();
       });
   });

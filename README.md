@@ -1,7 +1,7 @@
 <img src="logoSmall.png" alt='logo'/>
 
-[![Build Status](https://travis-ci.com/omobosteven/maintenance-tracker.svg?branch=ft-disapprove-request-157903304)](https://travis-ci.com/omobosteven/maintenance-tracker)
-[![Coverage Status](https://coveralls.io/repos/github/omobosteven/maintenance-tracker/badge.svg?branch=ft-disapprove-request-157903304)](https://coveralls.io/github/omobosteven/maintenance-tracker?branch=ft-disapprove-request-157903304)
+[![Build Status](https://travis-ci.com/omobosteven/maintenance-tracker.svg?branch=ft-resolve-request-157903328)](https://travis-ci.com/omobosteven/maintenance-tracker)
+[![Coverage Status](https://coveralls.io/repos/github/omobosteven/maintenance-tracker/badge.svg?branch=ft-resolve-request-157903328)](https://coveralls.io/github/omobosteven/maintenance-tracker?branch=ft-resolve-request-157903328)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a6fde1bb2915cec5032e/maintainability)](https://codeclimate.com/github/omobosteven/maintenance-tracker/maintainability)
 
 # Maintenance-tracker
@@ -74,6 +74,11 @@ Maintenance Tracker App is an application that provides users with the ability t
     <td>PUT</td>
     <td>/api/v1/requests/:id/disapprove</td>
     <td>Disapprove request</td>
+  </tr>
+  <tr>
+    <td>PUT</td>
+    <td>/api/v1/requests/:id/resolve</td>
+    <td>Resolve request</td>
   </tr>
   <tr>
     <td>POST</td>

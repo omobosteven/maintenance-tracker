@@ -57,4 +57,12 @@ requests.put(
   AdminRequestsController.updateRequestStatus,
 );
 
+requests.put(
+  '/requests/:id/resolve',
+  Authorization.verifyUser,
+  Authorization.verifyAdmin,
+  Validation.validateId,
+  AdminRequestsController.updateRequestStatus,
+);
+
 export default requests;
