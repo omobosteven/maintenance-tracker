@@ -44,6 +44,7 @@ class UsersController extends Controller {
                   status: 'success',
                   message: 'User created successfully',
                   data: {
+                    role: savedUser.rows[0].role,
                     token: authToken,
                   },
                 });
@@ -110,6 +111,7 @@ class UsersController extends Controller {
               status: 'success',
               message: 'Sign in successfully',
               data: {
+                role: user.rows[0].role,
                 token: authToken,
               },
             });

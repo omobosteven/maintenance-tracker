@@ -15,7 +15,8 @@ class RequestsController extends Controller {
 
     const queryGetAllRequestsForUser =
     `SELECT * FROM requests
-    WHERE userid = '${userid}';`;
+    WHERE userid = '${userid}'
+    ORDER BY requestid DESC;`;
 
     db.connect()
       .then((client) => {

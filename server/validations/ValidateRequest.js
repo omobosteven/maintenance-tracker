@@ -74,9 +74,9 @@ class ValidateRequest {
     const rules = {
       id: 'required|integer',
       type: ['required_with:type', { in: ['repair', 'maintenance'] }],
-      category: 'required_with:category|max:50',
+      category: 'required_with:category|max:10',
       description: 'required_with:description|min:8|max:100',
-      item: 'required_with:item|min:2|max:50',
+      item: 'required_with:item|min:2|max:15',
     };
 
     const validation = new Validator(data, rules, {
