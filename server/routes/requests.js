@@ -49,4 +49,12 @@ requests.put(
   AdminRequestsController.updateRequestStatus,
 );
 
+requests.put(
+  '/requests/:id/disapprove',
+  Authorization.verifyUser,
+  Authorization.verifyAdmin,
+  Validation.validateId,
+  AdminRequestsController.updateRequestStatus,
+);
+
 export default requests;
