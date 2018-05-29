@@ -15,12 +15,12 @@ class ValidateUser {
     const { email, password } = req.body;
 
     const data = {
-      emailAddress: email,
+      email,
       password,
     };
 
     const rules = {
-      emailAddress: 'required|email',
+      email: 'required|email',
       password: 'required|min:8',
     };
 

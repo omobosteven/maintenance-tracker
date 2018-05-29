@@ -47,8 +47,8 @@ describe('Tests for Users API endpoint', () => {
       })
       .end((err, res) => {
         expect(res).to.have.status(400);
-        expect(res.body.data.errors.emailAddress[0]).to
-          .equal('The emailAddress field is required.');
+        expect(res.body.data.errors.email[0]).to
+          .equal('The email field is required.');
         done();
       });
   });
