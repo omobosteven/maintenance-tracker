@@ -41,4 +41,16 @@ describe('Tests for admin requests API endpoints', () => {
         done();
       });
   });
+
+  it('should approve a request', (done) => {
+    chai.request(app)
+      .put('/api/v1/requests/1/approve')
+      .set('x-access-token', userToken)
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body.message).to.equal('Request approved');
+        expect(res.body.data.request.status).to.equal('approved');
+        done();
+      });
+  });
 });

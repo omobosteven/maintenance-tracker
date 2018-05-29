@@ -11,7 +11,7 @@ const requests = (client) => {
 
   DROP TYPE IF EXISTS status_allowed;
   CREATE TYPE status_allowed AS ENUM (
-    'processing',
+    'approved',
     'pending',
     'disapproved',
     'resolved'
@@ -24,7 +24,7 @@ const requests = (client) => {
       category VARCHAR(255) NOT NULL,
       item VARCHAR(255) NOT NULL,
       description VARCHAR(255) NOT NULL,
-      status status_allowed NOT NULL DEFAULT 'processing',
+      status status_allowed NOT NULL DEFAULT 'pending',
       createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (userId) REFERENCES users (userId)
   );`;

@@ -145,7 +145,7 @@ describe('Tests for requests API endpoints', () => {
           category: 'computers',
           item: 'laptop',
           description: 'faulty battery',
-          status: 'processing',
+          status: 'pending',
         });
         done();
       });
@@ -231,7 +231,7 @@ describe('Tests for requests API endpoints', () => {
         expect(res).to.have.status(200);
         expect(res.body.data.request.item).to.equal('laptop');
         expect(res.body.data.request.category).to.equal('computers');
-        expect(res.body.data.request.status).to.equal('processing');
+        expect(res.body.data.request.status).to.equal('pending');
         done();
       });
   });
