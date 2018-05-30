@@ -68,6 +68,17 @@ describe('Tests for admin requests API endpoints', () => {
       });
   });
 
+  it('should return error if request to be modified is not found', (done) => {
+    chai.request(app)
+      .put('/api/v1/requests/45/approve')
+      .set('x-access-token', userToken)
+      .end((err, res) => {
+        expect(res).to.have.status(404);
+        expect(res.body.message).to.equal('Request was not found');
+        done();
+      });
+  });
+
   it('should fetch all the requests in the system', (done) => {
     chai.request(app)
       .get('/api/v1/requests')
@@ -115,9 +126,9 @@ describe('Tests for admin requests API endpoints', () => {
       .put('/api/v1/requests/1/disapprove')
       .set('x-access-token', userToken)
       .end((err, res) => {
-        expect(res).to.have.status(404);
+        expect(res).to.have.status(405);
         expect(res.body.status).to.equal('fail');
-        expect(res.body.message).to.equal('Request was not found');
+        expect(res.body.message).to.equal('Request has been processed');
         done();
       });
   });
@@ -145,7 +156,7 @@ describe('Tests for admin requests API endpoints', () => {
         description: 'faulty screen',
       })
       .end((err, res) => {
-        expect(res).to.have.status(403);
+        expect(res).to.have.status(405);
         expect(res.body.message).to
           .equal('Not allowed, requests has been processed');
         done();

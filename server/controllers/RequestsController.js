@@ -172,7 +172,7 @@ class RequestsController extends Controller {
             }
 
             if (request.rows[0].status !== 'pending') {
-              return res.status(403).json({
+              return res.status(405).json({
                 status: 'fail',
                 message: 'Not allowed, requests has been processed',
               });
