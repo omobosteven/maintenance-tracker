@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this, consistent-return */
 import Controller from './Controller';
 import db from '../models/db';
 
@@ -170,6 +171,13 @@ class RequestsController extends Controller {
               });
             }
 
+            if (request.rows[0].status !== 'pending') {
+              return res.status(403).json({
+                status: 'fail',
+                message: 'Not allowed, requests has been processed',
+              });
+            }
+
             const requestUpdate = {
               ...request.rows[0],
               ...req.body,
@@ -191,7 +199,7 @@ class RequestsController extends Controller {
              WHERE requestid = '${id}'
              RETURNING *`;
 
-            return client.query(queryUpdateRequest)
+            client.query(queryUpdateRequest)
               .then((updatedRequest) => {
                 client.release();
                 return res.status(200).json({
