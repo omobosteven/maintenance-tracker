@@ -133,4 +133,22 @@ describe('Tests for admin requests API endpoints', () => {
         done();
       });
   });
+
+  it('should fail if user tries to update a processed requests', (done) => {
+    chai.request(app)
+      .put('/api/v1/users/requests/2')
+      .set('x-access-token', userToken)
+      .send({
+        type: 'maintenance',
+        category: 'computers',
+        item: 'laptop',
+        description: 'faulty screen',
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(403);
+        expect(res.body.message).to
+          .equal('Not allowed, requests has been processed');
+        done();
+      });
+  });
 });
