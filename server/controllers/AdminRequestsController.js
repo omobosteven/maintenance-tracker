@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this, consistent-return */
 import Controller from './Controller';
 import db from '../models/db';
 
@@ -107,33 +108,41 @@ class AdminRequestsController extends Controller {
 
     let check;
     let update;
+    let message;
 
     switch (statusUpdate) {
       case 'approve':
         check = 'pending';
         update = 'approved';
+        message = 'Request has been processed';
         break;
       case 'disapprove':
         check = 'pending';
         update = 'disapproved';
+        message = 'Request has been processed';
         break;
       case 'resolve':
       default:
         check = 'approved';
         update = 'resolved';
+        message = 'Request has not been approved';
     }
+
+    const queryFetchRequest =
+    `SELECT * FROM requests
+    WHERE requestid = '${id}';`;
 
     const queryUpdateRequestStatus =
     `UPDATE requests
     SET status='${update}'
-    WHERE requestid = '${id}' AND status = '${check}'
-    RETURNING *`;
+    WHERE requestid = '${id}'
+    RETURNING *;`;
 
     db.connect()
       .then((client) => {
-        client.query(queryUpdateRequestStatus)
+        client.query(queryFetchRequest)
           .then((request) => {
-            if (request.rows.length < 1) {
+            if (!request.rows[0]) {
               client.release();
               return res.status(404).json({
                 status: 'fail',
@@ -141,20 +150,37 @@ class AdminRequestsController extends Controller {
               });
             }
 
-            client.release();
-            return res.status(200).json({
-              status: 'success',
-              message: `Request ${update}`,
-              data: {
-                request: request.rows[0],
-              },
-            });
+            if (request.rows[0].status !== check) {
+              return res.status(405).json({
+                status: 'fail',
+                message,
+              });
+            }
+
+            client.query(queryUpdateRequestStatus)
+              .then((updatedRequest) => {
+                client.release();
+                return res.status(200).json({
+                  status: 'success',
+                  message: `Request ${update}`,
+                  data: {
+                    request: updatedRequest.rows[0],
+                  },
+                });
+              })
+              .catch(() => {
+                client.release();
+                res.status(500).json({
+                  status: 'error',
+                  message: 'Failed to update request status',
+                });
+              });
           })
           .catch(() => {
             client.release();
             res.status(500).json({
               status: 'error',
-              message: 'Failed to update request status',
+              message: 'Failed to fetch request',
             });
           });
       });
