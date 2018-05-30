@@ -21,6 +21,14 @@ requests.get(
 );
 
 requests.get(
+  '/requests/:id',
+  Authorization.verifyUser,
+  Authorization.verifyAdmin,
+  Validation.validateId,
+  AdminRequestsController.getRequest,
+);
+
+requests.get(
   '/users/requests/:id',
   Authorization.verifyUser,
   Validation.validateId,
