@@ -1,8 +1,7 @@
 /* eslint-disable class-methods-use-this, consistent-return */
-import Controller from './Controller';
 import db from '../models/db';
 
-class AdminRequestsController extends Controller {
+class AdminRequestsController {
   /**
    * @description Fetch all the requests in the system
    *
@@ -11,7 +10,7 @@ class AdminRequestsController extends Controller {
    *
    * @return {Object} Returned object
    */
-  static getAllRequests(req, res) {
+  static getAllRequests(request, response) {
     const queryFetchAllRequests =
     `SELECT * FROM requests
     ORDER BY requestid DESC`;
@@ -19,27 +18,27 @@ class AdminRequestsController extends Controller {
     db.connect()
       .then((client) => {
         client.query(queryFetchAllRequests)
-          .then((requests) => {
-            if (requests.rows.length < 1) {
+          .then((userRequests) => {
+            if (userRequests.rows.length < 1) {
               client.release();
-              return res.status(404).json({
-                status: 'fail',
+              return response.status(200).json({
+                status: 'success',
                 message: 'No request was found',
               });
             }
 
             client.release();
-            return res.status(200).json({
+            return response.status(200).json({
               status: 'success',
               message: 'All Requests',
               data: {
-                requests: requests.rows,
+                requests: userRequests.rows,
               },
             });
           })
           .catch(() => {
             client.release();
-            return res.status(500).json({
+            return response.status(500).json({
               status: 'error',
               message: 'Failed to fetch requests',
             });
@@ -56,8 +55,8 @@ class AdminRequestsController extends Controller {
    *
    * @return {Object} Returned object
    */
-  static getRequest(req, res) {
-    const { id } = req.params;
+  static getRequest(request, response) {
+    const { id } = request.params;
 
     const queryFetchRequest =
     `SELECT * FROM requests
@@ -66,26 +65,26 @@ class AdminRequestsController extends Controller {
     db.connect()
       .then((client) => {
         client.query(queryFetchRequest)
-          .then((request) => {
-            if (request.rows.length < 1) {
+          .then((userRequest) => {
+            if (userRequest.rows.length < 1) {
               client.release();
-              return res.status(404).json({
+              return response.status(404).json({
                 status: 'fail',
                 message: 'Request not found',
               });
             }
 
             client.release();
-            return res.status(200).json({
+            return response.status(200).json({
               status: 'success',
               data: {
-                request: request.rows[0],
+                request: userRequest.rows[0],
               },
             });
           })
           .catch(() => {
             client.release();
-            return res.status(500).json({
+            return response.status(500).json({
               status: 'error',
               message: 'Failed to fetch requests',
             });
@@ -101,10 +100,10 @@ class AdminRequestsController extends Controller {
    *
    * @return {Object} Returned object
    */
-  static updateRequestStatus(req, res) {
-    const { id } = req.params;
+  static updateRequestStatus(request, response) {
+    const { id } = request.params;
 
-    const statusUpdate = req.path.slice(req.path.lastIndexOf('/') + 1);
+    const statusUpdate = request.path.slice(request.path.lastIndexOf('/') + 1);
 
     let check;
     let update;
@@ -141,17 +140,19 @@ class AdminRequestsController extends Controller {
     db.connect()
       .then((client) => {
         client.query(queryFetchRequest)
-          .then((request) => {
-            if (!request.rows[0]) {
+          .then((userRequest) => {
+            if (!userRequest.rows[0]) {
               client.release();
-              return res.status(404).json({
+              return response.status(404).json({
                 status: 'fail',
                 message: 'Request was not found',
               });
             }
 
-            if (request.rows[0].status !== check) {
-              return res.status(405).json({
+            const { status } = userRequest.rows[0];
+
+            if (status !== check) {
+              return response.status(400).json({
                 status: 'fail',
                 message,
               });
@@ -160,7 +161,7 @@ class AdminRequestsController extends Controller {
             client.query(queryUpdateRequestStatus)
               .then((updatedRequest) => {
                 client.release();
-                return res.status(200).json({
+                return response.status(200).json({
                   status: 'success',
                   message: `Request ${update}`,
                   data: {
@@ -170,7 +171,7 @@ class AdminRequestsController extends Controller {
               })
               .catch(() => {
                 client.release();
-                res.status(500).json({
+                response.status(500).json({
                   status: 'error',
                   message: 'Failed to update request status',
                 });
@@ -178,7 +179,7 @@ class AdminRequestsController extends Controller {
           })
           .catch(() => {
             client.release();
-            res.status(500).json({
+            response.status(500).json({
               status: 'error',
               message: 'Failed to fetch request',
             });

@@ -9,8 +9,8 @@ describe('Test for non existing page', () => {
   it('should return a message if page does not exist', (done) => {
     chai.request(app)
       .get('/api')
-      .end((err, res) => {
-        expect(res.body.message).to.equal('Does not exist');
+      .end((error, response) => {
+        expect(response.body.message).to.equal('Does not exist');
         done();
       });
   });

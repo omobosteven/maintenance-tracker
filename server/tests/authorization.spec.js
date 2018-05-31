@@ -16,10 +16,12 @@ describe('Tests for Authorization', () => {
         email: 'jamesdoe@gmail.com',
         password: 'mypassword',
       })
-      .end((err, res) => {
-        userToken = res.body.data.token;
-        expect(res).to.have.status(200);
-        expect(res.body.message).to.equal('Sign in successfully');
+      .end((error, response) => {
+        userToken = response.body.data.token;
+        expect(response).to.have.status(200);
+        expect(response.body.message).to.equal('Sign in successfully');
+        expect(response.body.data.role).to.equal('user');
+        expect(response.body.data.email).to.equal('jamesdoe@gmail.com');
         done();
       });
   });
@@ -29,9 +31,9 @@ describe('Tests for Authorization', () => {
       .post('/api/v1/users/requests')
       .set('Content-type', 'application/json')
       .send({})
-      .end((err, res) => {
-        expect(res).to.have.status(401);
-        expect(res.body.message).to.equal('No Token provided');
+      .end((error, response) => {
+        expect(response).to.have.status(401);
+        expect(response.body.message).to.equal('No Token provided');
         done();
       });
   });
@@ -42,9 +44,9 @@ describe('Tests for Authorization', () => {
       .set('Content-type', 'application/json')
       .set('x-access-token', 'balst')
       .send({})
-      .end((err, res) => {
-        expect(res).to.have.status(401);
-        expect(res.body.message).to.equal('Invalid credentials supplied');
+      .end((error, response) => {
+        expect(response).to.have.status(401);
+        expect(response.body.message).to.equal('Invalid credentials supplied');
         done();
       });
   });
@@ -54,9 +56,9 @@ describe('Tests for Authorization', () => {
     chai.request(app)
       .get('/api/v1/requests')
       .set('x-access-token', userToken)
-      .end((err, res) => {
-        expect(res).to.have.status(403);
-        expect(res.body.message).to.equal('Unauthorized');
+      .end((error, response) => {
+        expect(response).to.have.status(403);
+        expect(response.body.message).to.equal('Unauthorized');
         done();
       });
   });

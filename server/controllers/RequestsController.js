@@ -1,8 +1,7 @@
 /* eslint-disable class-methods-use-this, consistent-return */
-import Controller from './Controller';
 import db from '../models/db';
 
-class RequestsController extends Controller {
+class RequestsController {
   /**
    * @description Fetch all the requests of a logged in user
    *
@@ -11,8 +10,8 @@ class RequestsController extends Controller {
    *
    * @return {Object} Returned object
    */
-  static getAllRequests(req, res) {
-    const { userid } = req.decoded;
+  static getAllRequests(request, response) {
+    const { userid } = request.decoded;
 
     const queryGetAllRequestsForUser =
     `SELECT * FROM requests
@@ -24,25 +23,25 @@ class RequestsController extends Controller {
         client.query(queryGetAllRequestsForUser)
           .then((userRequests) => {
             if (userRequests.rows.length < 1) {
-              return res.status(404).json({
+              return response.status(404).json({
                 status: 'fail',
                 message: 'No request was found',
               });
             }
 
             client.release();
-            return res.status(200).json({
+            return response.status(200).json({
               status: 'success',
               message: 'My Requests',
               data: {
-                user: req.decoded.email,
+                user: request.decoded.email,
                 requests: userRequests.rows,
               },
             });
           })
           .catch(() => {
             client.release();
-            return res.status(500).json({
+            return response.status(500).json({
               status: 'error',
               message: 'Failed to fetch requests',
             });
@@ -58,9 +57,9 @@ class RequestsController extends Controller {
    *
    * @return {Object} Returned object
    */
-  static getRequest(req, res) {
-    const { userid, email } = req.decoded;
-    const { id } = req.params;
+  static getRequest(request, response) {
+    const { userid, email } = request.decoded;
+    const { id } = request.params;
 
     const queryFetchRequest =
     `SELECT * FROM requests
@@ -70,27 +69,27 @@ class RequestsController extends Controller {
     db.connect()
       .then((client) => {
         client.query(queryFetchRequest)
-          .then((request) => {
-            if (request.rows.length < 1) {
+          .then((userRequest) => {
+            if (userRequest.rows.length < 1) {
               client.release();
-              return res.status(404).json({
+              return response.status(404).json({
                 status: 'fail',
                 message: 'Request not found',
               });
             }
 
             client.release();
-            return res.status(200).json({
+            return response.status(200).json({
               status: 'success',
               data: {
                 user: email,
-                request: request.rows[0],
+                request: userRequest.rows[0],
               },
             });
           })
           .catch(() => {
             client.release();
-            return res.status(500).json({
+            return response.status(500).json({
               status: 'error',
               message: 'Failed to fetch requests',
             });
@@ -106,16 +105,23 @@ class RequestsController extends Controller {
    *
    * @return {Object} Returned object
    */
-  static createRequest(req, res) {
+  static createRequest(request, response) {
     let {
       type, category, item, description,
-    } = req.body;
+    } = request.body;
 
-    const { userid } = req.decoded;
+    const { userid } = request.decoded;
     type = type.trim().toLowerCase();
     category = category.trim().toLowerCase();
     item = item.trim().toLowerCase();
     description = description.trim().toLowerCase();
+
+    const queryRequestDuplicate =
+    `SELECT * FROM requests
+     WHERE userid='${userid}' AND
+     type='${type}' AND category='${category}' AND
+     item='${item}' AND description='${description}' AND
+     status='pending';`;
 
     const queryCreateRequest =
     `INSERT INTO requests
@@ -126,16 +132,31 @@ class RequestsController extends Controller {
 
     db.connect()
       .then((client) => {
-        client.query(queryCreateRequest)
-          .then((requestsSaved) => {
-            client.release();
-            return res.status(201).json({
-              status: 'success',
-              message: 'request created successfully',
-              data: { request: requestsSaved.rows[0] },
-            });
+        client.query(queryRequestDuplicate)
+          .then((duplicate) => {
+            if (duplicate.rows[0]) {
+              client.release();
+              return response.status(409).json({
+                status: 'fail',
+                message: 'request already exist',
+              });
+            }
+
+            client.query(queryCreateRequest)
+              .then((requestsSaved) => {
+                client.release();
+                return response.status(201).json({
+                  status: 'success',
+                  message: 'request created successfully',
+                  data: { request: requestsSaved.rows[0] },
+                });
+              })
+              .catch(() => response.status(500).json({
+                status: 'fail',
+                message: 'Requests could not be created',
+              }));
           })
-          .catch(() => res.status(500).json({
+          .catch(() => response.status(500).json({
             status: 'fail',
             message: 'Requests could not be created',
           }));
@@ -150,9 +171,9 @@ class RequestsController extends Controller {
    *
    * @return {Object} Returned object
    */
-  static modifyRequest(req, res) {
-    const { userid } = req.decoded;
-    const { id } = req.params;
+  static modifyRequest(request, response) {
+    const { userid } = request.decoded;
+    const { id } = request.params;
 
     const queryGetRequest =
    `SELECT * FROM requests
@@ -162,25 +183,25 @@ class RequestsController extends Controller {
     db.connect()
       .then((client) => {
         client.query(queryGetRequest)
-          .then((request) => {
-            if (!request.rows[0]) {
+          .then((userRequest) => {
+            if (!userRequest.rows[0]) {
               client.release();
-              return res.status(404).json({
+              return response.status(404).json({
                 status: 'fail',
                 message: 'Request was not found',
               });
             }
 
-            if (request.rows[0].status !== 'pending') {
-              return res.status(405).json({
+            if (userRequest.rows[0].status !== 'pending') {
+              return response.status(400).json({
                 status: 'fail',
                 message: 'Not allowed, requests has been processed',
               });
             }
 
             const requestUpdate = {
-              ...request.rows[0],
-              ...req.body,
+              ...userRequest.rows[0],
+              ...request.body,
             };
 
             let {
@@ -192,6 +213,13 @@ class RequestsController extends Controller {
             item = item.trim().toLowerCase();
             description = description.trim().toLowerCase();
 
+            const queryRequestDuplicate =
+            `SELECT * FROM requests
+             WHERE userid='${userid}' AND
+             type='${type}' AND category='${category}' AND
+             item='${item}' AND description='${description}' AND
+             status='pending';`;
+
             const queryUpdateRequest =
             `UPDATE requests 
              SET type = '${type}', category= '${category}',
@@ -199,28 +227,41 @@ class RequestsController extends Controller {
              WHERE requestid = '${id}'
              RETURNING *`;
 
-            client.query(queryUpdateRequest)
-              .then((updatedRequest) => {
-                client.release();
-                return res.status(200).json({
-                  status: 'success',
-                  message: 'request updated successfully',
-                  data: {
-                    request: updatedRequest.rows[0],
-                  },
-                });
+            client.query(queryRequestDuplicate)
+              .then((duplicate) => {
+                if (duplicate.rows[0]) {
+                  client.release();
+                  return response.status(409).json({
+                    status: 'fail',
+                    message: 'request already exist',
+                  });
+                }
+
+                client.query(queryUpdateRequest)
+                  .then((updatedRequest) => {
+                    client.release();
+                    return response.status(200).json({
+                      status: 'success',
+                      message: 'request updated successfully',
+                      data: {
+                        request: updatedRequest.rows[0],
+                      },
+                    });
+                  })
+                  .catch((error) => {
+                    client.release();
+                    return response.status(500).json({
+                      status: 'fail',
+                      message: 'Failed to update request',
+                      error: error.message,
+                    });
+                  });
               })
-              .catch(() => {
-                client.release();
-                return res.status(500).json({
-                  status: 'fail',
-                  message: 'Failed to update request, Internal server error',
-                });
-              });
+              .catch();
           })
           .catch(() => {
             client.release();
-            return res.status(500).json({
+            return response.status(500).json({
               status: 'fail',
               message: 'Failed to retrieve request, Internal server error',
             });

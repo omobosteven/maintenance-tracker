@@ -4,29 +4,29 @@ class ValidateRequest {
   /**
    * @description Validates create request inputs
    *
-   * @param {Object} req
-   * @param {Object} res
+   * @param {Object} request
+   * @param {Object} response
    * @param {Function} next
    *
    * @return {Function} next
    */
-  static create(req, res, next) {
+  static create(request, response, next) {
     const {
       type, category, description, item,
-    } = req.body;
+    } = request.body;
 
     const data = {
-      type,
-      category,
-      description,
-      item,
+      type: (type && type.trim().toLowerCase()),
+      category: (category && category.trim().toLowerCase()),
+      description: (description && description.trim().toLowerCase()),
+      item: (item && item.trim().toLowerCase()),
     };
 
     const rules = {
       type: ['required', { in: ['repair', 'maintenance'] }],
-      category: 'required|max:50',
-      description: 'required|min:10|max:100',
-      item: 'required|max:50',
+      category: 'required|max:20',
+      description: 'required|min:10|max:50',
+      item: 'required|min:3|max:50|alpha_dash',
     };
 
     const validation = new Validator(data, rules, {
@@ -37,7 +37,7 @@ class ValidateRequest {
       return next();
     }
 
-    return res.status(400).json({
+    return response.status(400).json({
       status: 'fail',
       data: {
         errors: validation.errors.all(),
@@ -48,35 +48,36 @@ class ValidateRequest {
   /**
    * @description Validates modify request inputs
    *
-   * @param {Object} req
-   * @param {Object} res
+   * @param {Object} request
+   * @param {Object} response
    * @param {Function} next
    *
    * @return {Function} next
    */
-  static modify(req, res, next) {
+  static modify(request, response, next) {
     const {
       type, category, description, item,
-    } = req.body;
-    const { id } = req.params;
+    } = request.body;
 
     if (!type && !category && !item && !description) {
-      return res.status(400).json({
+      return response.status(400).json({
         status: 'fail',
         message: 'Enter a field to update',
       });
     }
 
     const data = {
-      id, type, category, item, description,
+      type,
+      category,
+      description,
+      item,
     };
 
     const rules = {
-      id: 'required|integer',
       type: ['required_with:type', { in: ['repair', 'maintenance'] }],
-      category: 'required_with:category|max:10',
-      description: 'required_with:description|min:8|max:100',
-      item: 'required_with:item|min:2|max:15',
+      category: 'required_with:category|max:20',
+      description: 'required_with:description|min:10|max:50',
+      item: 'required_with:item|min:2|max:15|alpha_dash',
     };
 
     const validation = new Validator(data, rules, {
@@ -92,7 +93,7 @@ class ValidateRequest {
       return next();
     }
 
-    return res.status(400).json({
+    return response.status(400).json({
       status: 'fail',
       data: {
         errors: validation.errors.all(),
