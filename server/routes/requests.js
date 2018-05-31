@@ -45,6 +45,7 @@ requests.post(
 requests.put(
   '/users/requests/:id',
   Authorization.verifyUser,
+  Validation.validateId,
   ValidateRequest.modify,
   RequestsController.modifyRequest,
 );

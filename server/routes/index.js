@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.use('/api/v1', users);
 router.use('/api/v1', requests);
-router.use('/*', (req, res) => res.status(404).send({
+router.use('/*', (request, response) => response.status(404).send({
   status: 'fail',
   message: 'Does not exist',
 }));

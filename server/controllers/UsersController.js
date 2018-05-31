@@ -1,9 +1,8 @@
 import bcrypt from 'bcryptjs';
 import Util from '../utility/Util';
-import Controller from './Controller';
 import db from '../models/db';
 
-class UsersController extends Controller {
+class UsersController {
   /**
    * @description Method to create a new user
    *
@@ -12,8 +11,8 @@ class UsersController extends Controller {
    *
    * @return {Object} Returned object
    */
-  static create(req, res) {
-    const { body } = req;
+  static create(request, response) {
+    const { body } = request;
     const email = body.email.trim().toLowerCase();
     const hashPassword = bcrypt.hashSync(body.password.trim(), 10);
 
@@ -30,7 +29,7 @@ class UsersController extends Controller {
           .then((emailExist) => {
             if (emailExist.rows[0]) {
               client.release();
-              return res.status(409).json({
+              return response.status(409).json({
                 status: 'fail',
                 message: 'User with this email already exist',
               });
@@ -40,18 +39,19 @@ class UsersController extends Controller {
               .then((savedUser) => {
                 const authToken = Util.token(savedUser.rows[0]);
                 client.release();
-                return res.status(201).json({
+                return response.status(201).json({
                   status: 'success',
                   message: 'User created successfully',
                   data: {
                     role: savedUser.rows[0].role,
+                    email: savedUser.rows[0].email,
                     token: authToken,
                   },
                 });
               })
               .catch(() => {
                 client.release();
-                return res.status(500).json({
+                return response.status(500).json({
                   status: 'fail',
                   message: 'Internal server error',
                 });
@@ -59,7 +59,7 @@ class UsersController extends Controller {
           })
           .catch(() => {
             client.release();
-            return res.status(500).json({
+            return response.status(500).json({
               status: 'fail',
               message: 'Internal server error',
             });
@@ -75,8 +75,8 @@ class UsersController extends Controller {
    *
    * @return {Object} Returned object
    */
-  static login(req, res) {
-    const { body } = req;
+  static login(request, response) {
+    const { body } = request;
 
     const emailAddress = body.email.trim().toLowerCase();
     const queryGetUser = `SELECT userId, email, role, password
@@ -89,7 +89,7 @@ class UsersController extends Controller {
           .then((user) => {
             if (!user.rows[0]) {
               client.release();
-              return res.status(404).json({
+              return response.status(404).json({
                 status: 'fail',
                 message: 'User not found',
               });
@@ -99,7 +99,7 @@ class UsersController extends Controller {
               .compareSync(body.password.trim(), user.rows[0].password);
             if (!checkPassword) {
               client.release();
-              return res.status(400).json({
+              return response.status(400).json({
                 status: 'fail',
                 message: 'Wrong password',
               });
@@ -107,18 +107,19 @@ class UsersController extends Controller {
 
             const authToken = Util.token(user.rows[0]);
             client.release();
-            return res.status(200).json({
+            return response.status(200).json({
               status: 'success',
               message: 'Sign in successfully',
               data: {
                 role: user.rows[0].role,
+                email: user.rows[0].email,
                 token: authToken,
               },
             });
           })
           .catch(() => {
             client.release();
-            return res.status(500).json({
+            return response.status(500).json({
               status: 'error',
               message: 'internal server error',
             });

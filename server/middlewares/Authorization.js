@@ -9,29 +9,31 @@ class Authorization {
   /**
    * @description Verify authenticated userId supplied in token
    *
-   * @param {Object} req - HTTP Request
-   * @param {Object} res - HTTP Response
+   * @param {Object} request - HTTP Request
+   * @param {Object} response - HTTP Response
    * @param {Function} next
    *
    * @return {Function} next
    */
-  static verifyUser(req, res, next) {
+  static verifyUser(request, response, next) {
     const token =
-    req.headers['x-access-token'] || req.body.token || req.query.token;
+    request.headers['x-access-token'] ||
+    request.body.token ||
+    request.query.token;
 
     if (token) {
       jwt.verify(token, secret, (err, decoded) => {
         if (err) {
-          return res.status(401).json({
+          return response.status(401).json({
             status: 'fail',
             message: 'Invalid credentials supplied',
           });
         }
-        req.decoded = decoded;
+        request.decoded = decoded;
         return next();
       });
     } else {
-      return res.status(401).json({
+      return response.status(401).json({
         status: 'fail',
         message: 'No Token provided',
       });
@@ -41,17 +43,17 @@ class Authorization {
   /**
    * @description Verify if user is an admin
    *
-   * @param {Object} req - HTTP Request
-   * @param {Object} res - HTTP Response
+   * @param {Object} request - HTTP Request
+   * @param {Object} response - HTTP Response
    * @param {Function} next
    *
    * @return {Function} next
    */
-  static verifyAdmin(req, res, next) {
-    if (req.decoded.role === 'admin') {
+  static verifyAdmin(request, response, next) {
+    if (request.decoded.role === 'admin') {
       next();
     } else {
-      res.status(403).json({
+      response.status(403).json({
         status: 'fail',
         message: 'Unauthorized',
       });

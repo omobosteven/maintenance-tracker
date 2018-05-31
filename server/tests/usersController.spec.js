@@ -14,10 +14,12 @@ describe('Tests for Users API endpoint', () => {
         email: 'jamesdoe@gmail.com',
         password: 'mypassword',
       })
-      .end((err, res) => {
-        expect(res).to.have.status(201);
-        expect(res.body.message).to.equal('User created successfully');
-        expect(res.body.data).to.have.property('token');
+      .end((error, response) => {
+        expect(response).to.have.status(201);
+        expect(response.body.message).to.equal('User created successfully');
+        expect(response.body.data.role).to.equal('user');
+        expect(response.body.data.email).to.equal('jamesdoe@gmail.com');
+        expect(response.body.data).to.have.property('token');
         done();
       });
   });
@@ -30,9 +32,10 @@ describe('Tests for Users API endpoint', () => {
         email: 'jamesdoe@gmail.com',
         password: 'mypassword',
       })
-      .end((err, res) => {
-        expect(res).to.have.status(409);
-        expect(res.body.message).to.equal('User with this email already exist');
+      .end((error, response) => {
+        expect(response).to.have.status(409);
+        expect(response.body.message).to
+          .equal('User with this email already exist');
         done();
       });
   });
@@ -45,9 +48,9 @@ describe('Tests for Users API endpoint', () => {
         email: '',
         password: 'mypassword',
       })
-      .end((err, res) => {
-        expect(res).to.have.status(400);
-        expect(res.body.data.errors.email[0]).to
+      .end((error, response) => {
+        expect(response).to.have.status(400);
+        expect(response.body.data.errors.email[0]).to
           .equal('The email field is required.');
         done();
       });
@@ -59,12 +62,12 @@ describe('Tests for Users API endpoint', () => {
       .set('Content-type', 'application/json')
       .send({
         email: 'jamesdoe@gmail.com',
-        password: 'mypass',
+        password: 'mypas',
       })
-      .end((err, res) => {
-        expect(res).to.have.status(400);
-        expect(res.body.data.errors.password[0]).to
-          .equal('The password must be at least 8 characters.');
+      .end((error, response) => {
+        expect(response).to.have.status(400);
+        expect(response.body.data.errors.password[0]).to
+          .equal('The password must be at least 6 characters.');
         done();
       });
   });
@@ -77,11 +80,13 @@ describe('Tests for Users API endpoint', () => {
         email: 'jamesdoe@gmail.com',
         password: 'mypassword',
       })
-      .end((err, res) => {
-        const { token } = res.body.data;
-        expect(res).to.have.status(200);
-        expect(res.body.message).to.equal('Sign in successfully');
-        expect(res.body.data.token).to.equal(token);
+      .end((error, response) => {
+        const { token } = response.body.data;
+        expect(response).to.have.status(200);
+        expect(response.body.message).to.equal('Sign in successfully');
+        expect(response.body.data.role).to.equal('user');
+        expect(response.body.data.email).to.equal('jamesdoe@gmail.com');
+        expect(response.body.data.token).to.equal(token);
         done();
       });
   });
@@ -94,9 +99,9 @@ describe('Tests for Users API endpoint', () => {
         email: 'jamedoe@gmail.com',
         password: 'mypassword',
       })
-      .end((err, res) => {
-        expect(res).to.have.status(404);
-        expect(res.body.message).to.equal('User not found');
+      .end((error, response) => {
+        expect(response).to.have.status(404);
+        expect(response.body.message).to.equal('User not found');
         done();
       });
   });
@@ -109,9 +114,9 @@ describe('Tests for Users API endpoint', () => {
         email: 'jamesdoe@gmail.com',
         password: 'mypasswor',
       })
-      .end((err, res) => {
-        expect(res).to.have.status(400);
-        expect(res.body.message).to.equal('Wrong password');
+      .end((error, response) => {
+        expect(response).to.have.status(400);
+        expect(response.body.message).to.equal('Wrong password');
         done();
       });
   });

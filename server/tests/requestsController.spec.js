@@ -16,10 +16,12 @@ describe('Tests for requests API endpoints', () => {
         email: 'jamesdoe@gmail.com',
         password: 'mypassword',
       })
-      .end((err, res) => {
-        userToken = res.body.data.token;
-        expect(res).to.have.status(200);
-        expect(res.body.message).to.equal('Sign in successfully');
+      .end((error, response) => {
+        userToken = response.body.data.token;
+        expect(response).to.have.status(200);
+        expect(response.body.message).to.equal('Sign in successfully');
+        expect(response.body.data.role).to.equal('user');
+        expect(response.body.data.email).to.equal('jamesdoe@gmail.com');
         done();
       });
   });
@@ -28,9 +30,9 @@ describe('Tests for requests API endpoints', () => {
     chai.request(app)
       .get('/api/v1/users/requests')
       .set('x-access-token', userToken)
-      .end((err, res) => {
-        expect(res).to.have.status(404);
-        expect(res.body.message).to.equal('No request was found');
+      .end((error, response) => {
+        expect(response).to.have.status(404);
+        expect(response.body.message).to.equal('No request was found');
         done();
       });
   });
@@ -39,10 +41,10 @@ describe('Tests for requests API endpoints', () => {
     chai.request(app)
       .get('/api/v1/users/requests/45')
       .set('x-access-token', userToken)
-      .end((err, res) => {
-        expect(res).to.have.status(404);
-        expect(res.body.status).to.equal('fail');
-        expect(res.body.message).to.equal('Request not found');
+      .end((error, response) => {
+        expect(response).to.have.status(404);
+        expect(response.body.status).to.equal('fail');
+        expect(response.body.message).to.equal('Request not found');
         done();
       });
   });
@@ -51,9 +53,9 @@ describe('Tests for requests API endpoints', () => {
     chai.request(app)
       .get('/api/v1/users/requests/45yu')
       .set('x-access-token', userToken)
-      .end((err, res) => {
-        expect(res).to.have.status(400);
-        expect(res.body.data.errors)
+      .end((error, response) => {
+        expect(response).to.have.status(400);
+        expect(response.body.data.errors)
           .to.equal('The request id must be a number');
         done();
       });
@@ -65,9 +67,9 @@ describe('Tests for requests API endpoints', () => {
       .set('x-access-token', userToken)
       .set('Content-type', 'application/json')
       .send({})
-      .end((err, res) => {
-        expect(res).to.have.status(400);
-        expect(res.body.data.errors.type[0])
+      .end((error, response) => {
+        expect(response).to.have.status(400);
+        expect(response.body.data.errors.type[0])
           .to.equal('The type field is required.');
         done();
       });
@@ -83,9 +85,9 @@ describe('Tests for requests API endpoints', () => {
         category: '32ew',
         item: 'laptop',
       })
-      .end((err, res) => {
-        expect(res).to.have.status(400);
-        expect(res.body.data.errors.type[0]).to
+      .end((error, response) => {
+        expect(response).to.have.status(400);
+        expect(response.body.data.errors.type[0]).to
           .equal('type must be either of repair or maintenance');
         done();
       });
@@ -102,9 +104,9 @@ describe('Tests for requests API endpoints', () => {
         item: 'laptop',
         description: 'stop',
       })
-      .end((err, res) => {
-        expect(res).to.have.status(400);
-        expect(res.body.data.errors.description[0])
+      .end((error, response) => {
+        expect(response).to.have.status(400);
+        expect(response.body.data.errors.description[0])
           .to.equal('The description must be at least 10 characters.');
         done();
       });
@@ -121,11 +123,31 @@ describe('Tests for requests API endpoints', () => {
         item: 'laptop',
         description: 'faulty battery',
       })
-      .end((err, res) => {
-        expect(res).to.have.status(201);
-        expect(res.body.message).to.equal('request created successfully');
-        expect(res.body.data.request.item).to.equal('laptop');
-        expect(res.body.data.request.description).to.equal('faulty battery');
+      .end((error, response) => {
+        expect(response).to.have.status(201);
+        expect(response.body.message).to.equal('request created successfully');
+        expect(response.body.data.request.item).to.equal('laptop');
+        expect(response.body.data.request.description).to
+          .equal('faulty battery');
+        done();
+      });
+  });
+
+  it('should return error if requests already exist', (done) => {
+    chai.request(app)
+      .post('/api/v1/users/requests')
+      .set('x-access-token', userToken)
+      .set('Content-type', 'application/json')
+      .send({
+        type: 'repair',
+        category: 'computers',
+        item: 'laptop',
+        description: 'faulty battery',
+      })
+      .end((error, response) => {
+        expect(response).to.have.status(409);
+        expect(response.body.message).to.equal('request already exist');
+        expect(response.body.status).to.equal('fail');
         done();
       });
   });
@@ -134,11 +156,11 @@ describe('Tests for requests API endpoints', () => {
     chai.request(app)
       .get('/api/v1/users/requests')
       .set('x-access-token', userToken)
-      .end((err, res) => {
-        expect(res).to.have.status(200);
-        expect(res.body.message).to.equal('My Requests');
-        expect(res.body.data.requests).to.be.an('array');
-        expect(res.body.data.requests[0]).to.deep.include({
+      .end((error, response) => {
+        expect(response).to.have.status(200);
+        expect(response.body.message).to.equal('My Requests');
+        expect(response.body.data.requests).to.be.an('array');
+        expect(response.body.data.requests[0]).to.deep.include({
           requestid: 1,
           userid: 2,
           type: 'repair',
@@ -162,9 +184,9 @@ describe('Tests for requests API endpoints', () => {
         item: 'laptop',
         description: 'faulty keyboard',
       })
-      .end((err, res) => {
-        expect(res).to.have.status(404);
-        expect(res.body.message).to.equal('Request was not found');
+      .end((error, response) => {
+        expect(response).to.have.status(404);
+        expect(response.body.message).to.equal('Request was not found');
         done();
       });
   });
@@ -175,9 +197,9 @@ describe('Tests for requests API endpoints', () => {
       .set('x-access-token', userToken)
       .set('Content-type', 'application/json')
       .send({})
-      .end((err, res) => {
-        expect(res).to.have.status(400);
-        expect(res.body.message)
+      .end((error, response) => {
+        expect(response).to.have.status(400);
+        expect(response.body.message)
           .to.equal('Enter a field to update');
         done();
       });
@@ -194,11 +216,11 @@ describe('Tests for requests API endpoints', () => {
         item: 'laptop',
         description: 'faulty keyboard',
       })
-      .end((err, res) => {
-        expect(res).to.have.status(400);
-        expect(res.body.data.errors.type[0])
+      .end((error, response) => {
+        expect(response).to.have.status(400);
+        expect(response.body.data.errors.type[0])
           .to.equal('The type field cannot be empty');
-        expect(res.body.data.errors.category[0])
+        expect(response.body.data.errors.category[0])
           .to.equal('The category field cannot be empty');
         done();
       });
@@ -209,16 +231,25 @@ describe('Tests for requests API endpoints', () => {
       .put('/api/v1/users/requests/three')
       .set('x-access-token', userToken)
       .set('Content-type', 'application/json')
-      .send({
-        type: 'repair',
-        category: 'computers',
-        item: 'laptop',
-        description: 'faulty keyboard',
-      })
-      .end((err, res) => {
-        expect(res).to.have.status(400);
-        expect(res.body.data.errors.id[0])
+      .send({})
+      .end((error, response) => {
+        expect(response).to.have.status(400);
+        expect(response.body.data.errors)
           .to.equal('The request id must be a number');
+        done();
+      });
+  });
+
+  it('should return error if Id is negative', (done) => {
+    chai.request(app)
+      .put('/api/v1/users/requests/-3')
+      .set('x-access-token', userToken)
+      .set('Content-type', 'application/json')
+      .send({})
+      .end((error, response) => {
+        expect(response).to.have.status(400);
+        expect(response.body.data.errors)
+          .to.equal('Invalid id entered');
         done();
       });
   });
@@ -227,11 +258,11 @@ describe('Tests for requests API endpoints', () => {
     chai.request(app)
       .get('/api/v1/users/requests/1')
       .set('x-access-token', userToken)
-      .end((err, res) => {
-        expect(res).to.have.status(200);
-        expect(res.body.data.request.item).to.equal('laptop');
-        expect(res.body.data.request.category).to.equal('computers');
-        expect(res.body.data.request.status).to.equal('pending');
+      .end((error, response) => {
+        expect(response).to.have.status(200);
+        expect(response.body.data.request.item).to.equal('laptop');
+        expect(response.body.data.request.category).to.equal('computers');
+        expect(response.body.data.request.status).to.equal('pending');
         done();
       });
   });
@@ -247,13 +278,33 @@ describe('Tests for requests API endpoints', () => {
         item: 'laptop',
         description: 'faulty keyboard',
       })
-      .end((err, res) => {
-        expect(res).to.have.status(200);
-        expect(res.body.message).to.equal('request updated successfully');
-        expect(res.body.data.request.description).to.equal('faulty keyboard');
-        expect(res.body.data.request.type).to.equal('repair');
-        expect(res.body.data.request.category).to.equal('computers');
-        expect(res.body.data.request.item).to.equal('laptop');
+      .end((error, response) => {
+        expect(response).to.have.status(200);
+        expect(response.body.message).to.equal('request updated successfully');
+        expect(response.body.data.request.description).to
+          .equal('faulty keyboard');
+        expect(response.body.data.request.type).to.equal('repair');
+        expect(response.body.data.request.category).to.equal('computers');
+        expect(response.body.data.request.item).to.equal('laptop');
+        done();
+      });
+  });
+
+  it('should return error if updated requests already exist', (done) => {
+    chai.request(app)
+      .put('/api/v1/users/requests/1')
+      .set('x-access-token', userToken)
+      .set('Content-type', 'application/json')
+      .send({
+        type: 'repair',
+        category: 'computers',
+        item: 'laptop',
+        description: 'faulty keyboard',
+      })
+      .end((error, response) => {
+        expect(response).to.have.status(409);
+        expect(response.body.message).to.equal('request already exist');
+        expect(response.body.status).to.equal('fail');
         done();
       });
   });

@@ -5,19 +5,24 @@ class Validation {
   /**
    * @description Validates request params id
    *
-   * @param {Object} req
-   * @param {Object} res
+   * @param {Object} request
+   * @param {Object} response
    * @param {Function} next
    *
    * @return {Function} next
    */
-  static validateId(req, res, next) {
-    const { id } = req.params;
+  static validateId(request, response, next) {
+    const { id } = request.params;
+
+    Validator.register(
+      'posInt', value => value > 0,
+      'Invalid :attribute entered',
+    );
 
     const validation = new Validator({
       id,
     }, {
-      id: 'required|integer',
+      id: 'required|integer|posInt',
     }, {
       'integer.id': 'The request :attribute must be a number',
     });
@@ -26,7 +31,7 @@ class Validation {
       return next();
     }
 
-    return res.status(400).json({
+    return response.status(400).json({
       status: 'fail',
       data: {
         errors: validation.errors.first('id'),

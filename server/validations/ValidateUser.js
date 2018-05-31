@@ -5,14 +5,14 @@ class ValidateUser {
   /**
    * @description Validates create user inputs
    *
-   * @param {Object} req
-   * @param {Object} res
+   * @param {Object} request
+   * @param {Object} response
    * @param {Function} next
    *
    * @return {Function} next
    */
-  static userInput(req, res, next) {
-    const { email, password } = req.body;
+  static userInput(request, response, next) {
+    const { email, password } = request.body;
 
     const data = {
       email,
@@ -21,7 +21,7 @@ class ValidateUser {
 
     const rules = {
       email: 'required|email',
-      password: 'required|min:8',
+      password: 'required|min:6',
     };
 
     const validation = new Validator(data, rules);
@@ -30,7 +30,7 @@ class ValidateUser {
       return next();
     }
 
-    return res.status(400).json({
+    return response.status(400).json({
       status: 'fail',
       data: {
         errors: validation.errors.all(),
