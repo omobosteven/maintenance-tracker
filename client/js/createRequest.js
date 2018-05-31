@@ -5,6 +5,8 @@ const {
 } = requestForm.elements;
 const errorMessage = document.querySelectorAll('.error');
 
+user.innerText = localStorage.getItem('user');
+
 const createRequest = (e) => {
   e.preventDefault();
   const requestDetails = {
