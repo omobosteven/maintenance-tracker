@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Maintenance tracker | Signup</title>
+  <link rel="stylesheet" href="vendors/css/normalize.css" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.3.54/css/materialdesignicons.min.css" type="text/css">
+  <link rel="stylesheet" href="css/style.css" type="text/css">
+</head>
+<body>
+  <div class="content request-view">
+    <header>
+      <nav class="container">
+        <div class="row">
+          <div class="header-logo">
+            <a href="signup.html"><img src="img/logo-white.png" alt="maintanace-tracker logo" class="logo"></a>
+            <p class="user">omobosteven <br> Dashboard</p>
+            <button type="button" id="navbar-toggler" class="nav-toggle"><i class="mdi mdi-view-sequential"></i></button>
+          </div>
+          <ul class="main-nav" id="navbar-collapse">
+              <li><a href="create-request.html" class="active">Make Request</a></li>
+              <li><a href="user-view-requests.html">View Requests</a></li>
+              <li><a href="signup.html">Logout</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <section class="section-form request-form container">
+      <div class="row card-form">
+        <form method="post" class="signup-form" name="requestForm">
+          <h2 class="form-title">Create a Request</h2>
+          <div class="form-group">
+            <label for="type">Type</label>
+            <select class="form-control" name="type" id="type">
+              <option value="repair">Repair</option>
+              <option value="maintenance">Maintenance</option>
+            </select>
+          </div>
+          <p class="error error-type"></p>
+          <div class="form-group">
+            <label for="category">Category</label>
+            <select class="form-control" name="category" id="category">
+              <option value="computers">Computers</option>
+              <option value="electronics">Electronics</option>
+              <option value="furnitures">Furnitures</option>
+            </select>
+          </div>
+          <p class="error error-category"></p>
+          <div class="form-group">
+            <label for="item">Item</label>
+            <input class="form-control" type="text" name="requestItem" id="item" placeholder="Enter item" required>
+          </div>
+          <p class="error error-item"></p>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" name="description" id="description" placeholder="Enter a description of the problem" rows= "4"></textarea>
+          </div>
+          <p class="error error-description"></p>
+          <div class="submit-btn create-btn">
+            <input type="submit" value="Create Request">
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+  
+  <footer>
+    <p>Operations department &copy; 2018</p>
+  </footer>
+  <script src="js/main.js"></script>
+  <script src="https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.10/dist/js/alertify.js"></script>
+  <script src="./js/createRequest.js"></script>
+</body>
+</html>
