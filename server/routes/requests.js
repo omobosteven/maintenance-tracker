@@ -1,6 +1,7 @@
 import express from 'express';
 import AdminRequestsController from '../controllers/AdminRequestsController';
 import Authorization from '../middlewares/Authorization';
+import AdminUpdateRequest from '../middlewares/AdminUpdateRequest';
 import RequestsController from '../controllers/RequestsController';
 import ValidateRequest from '../validations/ValidateRequest';
 import Validation from '../validations/Validation';
@@ -55,7 +56,8 @@ requests.put(
   Authorization.verifyUser,
   Authorization.verifyAdmin,
   Validation.validateId,
-  AdminRequestsController.updateRequestStatus,
+  AdminUpdateRequest.fetchRequest,
+  AdminRequestsController.approveRequest,
 );
 
 requests.put(
@@ -63,7 +65,8 @@ requests.put(
   Authorization.verifyUser,
   Authorization.verifyAdmin,
   Validation.validateId,
-  AdminRequestsController.updateRequestStatus,
+  AdminUpdateRequest.fetchRequest,
+  AdminRequestsController.disapproveRequest,
 );
 
 requests.put(
@@ -71,7 +74,8 @@ requests.put(
   Authorization.verifyUser,
   Authorization.verifyAdmin,
   Validation.validateId,
-  AdminRequestsController.updateRequestStatus,
+  AdminUpdateRequest.fetchRequest,
+  AdminRequestsController.reolveRequest,
 );
 
 export default requests;

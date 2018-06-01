@@ -106,7 +106,7 @@ describe('Tests for admin requests API endpoints', () => {
       .set('x-access-token', userToken)
       .end((error, response) => {
         expect(response).to.have.status(200);
-        expect(response.body.message).to.equal('Request approved');
+        expect(response.body.message).to.equal('Request Approved');
         expect(response.body.data.request.status).to.equal('approved');
         done();
       });
@@ -118,20 +118,21 @@ describe('Tests for admin requests API endpoints', () => {
       .set('x-access-token', userToken)
       .end((error, response) => {
         expect(response).to.have.status(200);
-        expect(response.body.message).to.equal('Request disapproved');
+        expect(response.body.message).to.equal('Request Disapproved');
         expect(response.body.data.request.status).to.equal('disapproved');
         done();
       });
   });
 
-  it('should fail if admin tries to disapporve an approved request', (done) => {
+  it('should approved a disapporved request', (done) => {
     chai.request(app)
-      .put('/api/v1/requests/1/disapprove')
+      .put('/api/v1/requests/2/approve')
       .set('x-access-token', userToken)
       .end((error, response) => {
-        expect(response).to.have.status(400);
-        expect(response.body.status).to.equal('fail');
-        expect(response.body.message).to.equal('Request has been processed');
+        expect(response).to.have.status(200);
+        expect(response.body.status).to.equal('success');
+        expect(response.body.message).to.equal('Request Approved');
+        expect(response.body.data.request.status).to.equal('approved');
         done();
       });
   });
@@ -142,8 +143,20 @@ describe('Tests for admin requests API endpoints', () => {
       .set('x-access-token', userToken)
       .end((error, response) => {
         expect(response).to.have.status(200);
-        expect(response.body.message).to.equal('Request resolved');
+        expect(response.body.message).to.equal('Request Resolved');
         expect(response.body.data.request.status).to.equal('resolved');
+        done();
+      });
+  });
+
+  it('should fail if admin tries to approve a resolved request', (done) => {
+    chai.request(app)
+      .put('/api/v1/requests/1/approve')
+      .set('x-access-token', userToken)
+      .end((error, response) => {
+        expect(response).to.have.status(400);
+        expect(response.body.message).to
+          .equal('Request has already been processed');
         done();
       });
   });

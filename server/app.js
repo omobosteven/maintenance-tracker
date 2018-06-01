@@ -16,6 +16,11 @@ const apiDocsUrl =
 
 app.get('/', (request, response) =>
   response.redirect(apiDocsUrl));
+
+app.get('/api/v1/', (request, response) => response.status(200).json({
+  status: 'success',
+  message: 'Welcome to maintenanc tracker app',
+}));
 app.use(routes);
 
 const port = parseInt(process.env.PORT, 10) || 3000;

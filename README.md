@@ -1,13 +1,14 @@
 <img src="logoSmall.png" alt='logo'/>
 
-[![Build Status](https://travis-ci.com/omobosteven/maintenance-tracker.svg?branch=ch-prepare-for-demo-158006839)](https://travis-ci.com/omobosteven/maintenance-tracker)
-[![Coverage Status](https://coveralls.io/repos/github/omobosteven/maintenance-tracker/badge.svg?branch=ch-prepare-for-demo-158006839)](https://coveralls.io/github/omobosteven/maintenance-tracker?branch=ch-prepare-for-demo-158006839)
+[![Build Status](https://travis-ci.com/omobosteven/maintenance-tracker.svg?branch=ch-request-response-158020155)](https://travis-ci.com/omobosteven/maintenance-tracker)
+[![Coverage Status](https://coveralls.io/repos/github/omobosteven/maintenance-tracker/badge.svg?branch=ch-request-response-158020155)](https://coveralls.io/github/omobosteven/maintenance-tracker?branch=ch-request-response-158020155)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a6fde1bb2915cec5032e/maintainability)](https://codeclimate.com/github/omobosteven/maintenance-tracker/maintainability)
 
 # Maintenance-tracker
 Maintenance Tracker App is an application that provides users with the ability to reach out to operations or repairs department regarding repair or maintenance requests and monitor the status of their request.
 
 * [Maintenance-tracker API documentation](https://maintenance-tracker-stv.herokuapp.com/)
+* [Maintenance-tracker API on Heroku](https://maintenance-tracker-stv.herokuapp.com/api/v1/)
 
 ## Features
 * User can create an account and log in
