@@ -1,7 +1,7 @@
 <img src="logoSmall.png" alt='logo'/>
 
-[![Build Status](https://travis-ci.com/omobosteven/maintenance-tracker.svg?branch=ch-request-response-158020155)](https://travis-ci.com/omobosteven/maintenance-tracker)
-[![Coverage Status](https://coveralls.io/repos/github/omobosteven/maintenance-tracker/badge.svg?branch=ch-request-response-158020155)](https://coveralls.io/github/omobosteven/maintenance-tracker?branch=ch-request-response-158020155)
+[![Build Status](https://travis-ci.com/omobosteven/maintenance-tracker.svg?branch=bg-request-response-158020155)](https://travis-ci.com/omobosteven/maintenance-tracker)
+[![Coverage Status](https://coveralls.io/repos/github/omobosteven/maintenance-tracker/badge.svg?branch=bg-request-response-158020155)](https://coveralls.io/github/omobosteven/maintenance-tracker?branch=bg-request-response-158020155)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a6fde1bb2915cec5032e/maintainability)](https://codeclimate.com/github/omobosteven/maintenance-tracker/maintainability)
 
 # Maintenance-tracker
@@ -99,53 +99,22 @@ Maintenance Tracker App is an application that provides users with the ability t
 </table>
 <hr>
 
-### Register a user: `/api/v1/auth/signup`
-To Register a user, send the following parameters
+### Getting Started
 
-```
-{
-  email: 'jamesdoe@gmail.com',
-  password: 'mypassword',
-}
-```
-<hr>
+* Clone project repo - git clone `https://github.com/omobosteven/maintenance-tracker.git`
+* Ensure you have installed [NodeJS](https://nodejs.org/en/) and [Postgres](https://www.postgresql.org/download/)
+* Navigate into the application root directory: `cd maintenance-tracker`
+* Setup PostgresSQL servic on your local machine
+* Run `$ npm install` to install all dependencies
+* Create a `.env` file in the root directory using the sample `.env.sample` file
+* setup your database configurations according to settings in server/config/config.js
+* Run `$ npm run db-migrate`
+* Run tests using `$ npm run test`
 
-### Login a user: `/api/v1/auth/login`
-To Login a user, send the following parameters
+### How to Demo/Run the App
 
-```
-{
-  email: 'jamesdoe@gmail.com',
-  password: 'mypassword',
-}
-```
-<hr>
-
-### Create a Request: `/api/v1/users/requests`
-To create a request, send the following parameters
-
-```
-{
-   type: 'repair',
-   category: 'computers',
-   item: 'printer',
-   description: 'faulty laptop',
-}
-```
-<hr>
-
-### Modify a Request: `/api/v1/users/requests/:id`
-To modify a request, send the following parameters
-
-```
-{
-   type: 'repair',
-   category: 'electronic',
-   item: 'printer',
-   description: 'faulty keyboard',
-}
-```
-<hr>
+* To start the app in development, run: `npm run start-dev`
+* To start the app in a production environment, run: `npm start`
 
 
 ## Contributing
@@ -153,6 +122,9 @@ To modify a request, send the following parameters
 This project is open for contributions. All contributions must adhere to the Airbnb styleguide.
 
 * [Airbnb Styleguide](http://airbnb.io/javascript/)
+
+### License
+* [MIT License](https://github.com/omobosteven/maintenance-tracker/blob/develop/LICENSE)
 
 ### Author(s)
 
