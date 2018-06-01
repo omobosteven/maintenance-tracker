@@ -12,8 +12,9 @@ class AdminRequestsController {
    */
   static getAllRequests(request, response) {
     const queryFetchAllRequests =
-    `SELECT * FROM requests
-    ORDER BY requestid DESC`;
+    `SELECT email,requests.* FROM requests
+     INNER JOIN users ON requests.userid = users.userid
+     ORDER BY requestid DESC`;
 
     db.connect()
       .then((client) => {
@@ -59,8 +60,10 @@ class AdminRequestsController {
     const { id } = request.params;
 
     const queryFetchRequest =
-    `SELECT * FROM requests
-    WHERE requestid = '${id}';`;
+    `SELECT email, requests.*
+     FROM requests
+     INNER JOIN users ON requests.userid = users.userid
+     WHERE requestid = '${id}';`;
 
     db.connect()
       .then((client) => {
@@ -93,95 +96,160 @@ class AdminRequestsController {
   }
 
   /**
-   * @description Update a request status
+   * @description Approve a request status
    *
    * @param {Object} request - HTTP Request
    * @param {Object} response - HTTP Response
    *
    * @return {Object} Returned object
    */
-  static updateRequestStatus(request, response) {
+  static approveRequest(request, response) {
     const { id } = request.params;
 
-    const statusUpdate = request.path.slice(request.path.lastIndexOf('/') + 1);
+    const { status } = request.userRequest.rows[0];
 
-    let check;
-    let update;
-    let message;
-
-    switch (statusUpdate) {
-      case 'approve':
-        check = 'pending';
-        update = 'approved';
-        message = 'Request has been processed';
-        break;
-      case 'disapprove':
-        check = 'pending';
-        update = 'disapproved';
-        message = 'Request has been processed';
-        break;
-      case 'resolve':
-      default:
-        check = 'approved';
-        update = 'resolved';
-        message = 'Request has not been approved';
+    if (status !== 'pending' && status !== 'disapproved') {
+      return response.status(400).json({
+        status: 'fail',
+        message: 'Request has already been processed',
+      });
     }
-
-    const queryFetchRequest =
-    `SELECT * FROM requests
-    WHERE requestid = '${id}';`;
 
     const queryUpdateRequestStatus =
     `UPDATE requests
-    SET status='${update}'
-    WHERE requestid = '${id}'
-    RETURNING *;`;
+    SET status='approved'
+    FROM users
+    WHERE requests.userid = users.userid AND requestid = '${id}'
+    RETURNING email, requests.*;`;
 
     db.connect()
       .then((client) => {
-        client.query(queryFetchRequest)
-          .then((userRequest) => {
-            if (!userRequest.rows[0]) {
-              client.release();
-              return response.status(404).json({
-                status: 'fail',
-                message: 'Request was not found',
-              });
-            }
-
-            const { status } = userRequest.rows[0];
-
-            if (status !== check) {
-              return response.status(400).json({
-                status: 'fail',
-                message,
-              });
-            }
-
-            client.query(queryUpdateRequestStatus)
-              .then((updatedRequest) => {
-                client.release();
-                return response.status(200).json({
-                  status: 'success',
-                  message: `Request ${update}`,
-                  data: {
-                    request: updatedRequest.rows[0],
-                  },
-                });
-              })
-              .catch(() => {
-                client.release();
-                response.status(500).json({
-                  status: 'error',
-                  message: 'Failed to update request status',
-                });
-              });
+        client.query(queryUpdateRequestStatus)
+          .then((updatedRequest) => {
+            client.release();
+            return response.status(200).json({
+              status: 'success',
+              message: 'Request Approved',
+              data: {
+                request: updatedRequest.rows[0],
+              },
+            });
           })
-          .catch(() => {
+          .catch((error) => {
             client.release();
             response.status(500).json({
               status: 'error',
-              message: 'Failed to fetch request',
+              message: 'Failed to update request status',
+              error: error.message,
+            });
+          });
+      });
+  }
+
+  /**
+   * @description dispprove a request status
+   *
+   * @param {Object} request - HTTP Request
+   * @param {Object} response - HTTP Response
+   *
+   * @return {Object} Returned object
+   */
+  static disapproveRequest(request, response) {
+    const { id } = request.params;
+
+    const { status } = request.userRequest.rows[0];
+
+    if (status === 'resolved' || status === 'disapproved') {
+      return response.status(400).json({
+        status: 'fail',
+        message: 'Request has already been processed',
+      });
+    }
+
+    const queryUpdateRequestStatus =
+    `UPDATE requests
+    SET status='disapproved'
+    FROM users
+    WHERE requests.userid = users.userid AND requestid = '${id}'
+    RETURNING email, requests.*;`;
+
+    db.connect()
+      .then((client) => {
+        client.query(queryUpdateRequestStatus)
+          .then((updatedRequest) => {
+            client.release();
+            return response.status(200).json({
+              status: 'success',
+              message: 'Request Disapproved',
+              data: {
+                request: updatedRequest.rows[0],
+              },
+            });
+          })
+          .catch((error) => {
+            client.release();
+            response.status(500).json({
+              status: 'error',
+              message: 'Failed to update request status',
+              error: error.message,
+            });
+          });
+      });
+  }
+
+  /**
+   * @description resolved a request status
+   *
+   * @param {Object} request - HTTP Request
+   * @param {Object} response - HTTP Response
+   *
+   * @return {Object} Returned object
+   */
+  static reolveRequest(request, response) {
+    const { id } = request.params;
+
+    const { status } = request.userRequest.rows[0];
+
+    if (status === 'resolved') {
+      return response.status(400).json({
+        status: 'fail',
+        message: 'Request has already been processed',
+      });
+    }
+
+    if (status !== 'approved') {
+      return response.status(400).json({
+        status: 'fail',
+        message: 'Request is not approved',
+      });
+    }
+
+    const queryUpdateRequestStatus =
+    `UPDATE requests
+    SET status='resolved'
+    FROM users
+    WHERE requests.userid = users.userid AND requestid = '${id}'
+    RETURNING email, requests.*;`;
+
+    db.connect()
+      .then((client) => {
+        client.query(queryUpdateRequestStatus)
+          .then((updatedRequest) => {
+            client.release();
+            return response.status(200).json({
+              status: 'success',
+              message: 'Request Resolved',
+              data: {
+                request: updatedRequest.rows[0],
+              },
+            });
+          })
+          .catch((error) => {
+            client.release();
+            response.status(500).json({
+              status: 'error',
+              message: 'Failed to update request status',
+              error: error.message,
             });
           });
       });

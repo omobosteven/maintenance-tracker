@@ -19,14 +19,13 @@ const requests = (client) => {
 
   CREATE TABLE Requests (
       requestId SERIAL PRIMARY KEY,
-      userId INT NOT NULL,
+      userId INTEGER REFERENCES users(userid),
       type type_allowed NOT NULL,
       category VARCHAR(255) NOT NULL,
       item VARCHAR(255) NOT NULL,
       description VARCHAR(255) NOT NULL,
       status status_allowed NOT NULL DEFAULT 'pending',
-      createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (userId) REFERENCES users (userId)
+      createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
   );`;
 
   client.query(queryString)
