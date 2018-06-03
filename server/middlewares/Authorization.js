@@ -55,7 +55,7 @@ class Authorization {
     } else {
       response.status(403).json({
         status: 'fail',
-        message: 'Unauthorized',
+        message: 'This is only available to admin',
       });
     }
   }

@@ -14,8 +14,9 @@ class RequestsController {
     const { userid } = request.decoded;
 
     const queryGetAllRequestsForUser =
-    `SELECT * FROM requests
-    WHERE userid = '${userid}'
+    `SELECT email, requests.* FROM requests
+    INNER JOIN users ON requests.userid = users.userid
+    WHERE requests.userid = '${userid}'
     ORDER BY requestid DESC;`;
 
     db.connect()
@@ -34,16 +35,16 @@ class RequestsController {
               status: 'success',
               message: 'My Requests',
               data: {
-                user: request.decoded.email,
                 requests: userRequests.rows,
               },
             });
           })
-          .catch(() => {
+          .catch((e) => {
             client.release();
             return response.status(500).json({
               status: 'error',
               message: 'Failed to fetch requests',
+              error: e.message,
             });
           });
       });
@@ -58,13 +59,14 @@ class RequestsController {
    * @return {Object} Returned object
    */
   static getRequest(request, response) {
-    const { userid, email } = request.decoded;
+    const { userid } = request.decoded;
     const { id } = request.params;
 
     const queryFetchRequest =
-    `SELECT * FROM requests
+    `SELECT email, requests.* FROM requests
+    INNER JOIN users ON requests.userid = users.userid
     WHERE requestid = '${id}' 
-    AND userid = '${userid}';`;
+    AND requests.userid = '${userid}';`;
 
     db.connect()
       .then((client) => {
@@ -82,7 +84,6 @@ class RequestsController {
             return response.status(200).json({
               status: 'success',
               data: {
-                user: email,
                 request: userRequest.rows[0],
               },
             });

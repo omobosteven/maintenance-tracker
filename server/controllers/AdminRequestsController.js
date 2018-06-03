@@ -108,10 +108,17 @@ class AdminRequestsController {
 
     const { status } = request.userRequest.rows[0];
 
-    if (status !== 'pending' && status !== 'disapproved') {
+    if (status === 'resolved') {
       return response.status(400).json({
         status: 'fail',
-        message: 'Request has already been processed',
+        message: 'Request has already been resolved',
+      });
+    }
+
+    if (status === 'approved') {
+      return response.status(400).json({
+        status: 'fail',
+        message: 'Request has already been approved',
       });
     }
 
@@ -159,10 +166,17 @@ class AdminRequestsController {
 
     const { status } = request.userRequest.rows[0];
 
-    if (status === 'resolved' || status === 'disapproved') {
+    if (status === 'resolved') {
       return response.status(400).json({
         status: 'fail',
-        message: 'Request has already been processed',
+        message: 'Request has already been resolved',
+      });
+    }
+
+    if (status === 'disapproved') {
+      return response.status(400).json({
+        status: 'fail',
+        message: 'Request has already been disapproved',
       });
     }
 
@@ -213,7 +227,7 @@ class AdminRequestsController {
     if (status === 'resolved') {
       return response.status(400).json({
         status: 'fail',
-        message: 'Request has already been processed',
+        message: 'Request has already been resolved',
       });
     }
 

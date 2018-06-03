@@ -33,7 +33,7 @@ class AdminRequests {
           })
           .catch(() => {
             client.release();
-            response.status(500).json({
+            return response.status(500).json({
               status: 'error',
               message: 'Failed to fetch request',
             });

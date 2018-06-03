@@ -14,8 +14,7 @@ app.use(express.static(path.join(__dirname, '../client')));
 const apiDocsUrl =
  'https://app.swaggerhub.com/apis/omobosteven/maintenance-tracker/1.0.0';
 
-app.get('/', (request, response) =>
-  response.redirect(apiDocsUrl));
+app.get('/', (request, response) => response.status(200).redirect(apiDocsUrl));
 
 app.get('/api/v1/', (request, response) => response.status(200).json({
   status: 'success',

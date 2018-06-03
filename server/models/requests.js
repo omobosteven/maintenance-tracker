@@ -17,9 +17,16 @@ const requests = (client) => {
     'resolved'
   );
 
+  DROP SEQUENCE IF EXISTS request_ref_no;
+  CREATE SEQUENCE request_ref_no
+  MINVALUE 100000
+  START 100000
+  CACHE 2;
+
   CREATE TABLE Requests (
       requestId SERIAL PRIMARY KEY,
       userId INTEGER REFERENCES users(userid),
+      ref_no INTEGER NOT NULL DEFAULT nextval('request_ref_no'),
       type type_allowed NOT NULL,
       category VARCHAR(255) NOT NULL,
       item VARCHAR(255) NOT NULL,

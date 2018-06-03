@@ -6,9 +6,9 @@ const router = express.Router();
 
 router.use('/api/v1', users);
 router.use('/api/v1', requests);
-router.use('/*', (request, response) => response.status(404).send({
+router.use('/*', (request, response) => response.status(400).send({
   status: 'fail',
-  message: 'Does not exist',
+  message: 'The API endpoint does not exist',
 }));
 
 export default router;
