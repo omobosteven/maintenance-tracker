@@ -91,7 +91,7 @@ class UsersController {
               client.release();
               return response.status(404).json({
                 status: 'fail',
-                message: 'User not found',
+                message: 'User was not found',
               });
             }
 
@@ -101,7 +101,7 @@ class UsersController {
               client.release();
               return response.status(400).json({
                 status: 'fail',
-                message: 'Wrong password',
+                message: 'Wrong password entered',
               });
             }
 

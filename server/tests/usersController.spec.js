@@ -101,7 +101,7 @@ describe('Tests for Users API endpoint', () => {
       })
       .end((error, response) => {
         expect(response).to.have.status(404);
-        expect(response.body.message).to.equal('User not found');
+        expect(response.body.message).to.equal('User was not found');
         done();
       });
   });
@@ -116,7 +116,7 @@ describe('Tests for Users API endpoint', () => {
       })
       .end((error, response) => {
         expect(response).to.have.status(400);
-        expect(response.body.message).to.equal('Wrong password');
+        expect(response.body.message).to.equal('Wrong password entered');
         done();
       });
   });

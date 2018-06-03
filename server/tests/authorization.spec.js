@@ -58,7 +58,8 @@ describe('Tests for Authorization', () => {
       .set('x-access-token', userToken)
       .end((error, response) => {
         expect(response).to.have.status(403);
-        expect(response.body.message).to.equal('Unauthorized');
+        expect(response.body.message).to
+          .equal('This is only available to admin');
         done();
       });
   });

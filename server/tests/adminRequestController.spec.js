@@ -156,7 +156,7 @@ describe('Tests for admin requests API endpoints', () => {
       .end((error, response) => {
         expect(response).to.have.status(400);
         expect(response.body.message).to
-          .equal('Request has already been processed');
+          .equal('Request has already been resolved');
         done();
       });
   });
