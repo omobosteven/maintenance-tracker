@@ -1,7 +1,7 @@
 <img src="logoSmall.png" alt='logo'/>
 
-[![Build Status](https://travis-ci.com/omobosteven/maintenance-tracker.svg?branch=ch-demo-feedback-api-158058839)](https://travis-ci.com/omobosteven/maintenance-tracker)
-[![Coverage Status](https://coveralls.io/repos/github/omobosteven/maintenance-tracker/badge.svg?branch=ch-demo-feedback-api-158058839)](https://coveralls.io/github/omobosteven/maintenance-tracker?branch=ch-demo-feedback-api-158058839)
+[![Build Status](https://travis-ci.com/omobosteven/maintenance-tracker.svg?branch=ch-frontend-refactor-158099627)](https://travis-ci.com/omobosteven/maintenance-tracker)
+[![Coverage Status](https://coveralls.io/repos/github/omobosteven/maintenance-tracker/badge.svg?branch=ch-frontend-refactor-158099627)](https://coveralls.io/github/omobosteven/maintenance-tracker?branch=ch-frontend-refactor-158099627)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a6fde1bb2915cec5032e/maintainability)](https://codeclimate.com/github/omobosteven/maintenance-tracker/maintainability)
 
 # Maintenance-tracker

@@ -1,8 +1,10 @@
 /* eslint-disable no-undef */
-const { signupForm } = document.forms;
-const signupBtn = document.getElementById('signupBtn');
-const { email, password, confirmPassword } = signupForm.elements;
+const alertLog = document.getElementById('alertLog');
+const alertMessage = document.getElementById('alertMessage');
 const errorMessage = document.querySelectorAll('.error');
+const signupBtn = document.getElementById('signupBtn');
+const { signupForm } = document.forms;
+const { email, password, confirmPassword } = signupForm.elements;
 
 const checkPassword = () => {
   if (confirmPassword.value && (password.value !== confirmPassword.value)) {
@@ -36,18 +38,36 @@ const createAccount = (e) => {
     option,
   ).then((response) => {
     if (response.status === 409) {
-      alertify.logPosition('bottom right');
-      alertify.delay(7000).error('User with this email already exist');
+      alertLog.style.display = 'block';
+      alertLog.classList.add('fail');
+      alertMessage.innerText = 'User with this email already exist';
     }
     return response.json();
   })
     .then((response) => {
       if (response.status === 'success') {
+        const username = response.data.email;
         localStorage.setItem('token', response.data.token);
-        alertify.logPosition('bottom right');
-        alertify.delay(5000).success(response.message);
-        window.location.href =
-        'https://maintenance-tracker-stv.herokuapp.com/user-view-requests.html';
+        localStorage.setItem('user', username.slice(0, username.indexOf('@')));
+        alertLog.style.display = 'block';
+        alertLog.classList.remove('fail');
+        alertLog.classList.add('success');
+        alertMessage.innerText = response.message;
+      }
+
+      const adminLink =
+      'https://maintenance-tracker-stv.herokuapp.com/admin-view-requests.html';
+      const userLink =
+      'https://maintenance-tracker-stv.herokuapp.com/user-view-requests.html';
+
+      switch (response.data.role) {
+        case 'admin':
+          window.location.href = adminLink;
+          break;
+        case 'user':
+          window.location.href = userLink;
+          break;
+        default:
       }
 
       if (response.data.errors.email) {

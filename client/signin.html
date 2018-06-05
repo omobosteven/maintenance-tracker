@@ -28,6 +28,10 @@
     </header>
 
     <section class="section-form signin-form container">
+      <div class="row alert" id="alertLog">
+        <span class="closeBtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+        <p id="alertMessage"></p>
+      </div>
       <div class="row card-form">
         <form method="post" class="signup-form" name="signinForm">
           <h2 class="form-title">User Login</h2>
@@ -55,7 +59,6 @@
     <p>Operations department &copy; 2018</p>
   </footer>
   <script src="js/main.js"></script>
-  <script src="https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.10/dist/js/alertify.js"></script>
   <script src="./js/signin.js"></script>
 </body>
 </html>
