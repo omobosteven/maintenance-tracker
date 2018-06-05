@@ -2,6 +2,8 @@
 const requests = document.getElementById('requests');
 const user = document.getElementById('user');
 
+user.innerText = localStorage.getItem('user');
+
 const saveIdOnLocalStorage = (e) => {
   let { id } = e.target;
   if (e.target.localName === 'p') {
@@ -16,14 +18,14 @@ const saveIdOnLocalStorage = (e) => {
 const createNewRequestItem = (request) => {
   const requestList = document.createElement('li');
   const requestLink = document.createElement('a');
-  const requestId = document.createElement('p');
+  const requestRef = document.createElement('p');
   const requestType = document.createElement('p');
   const requestItem = document.createElement('p');
   const requestStatus = document.createElement('p');
 
   requestList.addEventListener('click', saveIdOnLocalStorage, false);
 
-  requestId.innerText = `#${request.requestid}`;
+  requestRef.innerText = `#${request.ref_no}`;
   requestType.innerText = request.type;
   requestItem.innerText = request.item;
   requestStatus.innerText = request.status;
@@ -52,7 +54,7 @@ const createNewRequestItem = (request) => {
   requestLink.className = ('request-item');
   requestLink.setAttribute('id', `${request.requestid}`);
 
-  requestLink.appendChild(requestId);
+  requestLink.appendChild(requestRef);
   requestLink.appendChild(requestType);
   requestLink.appendChild(requestItem);
   requestLink.appendChild(requestStatus);
@@ -75,15 +77,18 @@ const getRequests = () => {
   fetch(
     'https://maintenance-tracker-stv.herokuapp.com/api/v1/users/requests',
     option,
-  ).then(response =>
-    response.json())
+  ).then((response) => {
+    if (response.status === 404) {
+      alertLog.style.display = 'block';
+      alertLog.classList.add('fail');
+      alertMessage.innerText = 'No request was found';
+    }
+    return response.json();
+  })
     .then((response) => {
       if (response.status === 'success') {
         response.data.requests
           .forEach(request => createNewRequestItem(request));
-        const username = response.data.user;
-        localStorage.setItem('user', username.slice(0, username.indexOf('@')));
-        user.innerText = localStorage.getItem('user');
       }
     })
     .catch(err => err.message);

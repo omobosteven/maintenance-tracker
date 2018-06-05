@@ -1,9 +1,12 @@
 /* eslint-disable no-undef */
+const alertLog = document.getElementById('alertLog');
+const alertMessage = document.getElementById('alertMessage');
+const errorMessage = document.querySelectorAll('.error');
 const { requestForm } = document.forms;
 const {
   type, category, requestItem, description,
 } = requestForm.elements;
-const errorMessage = document.querySelectorAll('.error');
+const user = document.getElementById('user');
 
 user.innerText = localStorage.getItem('user');
 
@@ -30,12 +33,21 @@ const createRequest = (e) => {
   fetch(
     'https://maintenance-tracker-stv.herokuapp.com/api/v1/users/requests',
     option,
-  ).then(response =>
-    response.json())
+  ).then((response) => {
+    if (response.status === 409) {
+      alertLog.style.display = 'block';
+      alertLog.classList.add('fail');
+      alertMessage.innerText = 'request already exist';
+    }
+
+    return response.json();
+  })
     .then((response) => {
       if (response.status === 'success') {
-        alertify.logPosition('bottom right');
-        alertify.delay(5000).success(response.message);
+        alertLog.style.display = 'block';
+        alertLog.classList.remove('fail');
+        alertLog.classList.add('success');
+        alertMessage.innerText = response.message;
         window.location.href =
         'https://maintenance-tracker-stv.herokuapp.com/user-view-requests.html';
       }

@@ -21,7 +21,7 @@ const requests = (client) => {
   CREATE SEQUENCE request_ref_no
   MINVALUE 100000
   START 100000
-  CACHE 2;
+  CACHE 1;
 
   CREATE TABLE Requests (
       requestId SERIAL PRIMARY KEY,
