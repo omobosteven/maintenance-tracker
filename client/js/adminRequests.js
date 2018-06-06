@@ -2,9 +2,6 @@
 const alertLog = document.getElementById('alertLog');
 const alertMessage = document.getElementById('alertMessage');
 const requests = document.getElementById('requests');
-const user = document.getElementById('user');
-
-user.innerText = localStorage.getItem('user');
 
 const saveIdOnLocalStorage = (e) => {
   let { id } = e.target;
@@ -14,7 +11,7 @@ const saveIdOnLocalStorage = (e) => {
 
   localStorage.setItem('id', `${parseInt(id, 10)}`);
   window.location.href =
-  'https://maintenance-tracker-stv.herokuapp.com/user-request-details.html';
+  'https://maintenance-tracker-stv.herokuapp.com/admin-request-details.html';
 };
 
 const createNewRequestItem = (request) => {
@@ -42,7 +39,7 @@ const createNewRequestItem = (request) => {
       requestList.className = ('pending');
       requestStatus.className = ('status-pending');
       break;
-    case 'disaproved':
+    case 'disapproved':
       requestList.className = ('rejected');
       requestStatus.className = ('status-rejected');
       break;

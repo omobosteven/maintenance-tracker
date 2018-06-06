@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Maintenance tracker</title>
+  <title>Maintenance tracker | Signup</title>
   <link rel="stylesheet" href="vendors/css/normalize.css" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.3.54/css/materialdesignicons.min.css" type="text/css">
@@ -16,14 +16,13 @@
       <nav class="container">
         <div class="row">
           <div class="header-logo">
-            <a href="user-view-requests.html"><img src="img/logo-white.png" alt="maintanace-tracker logo" class="logo"></a>
-            <p class="user"><span id="user"></span><br> Dashboard</p>
+            <a href="signup.html"><img src="img/logo-white.png" alt="maintanace-tracker logo" class="logo"></a>
+            <p class="user">Admin Dashboard</p>
             <button type="button" id="navbar-toggler" class="nav-toggle"><i class="mdi mdi-view-sequential"></i></button>
           </div>
           <ul class="main-nav" id="navbar-collapse">
-            <li><a href="create-request.html">Make Request</a></li>
-            <li><a href="user-view-requests.html" class="active">View Requests</a></li>
-            <li><a href="signin.html">Logout</a></li>
+            <li><a href="admin-view-requests.html" class="active">View Requests</a></li>
+            <li><a href="signup.html">Logout</a></li>
           </ul>
         </div>
       </nav>
@@ -38,26 +37,29 @@
         <p id="alertMessage"></p>
       </div>
       <div class="row card-details" id="cardDetails">
-        <a href="user-view-requests.html" class="close-link"><i class="mdi mdi-window-close"></i></a>
-        <a href="modify-request.html" class="edit-link" id="editLink"><i class="mdi mdi-pencil-box-outline"></i>Modify</a>
-        <div class="details user-details">
+        <a href="admin-view-requests.html" class="close-link-admin"><i class="mdi mdi-window-close"></i></a>
+        <div class="details">
           <p><span class="details-heading">Ref_no:</span> <span class="detail" id="reqRef"></span></p>
+          <p><span class="details-heading">User:</span> <span class="detail" id="reqUser"></span></p>
           <p><span class="details-heading">Type:</span> <span class="detail" id="reqType"></span></p>
           <p><span class="details-heading">Category:</span> <span class="detail" id="reqCat"></span></p>
           <p><span class="details-heading">Item:</span> <span class="detail" id="reqItem"></span></p>
           <p><span class="details-heading">Description:</span> <span class="detail" id="reqDes"></span></p>
         </div>
-        <div class="request-status">
-          <p id="requestStatus"></p>
+        <div class="admin-btn">
+          <button class="btn btn-approve" id="approveBtn" title="approve" disabled>Approve <i class="mdi mdi-thumb-up-outline" title="approve"></i></button>
+          <button class="btn btn-reject" id="disapproveBtn" title="disapprove">Disapprove <i class="mdi mdi-window-close" title="disapprove"></i></button>
+          <button class="btn btn-resolve" id="resolveBtn" title="resolve" disabled>Resolve <i class="mdi mdi-check" title="resolve"></i></button>
         </div>
       </div>
     </section>
   </div>
   
+  
   <footer>
     <p>Operations department &copy; 2018</p>
   </footer>
   <script src="js/main.js"></script>
-  <script src="js/requestDetails.js"></script>
+  <script src="js/adminRequestDetails.js"></script>
 </body>
 </html>

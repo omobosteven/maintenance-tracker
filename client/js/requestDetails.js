@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 const alertLog = document.getElementById('alertLog');
 const alertMessage = document.getElementById('alertMessage');
+const displayCard = document.getElementById('cardDetails');
 const modifyLink = document.getElementById('editLink');
 const requestRefNumber = document.getElementById('reqRef');
 const requestType = document.getElementById('reqType');
@@ -19,6 +20,7 @@ const generateRequestDetails = (request) => {
   requestCategory.innerText = request.category;
   requestItem.innerText = request.item;
   requestDescription.innerText = request.description;
+  displayCard.style.display = 'flex';
   requestStatus.parentElement.style.display = 'block';
 
   switch (request.status) {
