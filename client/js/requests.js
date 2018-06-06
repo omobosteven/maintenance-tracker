@@ -1,6 +1,4 @@
 /* eslint-disable no-undef */
-const alertLog = document.getElementById('alertLog');
-const alertMessage = document.getElementById('alertMessage');
 const requests = document.getElementById('requests');
 const user = document.getElementById('user');
 
