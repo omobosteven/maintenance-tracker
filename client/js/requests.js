@@ -42,7 +42,7 @@ const createNewRequestItem = (request) => {
       requestList.className = ('pending');
       requestStatus.className = ('status-pending');
       break;
-    case 'disaproved':
+    case 'disapproved':
       requestList.className = ('rejected');
       requestStatus.className = ('status-rejected');
       break;

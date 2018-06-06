@@ -51,7 +51,6 @@ input[disabled] {
   cursor: not-allowed; 
 }
 
-
 input[type=button] {
   background-color: #bb3615;
   border: 1px solid #bb3615;
@@ -410,7 +409,7 @@ select[name=filter] {
 .card-details {
   background-color: #fcfcfce5;
   color: #333333;
-  display: flex;
+  display: none;
   flex-direction: column;
   margin-top: 2.6rem;
   max-width: 650px;
@@ -533,6 +532,18 @@ select[name=filter] {
 .btn-resolve:hover {
   background-color: #328825;
   cursor: pointer;
+}
+
+button[disabled],
+button[disabled]:hover
+ {
+  background-color: #d1d1d1;
+  border: 1px solid #555;
+  color: #555;
+}
+
+button[disabled]:hover {
+  cursor: not-allowed; 
 }
 
 .details p {
