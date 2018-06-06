@@ -4,19 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Maintenance tracker | Signup</title>
+  <title>Maintenance tracker</title>
   <link rel="stylesheet" href="vendors/css/normalize.css" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.3.54/css/materialdesignicons.min.css" type="text/css">
   <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
-<body id='main'>
+<body onload="getRequestDetails()">
   <div class="content">
     <header>
       <nav class="container">
         <div class="row">
           <div class="header-logo">
-            <a href="signup.html"><img src="img/logo-white.png" alt="maintanace-tracker logo" class="logo"></a>
+            <a href="user-view-requests.html"><img src="img/logo-white.png" alt="maintanace-tracker logo" class="logo"></a>
             <p class="user"><span id="user"></span><br> Dashboard</p>
             <button type="button" id="navbar-toggler" class="nav-toggle"><i class="mdi mdi-view-sequential"></i></button>
           </div>
@@ -41,14 +41,14 @@
         <a href="user-view-requests.html" class="close-link"><i class="mdi mdi-window-close"></i></a>
         <a href="modify-request.html" class="edit-link" id="editLink"><i class="mdi mdi-pencil-box-outline"></i>Modify</a>
         <div class="details user-details">
-          <p><span class="details-heading">Ref:</span> <span class="detail" id="reqRef"></span></p>
+          <p><span class="details-heading">Ref_no:</span> <span class="detail" id="reqRef"></span></p>
           <p><span class="details-heading">Type:</span> <span class="detail" id="reqType"></span></p>
           <p><span class="details-heading">Category:</span> <span class="detail" id="reqCat"></span></p>
           <p><span class="details-heading">Item:</span> <span class="detail" id="reqItem"></span></p>
           <p><span class="details-heading">Description:</span> <span class="detail" id="reqDes"></span></p>
         </div>
         <div class="request-status">
-          <p class="req-resolved" id="requestStatus"></p>
+          <p id="requestStatus"></p>
         </div>
       </div>
     </section>

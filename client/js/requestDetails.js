@@ -1,13 +1,12 @@
 /* eslint-disable no-undef */
 const alertLog = document.getElementById('alertLog');
 const alertMessage = document.getElementById('alertMessage');
-const body = document.getElementById('main');
 const modifyLink = document.getElementById('editLink');
 const requestRefNumber = document.getElementById('reqRef');
 const requestType = document.getElementById('reqType');
 const requestCategory = document.getElementById('reqCat');
 const requestItem = document.getElementById('reqItem');
-const requestDescription = document.getElementById('reqDescription');
+const requestDescription = document.getElementById('reqDes');
 const requestStatus = document.getElementById('requestStatus');
 const user = document.getElementById('user');
 
@@ -24,21 +23,21 @@ const generateRequestDetails = (request) => {
 
   switch (request.status) {
     case 'pending':
-      requestStatus.className('req-pending');
-      requestStatus.innerText('Pending');
+      requestStatus.className = ('req-pending');
+      requestStatus.innerText = 'Pending';
       modifyLink.style.display = 'block';
       break;
     case 'approved':
-      requestStatus.className('req-approved');
-      requestStatus.innerText('Approved');
+      requestStatus.className = 'req-approved';
+      requestStatus.innerText = 'Approved';
       break;
     case 'disapproved':
-      requestStatus.className('req-reject');
-      requestStatus.innerText('Dispproved');
+      requestStatus.className = 'req-reject';
+      requestStatus.innerText = 'Dispproved';
       break;
     case 'resolved':
-      requestStatus.className('req-resolved');
-      requestStatus.innerText('Resolved');
+      requestStatus.className = 'req-resolved';
+      requestStatus.innerText = 'Resolved';
       break;
     default:
   }
@@ -46,7 +45,6 @@ const generateRequestDetails = (request) => {
 
 const getRequestDetails = () => {
   const token = localStorage.getItem('token');
-
   const option = {
     method: 'GET',
     headers: {
@@ -68,11 +66,8 @@ const getRequestDetails = () => {
   })
     .then((response) => {
       if (response.status === 'success') {
-        generateRequestDetails(response);
+        generateRequestDetails(response.data.request);
       }
     })
     .catch(err => err.message);
 };
-
-body.addEventListener('load', getRequestDetails);
-

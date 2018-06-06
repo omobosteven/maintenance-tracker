@@ -488,7 +488,7 @@ select[name=filter] {
 }
 
 .req-pending {
-  background-color: #dcdde1;
+  background-color: #d4d3d3;
   color: #555;
 }
 
