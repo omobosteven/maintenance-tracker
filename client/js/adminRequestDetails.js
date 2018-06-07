@@ -7,6 +7,7 @@ const btnResolve = document.getElementById('resolveBtn');
 const displayCard = document.getElementById('cardDetails');
 const requestRefNumber = document.getElementById('reqRef');
 const requestUser = document.getElementById('reqUser');
+const requestStatus = document.getElementById('reqStatus');
 const requestType = document.getElementById('reqType');
 const requestCategory = document.getElementById('reqCat');
 const requestItem = document.getElementById('reqItem');
@@ -22,6 +23,7 @@ const generateRequestDetails = (request) => {
   requestCategory.innerText = request.category;
   requestItem.innerText = request.item;
   requestDescription.innerText = request.description;
+  requestStatus.innerText = request.status;
   displayCard.style.display = 'flex';
 
   switch (request.status) {
@@ -49,7 +51,7 @@ const generateRequestDetails = (request) => {
   }
 };
 
-const getRequestDetails = () => {
+window.onload = () => {
   const option = {
     method: 'GET',
     headers: {

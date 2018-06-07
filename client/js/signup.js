@@ -18,6 +18,20 @@ const checkPassword = () => {
   }
 };
 
+const displayErrorMessages = (error) => {
+  if (error.email) {
+    const [emailError] = error.email;
+    errorMessage[0].style.display = 'block';
+    errorMessage[0].innerHTML = emailError;
+  }
+
+  if (error.password) {
+    const [passwordError] = error.password;
+    errorMessage[1].style.display = 'block';
+    errorMessage[1].innerHTML = passwordError;
+  }
+};
+
 const clearErrorMeassage = (e) => {
   e.target.parentElement.nextElementSibling.style.display = 'none';
 };
@@ -78,16 +92,8 @@ const createAccount = (e) => {
 
       redirectUser(response.data.role);
 
-      if (response.data.errors.email) {
-        const [emailError] = response.data.errors.email;
-        errorMessage[0].style.display = 'block';
-        errorMessage[0].innerHTML = emailError;
-      }
-
-      if (response.data.errors.password) {
-        const [passwordError] = response.data.errors.password;
-        errorMessage[1].style.display = 'block';
-        errorMessage[1].innerHTML = passwordError;
+      if (response.status === 'fail') {
+        displayErrorMessages(response.data.errors);
       }
     })
     .catch(err => err.message);

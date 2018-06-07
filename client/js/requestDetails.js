@@ -45,7 +45,7 @@ const generateRequestDetails = (request) => {
   }
 };
 
-const getRequestDetails = () => {
+window.onload = () => {
   const token = localStorage.getItem('token');
   const option = {
     method: 'GET',

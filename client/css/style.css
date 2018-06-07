@@ -300,6 +300,7 @@ textarea {
   align-items: center;
   background-color: #f1f1f1;
   color: #4b4b4b;
+  cursor: pointer;
   display: flex;
   font-weight: 400;
   justify-content: space-between;
@@ -309,6 +310,8 @@ textarea {
 }
 
 .request-item p {
+  pointer-events: none;
+  user-select: none;
   width: 150px;
 }
 
@@ -635,7 +638,7 @@ footer {
   }
 
   .section-form {
-    margin-top: 15.0rem;
+    margin-top: 16.0rem;
   }
 
   .request-form {
