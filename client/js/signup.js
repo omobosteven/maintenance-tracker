@@ -18,6 +18,27 @@ const checkPassword = () => {
   }
 };
 
+const clearErrorMeassage = (e) => {
+  e.target.parentElement.nextElementSibling.style.display = 'none';
+};
+
+const redirectUser = (userRole) => {
+  const adminLink =
+  'https://maintenance-tracker-stv.herokuapp.com/admin-view-requests.html';
+  const userLink =
+  'https://maintenance-tracker-stv.herokuapp.com/user-view-requests.html';
+
+  switch (userRole) {
+    case 'admin':
+      window.location.href = adminLink;
+      break;
+    case 'user':
+      window.location.href = userLink;
+      break;
+    default:
+  }
+};
+
 const createAccount = (e) => {
   e.preventDefault();
   const userDetails = {
@@ -55,34 +76,25 @@ const createAccount = (e) => {
         alertMessage.innerText = response.message;
       }
 
-      const adminLink =
-      'https://maintenance-tracker-stv.herokuapp.com/admin-view-requests.html';
-      const userLink =
-      'https://maintenance-tracker-stv.herokuapp.com/user-view-requests.html';
-
-      switch (response.data.role) {
-        case 'admin':
-          window.location.href = adminLink;
-          break;
-        case 'user':
-          window.location.href = userLink;
-          break;
-        default:
-      }
+      redirectUser(response.data.role);
 
       if (response.data.errors.email) {
         const [emailError] = response.data.errors.email;
+        errorMessage[0].style.display = 'block';
         errorMessage[0].innerHTML = emailError;
       }
 
       if (response.data.errors.password) {
         const [passwordError] = response.data.errors.password;
+        errorMessage[1].style.display = 'block';
         errorMessage[1].innerHTML = passwordError;
       }
     })
     .catch(err => err.message);
 };
 
-signupForm.addEventListener('submit', createAccount);
-password.addEventListener('input', checkPassword);
 confirmPassword.addEventListener('input', checkPassword);
+email.addEventListener('focus', clearErrorMeassage);
+password.addEventListener('focus', clearErrorMeassage);
+password.addEventListener('input', checkPassword);
+signupForm.addEventListener('submit', createAccount);

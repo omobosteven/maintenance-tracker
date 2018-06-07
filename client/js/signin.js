@@ -5,6 +5,27 @@ const errorMessage = document.querySelectorAll('.error');
 const { signinForm } = document.forms;
 const { email, password } = signinForm.elements;
 
+const clearErrorMeassage = (e) => {
+  e.target.parentElement.nextElementSibling.style.display = 'none';
+};
+
+const redirectUser = (userRole) => {
+  const adminLink =
+  'https://maintenance-tracker-stv.herokuapp.com/admin-view-requests.html';
+  const userLink =
+  'https://maintenance-tracker-stv.herokuapp.com/user-view-requests.html';
+
+  switch (userRole) {
+    case 'admin':
+      window.location.href = adminLink;
+      break;
+    case 'user':
+      window.location.href = userLink;
+      break;
+    default:
+  }
+};
+
 const siginUser = (e) => {
   e.preventDefault();
   const userDetails = {
@@ -48,32 +69,23 @@ const siginUser = (e) => {
         alertMessage.innerText = response.message;
       }
 
-      const adminLink =
-      'https://maintenance-tracker-stv.herokuapp.com/admin-view-requests.html';
-      const userLink =
-      'https://maintenance-tracker-stv.herokuapp.com/user-view-requests.html';
-
-      switch (response.data.role) {
-        case 'admin':
-          window.location.href = adminLink;
-          break;
-        case 'user':
-          window.location.href = userLink;
-          break;
-        default:
-      }
+      redirectUser(response.data.role);
 
       if (response.data.errors.email) {
         const [emailError] = response.data.errors.email;
+        errorMessage[0].style.display = 'block';
         errorMessage[0].innerHTML = emailError;
       }
 
       if (response.data.errors.password) {
         const [passwordError] = response.data.errors.password;
+        errorMessage[1].style.display = 'block';
         errorMessage[1].innerHTML = passwordError;
       }
     })
     .catch(err => err.message);
 };
 
+email.addEventListener('focus', clearErrorMeassage);
+password.addEventListener('focus', clearErrorMeassage);
 signinForm.addEventListener('submit', siginUser);
