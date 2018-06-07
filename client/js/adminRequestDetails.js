@@ -79,7 +79,7 @@ window.onload = () => {
     .catch(err => err.message);
 };
 
-const something = (e) => {
+const updateRequestStatus = (e) => {
   const urlOption = e.target.title;
   const url =
   `https://maintenance-tracker-stv.herokuapp.com/api/v1/requests/${id}/${urlOption}`;
@@ -112,6 +112,6 @@ const something = (e) => {
     .catch(err => err.message);
 };
 
-btnApprove.addEventListener('click', something);
-btnDisapprove.addEventListener('click', something);
-btnResolve.addEventListener('click', something);
+btnApprove.addEventListener('click', updateRequestStatus);
+btnDisapprove.addEventListener('click', updateRequestStatus);
+btnResolve.addEventListener('click', updateRequestStatus);

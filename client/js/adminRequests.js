@@ -1,7 +1,10 @@
 /* eslint-disable no-undef */
 const alertLog = document.getElementById('alertLog');
 const alertMessage = document.getElementById('alertMessage');
+const requestsFilter = document.getElementById('filter');
 const requests = document.getElementById('requests');
+
+let allRequests;
 
 const saveIdOnLocalStorage = (e) => {
   const { id } = e.target;
@@ -29,19 +32,19 @@ const createNewRequestItem = (request) => {
   const { status } = request;
   switch (status) {
     case 'pending':
-      requestList.className = ('new-request');
+      requestList.classList.add('request', 'new-request');
       requestStatus.className = ('status-new');
       break;
     case 'approved':
-      requestList.className = ('pending');
+      requestList.classList.add('request', 'pending');
       requestStatus.className = ('status-pending');
       break;
     case 'disapproved':
-      requestList.className = ('rejected');
+      requestList.classList.add('request', 'rejected');
       requestStatus.className = ('status-rejected');
       break;
     case 'resolved':
-      requestList.className = ('resolved');
+      requestList.classList = ('request', 'resolved');
       requestStatus.className = ('status-resolved');
       break;
     default:
@@ -57,6 +60,21 @@ const createNewRequestItem = (request) => {
   requestList.appendChild(requestLink);
 
   requests.appendChild(requestList);
+};
+
+const filterRequests = () => {
+  const filterValue = requestsFilter.value;
+
+  requests.innerText = '';
+
+  if (filterValue === 'all') {
+    allRequests.forEach(request => createNewRequestItem(request));
+  } else {
+    const filteredRequests =
+      allRequests.filter(request => request.status === filterValue);
+
+    filteredRequests.forEach(request => createNewRequestItem(request));
+  }
 };
 
 window.onload = () => {
@@ -83,9 +101,12 @@ window.onload = () => {
   })
     .then((response) => {
       if (response.status === 'success') {
+        allRequests = response.data.requests;
         response.data.requests
           .forEach(request => createNewRequestItem(request));
       }
     })
     .catch(err => err.message);
 };
+
+requestsFilter.addEventListener('change', filterRequests);
