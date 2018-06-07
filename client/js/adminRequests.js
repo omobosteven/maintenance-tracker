@@ -4,10 +4,7 @@ const alertMessage = document.getElementById('alertMessage');
 const requests = document.getElementById('requests');
 
 const saveIdOnLocalStorage = (e) => {
-  let { id } = e.target;
-  if (e.target.localName === 'p') {
-    id = e.target.parentElement.id;
-  }
+  const { id } = e.target;
 
   localStorage.setItem('id', `${parseInt(id, 10)}`);
   window.location.href =
@@ -62,7 +59,7 @@ const createNewRequestItem = (request) => {
   requests.appendChild(requestList);
 };
 
-const getAllRequests = () => {
+window.onload = () => {
   const token = localStorage.getItem('token');
 
   const option = {

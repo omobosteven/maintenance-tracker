@@ -3,17 +3,45 @@ const alertLog = document.getElementById('alertLog');
 const alertMessage = document.getElementById('alertMessage');
 const cancelBtn = document.getElementById('cancelUpdate');
 const errorMessage = document.querySelectorAll('.error');
+const user = document.getElementById('user');
+
 const { requestForm } = document.forms;
 const {
   type, category, requestItem, description,
 } = requestForm.elements;
-const user = document.getElementById('user');
+
 const id = localStorage.getItem('id');
 const token = localStorage.getItem('token');
 const detailUrl =
 'https://maintenance-tracker-stv.herokuapp.com/user-request-details.html';
 
 user.innerText = localStorage.getItem('user');
+
+const displayErrorMessages = (error) => {
+  if (error.type) {
+    const [typeError] = error.type;
+    errorMessage[0].innerHTML = typeError;
+  }
+
+  if (error.category) {
+    const [categoryError] = error.category;
+    errorMessage[1].innerHTML = categoryError;
+  }
+
+  if (error.item) {
+    const [itemError] = error.item;
+    errorMessage[2].innerHTML = itemError;
+  }
+
+  if (error.description) {
+    const [descriptionError] = error.description;
+    errorMessage[3].innerHTML = descriptionError;
+  }
+};
+
+const clearErrorMeassage = (e) => {
+  e.target.parentElement.nextElementSibling.style.display = 'none';
+};
 
 const modifyRequest = (e) => {
   e.preventDefault();
@@ -54,30 +82,14 @@ const modifyRequest = (e) => {
         window.location.href = detailUrl;
       }
 
-      if (response.data.errors.type) {
-        const [typeError] = response.data.errors.type;
-        errorMessage[0].innerHTML = typeError;
-      }
-
-      if (response.data.errors.category) {
-        const [categoryError] = response.data.errors.category;
-        errorMessage[1].innerHTML = categoryError;
-      }
-
-      if (response.data.errors.item) {
-        const [itemError] = response.data.errors.item;
-        errorMessage[2].innerHTML = itemError;
-      }
-
-      if (response.data.errors.description) {
-        const [descriptionError] = response.data.errors.description;
-        errorMessage[3].innerHTML = descriptionError;
+      if (response.status === 'fail') {
+        displayErrorMessages(response.data.errors);
       }
     })
     .catch(err => err.message);
 };
 
-const loadCurrentDetails = () => {
+window.onload = () => {
   const option = {
     method: 'GET',
     headers: {
@@ -113,5 +125,9 @@ const cancelUpdate = () => {
   window.location.href = detailUrl;
 };
 
+type.addEventListener('focus', clearErrorMeassage);
+category.addEventListener('focus', clearErrorMeassage);
+requestItem.addEventListener('focus', clearErrorMeassage);
+description.addEventListener('focus', clearErrorMeassage);
 requestForm.addEventListener('submit', modifyRequest);
 cancelBtn.addEventListener('click', cancelUpdate);

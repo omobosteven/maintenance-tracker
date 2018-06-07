@@ -172,11 +172,12 @@ nav .row {
 }
 
 .alert {
-  padding: 20px;
   color: white;
+  display: none;
+  font-size: 1.9rem;
   margin-bottom: 15px;
   max-width: 700px;
-  display: none;
+  padding: 20px;
 }
 
 .fail {
@@ -269,7 +270,8 @@ textarea {
 }
 
 .signup-form .error {
-  color: #f7ab98;
+  background: #e84118;
+  color: #fff;
   text-align: right;
 }
 
@@ -298,6 +300,7 @@ textarea {
   align-items: center;
   background-color: #f1f1f1;
   color: #4b4b4b;
+  cursor: pointer;
   display: flex;
   font-weight: 400;
   justify-content: space-between;
@@ -307,6 +310,8 @@ textarea {
 }
 
 .request-item p {
+  pointer-events: none;
+  user-select: none;
   width: 150px;
 }
 
@@ -633,12 +638,30 @@ footer {
   }
 
   .section-form {
-    margin-top: 12.0rem;
+    margin-top: 16.0rem;
+  }
+
+  .request-form {
+    margin-top: 10.0rem;
+  }
+
+  .section-details {
+    margin-top: 8.5rem;
+  }
+
+  .user-requests {
+    margin-top: 14.6rem;
   }
 
   .signup-form .form-group {
     flex-direction: row;
     justify-content: space-between;
+  }
+
+  .signup-form .error {
+    font-size: 1.9rem;
+    margin-left: 17.2rem;
+    max-width: 39.6rem;
   }
 
   .signup-form .submit-btn {

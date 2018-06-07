@@ -561,7 +561,19 @@ footer {
   }
 
   .section-form {
-    margin-top: 12.0rem;
+    margin-top: 15.0rem;
+  }
+
+  .request-form {
+    margin-top: 10.0rem;
+  }
+
+  .section-details {
+    margin-top: 8.5rem;
+  }
+
+  .user-requests {
+    margin-top: 14.6rem;
   }
 
   .signup-form .form-group {
