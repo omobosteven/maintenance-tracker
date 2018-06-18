@@ -1,10 +1,6 @@
-import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 
-dotenv.config();
-const secret = process.env.JWT_SECRET;
-
-class Util {
+class GenerateToken {
   /**
    * @description Method to generate token
    *
@@ -12,7 +8,7 @@ class Util {
    *
    * @return {String} Returned token
    */
-  static token(user) {
+  static token(user, secret) {
     const authToken = jwt.sign(
       user, secret,
       { expiresIn: '1d' },
@@ -22,4 +18,4 @@ class Util {
   }
 }
 
-export default Util;
+export default GenerateToken;

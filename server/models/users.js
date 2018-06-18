@@ -1,8 +1,6 @@
-import dotenv from 'dotenv';
+
 import bcrypt from 'bcryptjs';
 import db from './db';
-
-dotenv.config();
 
 const hash = bcrypt.hashSync(process.env.ADMIN_PASSWORD, 10);
 const adminEmail = process.env.ADMIN_EMAIL;

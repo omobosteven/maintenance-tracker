@@ -1,6 +1,8 @@
 import bcrypt from 'bcryptjs';
-import Util from '../utility/Util';
+import GenerateToken from './helper/GenerateToken';
 import db from '../models/db';
+
+const secret = process.env.JWT_SECRET;
 
 class UsersController {
   /**
@@ -37,7 +39,7 @@ class UsersController {
 
             return client.query(queryCreateUser)
               .then((savedUser) => {
-                const authToken = Util.token(savedUser.rows[0]);
+                const authToken = GenerateToken.token(savedUser.rows[0], secret);
                 client.release();
                 return response.status(201).json({
                   status: 'success',
@@ -105,7 +107,7 @@ class UsersController {
               });
             }
 
-            const authToken = Util.token(user.rows[0]);
+            const authToken = GenerateToken.token(user.rows[0], secret);
             client.release();
             return response.status(200).json({
               status: 'success',

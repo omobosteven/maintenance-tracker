@@ -26,7 +26,7 @@ class ValidateRequest {
       type: ['required', { in: ['repair', 'maintenance'] }],
       category: 'required|max:20',
       description: 'required|min:10|max:50',
-      item: 'required|min:3|max:50|alpha_dash',
+      item: 'required|min:3|max:50',
     };
 
     const validation = new Validator(data, rules, {
@@ -77,7 +77,7 @@ class ValidateRequest {
       type: ['required_with:type', { in: ['repair', 'maintenance'] }],
       category: 'required_with:category|max:20',
       description: 'required_with:description|min:10|max:50',
-      item: 'required_with:item|min:2|max:15|alpha_dash',
+      item: 'required_with:item|min:2|max:15',
     };
 
     const validation = new Validator(data, rules, {
