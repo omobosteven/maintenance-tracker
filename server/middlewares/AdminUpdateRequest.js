@@ -1,12 +1,14 @@
 import db from '../models/db';
 
-class AdminRequests {
+class AdminUpdateRequests {
   /**
    * @description Method to check for request
    *
    * @param {Object} user
    *
    * @return {String} Returned token
+   *
+   *@return {Function} next
    */
   static fetchRequest(request, response, next) {
     const { id } = request.params;
@@ -42,4 +44,4 @@ class AdminRequests {
   }
 }
 
-export default AdminRequests;
+export default AdminUpdateRequests;
