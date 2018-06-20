@@ -48,7 +48,7 @@ class Authorization {
    * @return {Function} next
    */
   static verifyAdmin(request, response, next) {
-    if (request.decoded.role === 'admin') {
+    if (request.decoded.roleId === 1) {
       next();
     } else {
       response.status(403).json({

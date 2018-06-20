@@ -14,8 +14,8 @@ class AdminUpdateRequests {
     const { id } = request.params;
 
     const queryFetchRequest =
-    `SELECT * FROM requests
-    WHERE requestid = '${id}';`;
+    `SELECT * FROM "Requests"
+    WHERE "requestId" = '${id}';`;
 
     db.connect()
       .then((client) => {

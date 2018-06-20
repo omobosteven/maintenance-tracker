@@ -88,7 +88,7 @@ describe('Tests for requests API endpoints', () => {
       .end((error, response) => {
         expect(response).to.have.status(400);
         expect(response.body.data.errors.type[0]).to
-          .equal('type must be either of repair or maintenance');
+          .equal('type field must be either of 1:repair or 2:maintenance');
         done();
       });
   });
@@ -118,7 +118,7 @@ describe('Tests for requests API endpoints', () => {
       .set('x-access-token', userToken)
       .set('Content-type', 'application/json')
       .send({
-        type: 'repair',
+        type: '1',
         category: 'computers',
         item: 'laptop',
         description: 'faulty battery',
@@ -139,7 +139,7 @@ describe('Tests for requests API endpoints', () => {
       .set('x-access-token', userToken)
       .set('Content-type', 'application/json')
       .send({
-        type: 'repair',
+        type: '1',
         category: 'computers',
         item: 'laptop',
         description: 'faulty battery',
@@ -161,8 +161,8 @@ describe('Tests for requests API endpoints', () => {
         expect(response.body.message).to.equal('My Requests');
         expect(response.body.data.requests).to.be.an('array');
         expect(response.body.data.requests[0]).to.deep.include({
-          requestid: 1,
-          userid: 2,
+          requestId: 1,
+          userId: 2,
           type: 'repair',
           category: 'computers',
           item: 'laptop',
@@ -179,7 +179,7 @@ describe('Tests for requests API endpoints', () => {
       .set('x-access-token', userToken)
       .set('Content-type', 'application/json')
       .send({
-        type: 'repair',
+        type: '1',
         category: 'computers',
         item: 'laptop',
         description: 'faulty keyboard',
@@ -273,7 +273,7 @@ describe('Tests for requests API endpoints', () => {
       .set('x-access-token', userToken)
       .set('Content-type', 'application/json')
       .send({
-        type: 'repair',
+        type: '1',
         category: 'computers',
         item: 'laptop',
         description: 'faulty keyboard',
@@ -283,7 +283,7 @@ describe('Tests for requests API endpoints', () => {
         expect(response.body.message).to.equal('request updated successfully');
         expect(response.body.data.request.description).to
           .equal('faulty keyboard');
-        expect(response.body.data.request.type).to.equal('repair');
+        expect(response.body.data.request.typeId).to.equal(1);
         expect(response.body.data.request.category).to.equal('computers');
         expect(response.body.data.request.item).to.equal('laptop');
         done();
@@ -296,7 +296,7 @@ describe('Tests for requests API endpoints', () => {
       .set('x-access-token', userToken)
       .set('Content-type', 'application/json')
       .send({
-        type: 'repair',
+        type: '1',
         category: 'computers',
         item: 'laptop',
         description: 'faulty keyboard',

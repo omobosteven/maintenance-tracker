@@ -16,21 +16,21 @@ class ValidateRequest {
     } = request.body;
 
     const data = {
-      type: (type && type.trim().toLowerCase()),
+      type: (type && type.trim()),
       category: (category && category.trim().toLowerCase()),
       description: (description && description.trim().toLowerCase()),
       item: (item && item.trim().toLowerCase()),
     };
 
     const rules = {
-      type: ['required', { in: ['repair', 'maintenance'] }],
+      type: ['required', { in: ['1', '2'] }],
       category: 'required|max:20',
+      item: 'required|min:2|max:50',
       description: 'required|min:10|max:50',
-      item: 'required|min:3|max:50',
     };
 
     const validation = new Validator(data, rules, {
-      'in.type': ':attribute must be either of repair or maintenance',
+      'in.type': ':attribute field must be either of 1:repair or 2:maintenance',
     });
 
     if (validation.passes()) {
@@ -74,10 +74,10 @@ class ValidateRequest {
     };
 
     const rules = {
-      type: ['required_with:type', { in: ['repair', 'maintenance'] }],
+      type: ['required_with:type', { in: ['1', '2'] }],
       category: 'required_with:category|max:20',
-      description: 'required_with:description|min:10|max:50',
       item: 'required_with:item|min:2|max:15',
+      description: 'required_with:description|min:10|max:50',
     };
 
     const validation = new Validator(data, rules, {
@@ -85,8 +85,7 @@ class ValidateRequest {
       'required_with.category': 'The :attribute field cannot be empty',
       'required_with.item': 'The :attribute field cannot be empty',
       'required_with.description': 'The :attribute field cannot be empty',
-      'integer.id': 'The request :attribute must be a number',
-      'in.type': ':attribute must be either of repair or maintenance',
+      'in.type': ':attribute field must be either of 1:repair or 2:maintenance',
     });
 
     if (validation.passes()) {
