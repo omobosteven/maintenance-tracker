@@ -1,131 +1,105 @@
-<img src="logoSmall.png" alt='logo'/>
-
-[![Build Status](https://travis-ci.com/omobosteven/maintenance-tracker.svg?branch=ch-remove-enum-datatype-158414627)](https://travis-ci.com/omobosteven/maintenance-tracker)
-[![Coverage Status](https://coveralls.io/repos/github/omobosteven/maintenance-tracker/badge.svg?branch=ch-remove-enum-datatype-158414627)](https://coveralls.io/github/omobosteven/maintenance-tracker?branch=ch-remove-enum-datatype-158414627)
+[![Build Status](https://travis-ci.com/omobosteven/maintenance-tracker.svg?branch=ch-update-readme-158444226)](https://travis-ci.com/omobosteven/maintenance-tracker)
+[![Coverage Status](https://coveralls.io/repos/github/omobosteven/maintenance-tracker/badge.svg?branch=ch-update-readme-158444226)](https://coveralls.io/github/omobosteven/maintenance-tracker?branch=ch-update-readme-158444226)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a6fde1bb2915cec5032e/maintainability)](https://codeclimate.com/github/omobosteven/maintenance-tracker/maintainability)
 
 # Maintenance-tracker
-Maintenance Tracker App is an application that provides users with the ability to reach out to operations or repairs department regarding repair or maintenance requests and monitor the status of their request.
+MaintenanceTracker App is an application that provides users with the ability to reach out to operations or repairs department regarding repair or maintenance requests and monitor the status of their request. [MaintenanceTracker App](https://maintenance-tracker-stv.herokuapp.com/index.html)
 
-* [Maintenance-tracker API documentation](https://maintenance-tracker-stv.herokuapp.com/apidocs)
-* [Maintenance-tracker on Heroku](https://maintenance-tracker-stv.herokuapp.com/signup.html)
+<br />
+<br />
+
+## Getting Started
+This is a javascript application built with [**Express**](https://expressjs.com/) framework on the nodejs platform. It uses the [**postgreSQl**](https://www.postgresql.org/) database. Authentication of users is done using [**JSON Web Token**](https://jwt.io/).
+
+## Techonolgy Stack
+**UI & Templates**
+1. HTML & CSS
+3. Javascript
+
+**Server Side**
+1. NodeJS
+2. Express
+
+## Dependencies
+* [Postgres](https://www.postgresql.org/download/)
+* [NodeJS](https://nodejs.org/en/)
+
+## Installation
+1. Install [**Node JS**](https://nodejs.org/en/).
+2. Install [**Postgres**](https://www.postgresql.org/).
+3. Clone project [**repo**](https://github.com/omobosteven/maintenance-tracker.git).
+4. [**cd**] into the root of the **project directory**.
+5. Run `npm install` on the terminal to install Dependecies.
+6. Run `npm run db-migrate` on the terminal.
+7. Create a `.env` file in the root directory of the application. Use a different database for your testing and development. Example of the content of a .env file is shown in the .env.sample.
+8. Start the application:
+**_Different Build Environment_**
+
+**Production**
+```
+npm run start
+```
+**Development**
+```
+npm run start-dev
+```
+
+## Usage
+- Run database migration with `npm run db-migrate`
+- Start app development with `npm run start-dev`
+- Install **Postman** and use to test all endpoints
+
+## Limitations
+The limitations with this current version of Maintenance tracker includes:
+- Authenticated Users cannot reopen a resolved request.
+- Authenticated Users cannot cancel a request.
+
+## Testing
+
+Sever side tests - Run `npm test` on the terminal while within the **project root directory**.
+
+Server side testing is achieved through the use of `chai-http`, `mocha` and `chai` packages. `chai-http` is used to make requests to the api and `mocha` is the testing framework and `chai` is the exception library. They will both be installed when you run `npm install` and the tests will run when you run `npm test`.
 
 ## Features
-* User can create an account and log in
-* User can make maintenance or repairs request
-* User can modify their maintenance or repairs request
-* User can view all his/her requests
-* User can view the details/status of his/her request
-* Admin can do the following
-    * Approve or disapprove a repair/maintenance request
-    * Mark request as resolved once it is done
-    * View all maintenance  or repaires request
+MaintenanceTracker consists of the following features:
 
-### Folder Structure
-* UI: contains the UI design with HTML/CSS/JAVASCRIPT
-* server: contains the project API endpoints created using Node/express, and tests using mocha/chai
+### Authentication
 
-## Technologies used
+- It uses JSON Web Token (JWT) for authentication.
+- Token is generated on user login
+- Token is perpetually verified to check the state of the user if logged in or not.
+- Admin User will br pre-seeded into the application with administrative priviledges
 
-#### Core Technology Stacks
-* Front-end: HTML, CSS and Javascript
-* Back-end: Expressjs
-* Libraries: Babel, eslint, Mocha/Chai + chai-http
-* System Dependencies: Node, PostgreSQL
+### Authenticated Users
+- Authenticated Users can register
+- Authenticated Users can log in
+- Authenticated Users can create a request
+- Authenticated Users can modify a request
+- Authenticated Users can view all their requests
+- Authenticated Users can view the details of a request
+- Authenticated Users can search through a list of books
 
-<h3>API Endpoints</h3>
-<hr>
-<table>
-  <tr>
-    <th>Request</th>
-    <th>End Point</th>
-    <th>Action</th>
-  </tr>
-  <tr>
-    <td>GET</td>
-    <td>/api/v1/users/requests</td>
-    <td>Fetch all the requests of a logged in user</td>
-  </tr>
-  <tr>
-    <td>GET</td>
-    <td>/api/v1/users/requests/:id</td>
-    <td>Fetch a request that belongs to a logged in user</td>
-  </tr>
-  <tr>
-    <td>GET</td>
-    <td>/api/v1/requests</td>
-    <td>Fetch all requests</td>
-  </tr>
-  <tr>
-    <td>GET</td>
-    <td>/api/v1/requests/:id</td>
-    <td>Fetch a requests</td>
-  </tr>
-  <tr>
-    <td>POST</td>
-    <td>/api/v1/users/requests</td>
-    <td>Create a request</td>
-  </tr>
-  <tr>
-    <td>PUT</td>
-    <td>/api/v1/users/requests/:id</td>
-    <td>Modify a request</td>
-  </tr>
-  <tr>
-    <td>PUT</td>
-    <td>/api/v1/requests/:id/approve</td>
-    <td>Approve request</td>
-  </tr>
-  <tr>
-    <td>PUT</td>
-    <td>/api/v1/requests/:id/disapprove</td>
-    <td>Disapprove request</td>
-  </tr>
-  <tr>
-    <td>PUT</td>
-    <td>/api/v1/requests/:id/resolve</td>
-    <td>Resolve request</td>
-  </tr>
-  <tr>
-    <td>POST</td>
-    <td>/api/v1/auth/signup</td>
-    <td>Register a user</td>
-  </tr>
-  <tr>
-    <td>POST</td>
-    <td>/api/v1/auth/login</td>
-    <td>Login a user</td>
-  </tr>
-</table>
-<hr>
+### Admin Users
+- Admins can view all requests in the system
+- Admins can view the details of a request
+- Admins can approve a request
+- Admins can disapprove a request
+- Admins can resolve a request
 
-### Getting Started
 
-* Clone project repo - git clone `https://github.com/omobosteven/maintenance-tracker.git`
-* Ensure you have installed [NodeJS](https://nodejs.org/en/) and [Postgres](https://www.postgresql.org/download/)
-* Navigate into the application root directory: `cd maintenance-tracker`
-* Setup PostgresSQL servic on your local machine
-* Run `$ npm install` to install all dependencies
-* Create a `.env` file in the root directory using the sample `.env.sample` file
-* setup your database configurations according to settings in server/config/config.js
-* Run `$ npm run db-migrate`
-* Run tests using `$ npm run test`
+## API Documentation
+You can view the API Documentation [here](https://maintenance-tracker-stv.herokuapp.com/apidocs)
 
-### How to Demo/Run the App
-
-* To start the app in development, run: `npm run start-dev`
-* To start the app in a production environment, run: `npm start`
-
+### Questions
+For more details contact omobosteven@gmail.com
 
 ## Contributing
 
 This project is open for contributions. All contributions must adhere to the Airbnb styleguide.
-
 * [Airbnb Styleguide](http://airbnb.io/javascript/)
 
 ### License
 * [MIT License](https://github.com/omobosteven/maintenance-tracker/blob/develop/LICENSE)
 
 ### Author(s)
-
 * [Omobo Steven](https://github.com/omobosteven)
