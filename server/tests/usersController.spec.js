@@ -115,7 +115,7 @@ describe('Tests for Users API endpoint', () => {
         password: 'mypasswor',
       })
       .end((error, response) => {
-        expect(response).to.have.status(400);
+        expect(response).to.have.status(422);
         expect(response.body.message).to.equal('Wrong password entered');
         done();
       });

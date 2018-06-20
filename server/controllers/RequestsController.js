@@ -11,13 +11,17 @@ class RequestsController {
    * @return {Object} Returned object
    */
   static getAllRequests(request, response) {
-    const { userid } = request.decoded;
+    const { userId } = request.decoded;
 
     const queryGetAllRequestsForUser =
-    `SELECT email, requests.* FROM requests
-    INNER JOIN users ON requests.userid = users.userid
-    WHERE requests.userid = '${userid}'
-    ORDER BY requestid DESC;`;
+    `SELECT "requestId",
+     "Requests"."userId", email, type, category,
+      item, description, status, "Requests"."createdAt" FROM "Requests"
+    INNER JOIN "Users" ON "Requests"."userId" = "Users"."userId"
+    INNER JOIN "RequestStatus" ON "Requests"."statusId" = "RequestStatus"."statusId"
+    INNER JOIN "RequestTypes" ON "Requests"."typeId" = "RequestTypes"."typeId"
+    WHERE "Requests"."userId" = '${userId}'
+    ORDER BY "requestId" DESC;`;
 
     db.connect()
       .then((client) => {
@@ -39,12 +43,11 @@ class RequestsController {
               },
             });
           })
-          .catch((e) => {
+          .catch(() => {
             client.release();
             return response.status(500).json({
               status: 'error',
               message: 'Failed to fetch requests',
-              error: e.message,
             });
           });
       });
@@ -59,14 +62,18 @@ class RequestsController {
    * @return {Object} Returned object
    */
   static getRequest(request, response) {
-    const { userid } = request.decoded;
+    const { userId } = request.decoded;
     const { id } = request.params;
 
     const queryFetchRequest =
-    `SELECT email, requests.* FROM requests
-    INNER JOIN users ON requests.userid = users.userid
-    WHERE requestid = '${id}' 
-    AND requests.userid = '${userid}';`;
+    `SELECT  "requestId",
+    "Requests"."userId", email, type, category,
+     item, description, status, "Requests"."createdAt" FROM "Requests"
+    INNER JOIN "Users" ON "Requests"."userId" = "Users"."userId"
+    INNER JOIN "RequestStatus" ON "Requests"."statusId" = "RequestStatus"."statusId"
+    INNER JOIN "RequestTypes" ON "Requests"."typeId" = "RequestTypes"."typeId"
+    WHERE "requestId" = '${id}' 
+    AND "Requests"."userId" = '${userId}';`;
 
     db.connect()
       .then((client) => {
@@ -111,24 +118,24 @@ class RequestsController {
       type, category, item, description,
     } = request.body;
 
-    const { userid } = request.decoded;
+    const { userId } = request.decoded;
     type = type.trim().toLowerCase();
     category = category.trim().toLowerCase();
     item = item.trim().toLowerCase();
     description = description.trim().toLowerCase();
 
     const queryRequestDuplicate =
-    `SELECT * FROM requests
-     WHERE userid='${userid}' AND
-     type='${type}' AND category='${category}' AND
+    `SELECT * FROM "Requests"
+     WHERE "userId"='${userId}' AND
+     "typeId"='${type}' AND category='${category}' AND
      item='${item}' AND description='${description}' AND
-     status='pending';`;
+     "statusId"=1;`;
 
     const queryCreateRequest =
-    `INSERT INTO requests
-    (userId, type, category, item, description)
+    `INSERT INTO "Requests"
+    ("userId", "typeId", category, item, description)
     VALUES
-    (${userid}, '${type}', '${category}', '${item}', '${description}')
+    (${userId}, '${type}', '${category}', '${item}', '${description}')
     RETURNING *`;
 
     db.connect()
@@ -173,13 +180,13 @@ class RequestsController {
    * @return {Object} Returned object
    */
   static modifyRequest(request, response) {
-    const { userid } = request.decoded;
+    const { userId } = request.decoded;
     const { id } = request.params;
 
     const queryGetRequest =
-   `SELECT * FROM requests
-    WHERE userid = '${userid}' AND
-    requestid = '${id}'`;
+   `SELECT * FROM "Requests"
+    WHERE "userId" = '${userId}' AND
+    "requestId" = '${id}'`;
 
     db.connect()
       .then((client) => {
@@ -193,10 +200,10 @@ class RequestsController {
               });
             }
 
-            if (userRequest.rows[0].status !== 'pending') {
-              return response.status(400).json({
+            if (userRequest.rows[0].statusId !== 1) {
+              return response.status(422).json({
                 status: 'fail',
-                message: 'Not allowed, requests has been processed',
+                message: 'Not allowed, request has been processed',
               });
             }
 
@@ -209,23 +216,23 @@ class RequestsController {
               type, category, item, description,
             } = requestUpdate;
 
-            type = type.trim().toLowerCase();
+            type = type.trim();
             category = category.trim().toLowerCase();
             item = item.trim().toLowerCase();
             description = description.trim().toLowerCase();
 
             const queryRequestDuplicate =
-            `SELECT * FROM requests
-             WHERE userid='${userid}' AND
-             type='${type}' AND category='${category}' AND
+            `SELECT * FROM "Requests"
+             WHERE "userId"='${userId}' AND
+             "typeId"='${type}' AND category='${category}' AND
              item='${item}' AND description='${description}' AND
-             status='pending';`;
+             "statusId"=1;`;
 
             const queryUpdateRequest =
-            `UPDATE requests 
-             SET type = '${type}', category= '${category}',
+            `UPDATE "Requests"
+             SET "typeId" = '${type}', category= '${category}',
              item = '${item}', description = '${description}'
-             WHERE requestid = '${id}'
+             WHERE "requestId" = '${id}'
              RETURNING *`;
 
             client.query(queryRequestDuplicate)
@@ -258,7 +265,7 @@ class RequestsController {
                     });
                   });
               })
-              .catch();
+              .catch(e => e.message);
           })
           .catch(() => {
             client.release();

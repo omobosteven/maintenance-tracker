@@ -18,12 +18,12 @@ class UsersController {
     const email = body.email.trim().toLowerCase();
     const hashPassword = bcrypt.hashSync(body.password.trim(), 10);
 
-    const queryEmailCheck = `SELECT email FROM users
+    const queryEmailCheck = `SELECT email FROM "Users"
                             WHERE email = '${email}';`;
-    const queryCreateUser = `INSERT INTO users (email, password)
+    const queryCreateUser = `INSERT INTO "Users" (email, password)
                             VALUES
                             ('${email}', '${hashPassword}')
-                            RETURNING *`;
+                            RETURNING "userId", "roleId", email`;
 
     db.connect()
       .then((client) => {
@@ -45,7 +45,7 @@ class UsersController {
                   status: 'success',
                   message: 'User created successfully',
                   data: {
-                    role: savedUser.rows[0].role,
+                    role: (savedUser.rows[0].roleId === 1) ? 'admin' : 'user',
                     email: savedUser.rows[0].email,
                     token: authToken,
                   },
@@ -81,8 +81,8 @@ class UsersController {
     const { body } = request;
 
     const emailAddress = body.email.trim().toLowerCase();
-    const queryGetUser = `SELECT userId, email, role, password
-                          FROM users
+    const queryGetUser = `SELECT "userId", email, "roleId", password
+                          FROM "Users"
                           WHERE email = '${emailAddress}'`;
 
     db.connect()
@@ -101,20 +101,26 @@ class UsersController {
               .compareSync(body.password.trim(), user.rows[0].password);
             if (!checkPassword) {
               client.release();
-              return response.status(400).json({
+              return response.status(422).json({
                 status: 'fail',
                 message: 'Wrong password entered',
               });
             }
 
-            const authToken = GenerateToken.token(user.rows[0], secret);
+            const { userId, roleId, email } = user.rows[0];
+
+            const authToken = GenerateToken.token({
+              userId,
+              roleId,
+              email,
+            }, secret);
             client.release();
             return response.status(200).json({
               status: 'success',
               message: 'Sign in successfully',
               data: {
-                role: user.rows[0].role,
-                email: user.rows[0].email,
+                role: (roleId === 1) ? 'admin' : 'user',
+                email,
                 token: authToken,
               },
             });

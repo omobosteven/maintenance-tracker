@@ -12,9 +12,13 @@ class AdminRequestsController {
    */
   static getAllRequests(request, response) {
     const queryFetchAllRequests =
-    `SELECT email,requests.* FROM requests
-     INNER JOIN users ON requests.userid = users.userid
-     ORDER BY requestid DESC`;
+    `SELECT "requestId",
+    "Requests"."userId", email, type, category,
+     item, description, status, "Requests"."createdAt" FROM "Requests"
+    INNER JOIN "Users" ON "Requests"."userId" = "Users"."userId"
+    INNER JOIN "RequestStatus" ON "Requests"."statusId" = "RequestStatus"."statusId"
+    INNER JOIN "RequestTypes" ON "Requests"."typeId" = "RequestTypes"."typeId"
+    ORDER BY "requestId" DESC;`;
 
     db.connect()
       .then((client) => {
@@ -60,10 +64,13 @@ class AdminRequestsController {
     const { id } = request.params;
 
     const queryFetchRequest =
-    `SELECT email, requests.*
-     FROM requests
-     INNER JOIN users ON requests.userid = users.userid
-     WHERE requestid = '${id}';`;
+    `SELECT "requestId",
+    "Requests"."userId", email, type, category,
+     item, description, status, "Requests"."createdAt" FROM "Requests"
+    INNER JOIN "Users" ON "Requests"."userId" = "Users"."userId"
+    INNER JOIN "RequestStatus" ON "Requests"."statusId" = "RequestStatus"."statusId"
+    INNER JOIN "RequestTypes" ON "Requests"."typeId" = "RequestTypes"."typeId"
+    WHERE "requestId" = '${id}';`;
 
     db.connect()
       .then((client) => {
@@ -106,28 +113,28 @@ class AdminRequestsController {
   static approveRequest(request, response) {
     const { id } = request.params;
 
-    const { status } = request.userRequest.rows[0];
+    const { statusId } = request.userRequest.rows[0];
 
-    if (status === 'resolved') {
-      return response.status(400).json({
+    if (statusId === 4) {
+      return response.status(422).json({
         status: 'fail',
         message: 'Request has already been resolved',
       });
     }
 
-    if (status === 'approved') {
-      return response.status(400).json({
+    if (statusId === 2) {
+      return response.status(422).json({
         status: 'fail',
         message: 'Request has already been approved',
       });
     }
 
     const queryUpdateRequestStatus =
-    `UPDATE requests
-    SET status='approved'
-    FROM users
-    WHERE requests.userid = users.userid AND requestid = '${id}'
-    RETURNING email, requests.*;`;
+    `UPDATE "Requests"
+    SET "statusId"=2
+    FROM "Users"
+    WHERE "Users"."userId" = "Requests"."userId" AND "requestId" = '${id}'
+    RETURNING email, "Requests".*;`;
 
     db.connect()
       .then((client) => {
@@ -164,28 +171,28 @@ class AdminRequestsController {
   static disapproveRequest(request, response) {
     const { id } = request.params;
 
-    const { status } = request.userRequest.rows[0];
+    const { statusId } = request.userRequest.rows[0];
 
-    if (status === 'resolved') {
-      return response.status(400).json({
+    if (statusId === 4) {
+      return response.status(422).json({
         status: 'fail',
         message: 'Request has already been resolved',
       });
     }
 
-    if (status === 'disapproved') {
-      return response.status(400).json({
+    if (statusId === 3) {
+      return response.status(422).json({
         status: 'fail',
         message: 'Request has already been disapproved',
       });
     }
 
     const queryUpdateRequestStatus =
-    `UPDATE requests
-    SET status='disapproved'
-    FROM users
-    WHERE requests.userid = users.userid AND requestid = '${id}'
-    RETURNING email, requests.*;`;
+    `UPDATE "Requests"
+    SET "statusId"=3
+    FROM "Users"
+    WHERE "Requests"."userId" = "Users"."userId" AND "requestId" = '${id}'
+    RETURNING email, "Requests".*;`;
 
     db.connect()
       .then((client) => {
@@ -222,28 +229,28 @@ class AdminRequestsController {
   static reolveRequest(request, response) {
     const { id } = request.params;
 
-    const { status } = request.userRequest.rows[0];
+    const { statusId } = request.userRequest.rows[0];
 
-    if (status === 'resolved') {
-      return response.status(400).json({
+    if (statusId === 4) {
+      return response.status(422).json({
         status: 'fail',
         message: 'Request has already been resolved',
       });
     }
 
-    if (status !== 'approved') {
-      return response.status(400).json({
+    if (statusId !== 2) {
+      return response.status(422).json({
         status: 'fail',
         message: 'Request is not approved',
       });
     }
 
     const queryUpdateRequestStatus =
-    `UPDATE requests
-    SET status='resolved'
-    FROM users
-    WHERE requests.userid = users.userid AND requestid = '${id}'
-    RETURNING email, requests.*;`;
+    `UPDATE "Requests"
+    SET "statusId"=4
+    FROM "Users"
+    WHERE "Requests"."userId" = "Users"."userId" AND "requestId" = '${id}'
+    RETURNING email, "Requests".*;`;
 
     db.connect()
       .then((client) => {

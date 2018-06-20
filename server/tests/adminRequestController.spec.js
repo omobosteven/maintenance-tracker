@@ -32,7 +32,7 @@ describe('Tests for admin requests API endpoints', () => {
       .set('x-access-token', userToken)
       .set('Content-type', 'application/json')
       .send({
-        type: 'maintenance',
+        type: '2',
         category: 'computers',
         item: 'laptop',
         description: 'faulty screen',
@@ -90,7 +90,7 @@ describe('Tests for admin requests API endpoints', () => {
         expect(response).to.have.status(200);
         expect(response.body.message).to.equal('All Requests');
         expect(response.body.data.requests).to.be.an('array');
-        expect(response.body.data.requests[0].requestid).to.equal(2);
+        expect(response.body.data.requests[0].requestId).to.equal(2);
         expect(response.body.data.requests[0].description).to
           .equal('faulty screen');
         expect(response.body.data.requests[0].type).to.equal('maintenance');
@@ -107,7 +107,7 @@ describe('Tests for admin requests API endpoints', () => {
       .end((error, response) => {
         expect(response).to.have.status(200);
         expect(response.body.message).to.equal('Request Approved');
-        expect(response.body.data.request.status).to.equal('approved');
+        expect(response.body.data.request.statusId).to.equal(2);
         done();
       });
   });
@@ -119,7 +119,7 @@ describe('Tests for admin requests API endpoints', () => {
       .end((error, response) => {
         expect(response).to.have.status(200);
         expect(response.body.message).to.equal('Request Disapproved');
-        expect(response.body.data.request.status).to.equal('disapproved');
+        expect(response.body.data.request.statusId).to.equal(3);
         done();
       });
   });
@@ -132,7 +132,7 @@ describe('Tests for admin requests API endpoints', () => {
         expect(response).to.have.status(200);
         expect(response.body.status).to.equal('success');
         expect(response.body.message).to.equal('Request Approved');
-        expect(response.body.data.request.status).to.equal('approved');
+        expect(response.body.data.request.statusId).to.equal(2);
         done();
       });
   });
@@ -144,7 +144,7 @@ describe('Tests for admin requests API endpoints', () => {
       .end((error, response) => {
         expect(response).to.have.status(200);
         expect(response.body.message).to.equal('Request Resolved');
-        expect(response.body.data.request.status).to.equal('resolved');
+        expect(response.body.data.request.statusId).to.equal(4);
         done();
       });
   });
@@ -154,7 +154,7 @@ describe('Tests for admin requests API endpoints', () => {
       .put('/api/v1/requests/1/approve')
       .set('x-access-token', userToken)
       .end((error, response) => {
-        expect(response).to.have.status(400);
+        expect(response).to.have.status(422);
         expect(response.body.message).to
           .equal('Request has already been resolved');
         done();
@@ -166,15 +166,15 @@ describe('Tests for admin requests API endpoints', () => {
       .put('/api/v1/users/requests/2')
       .set('x-access-token', userToken)
       .send({
-        type: 'maintenance',
+        type: 2,
         category: 'computers',
         item: 'laptop',
         description: 'faulty screen',
       })
       .end((error, response) => {
-        expect(response).to.have.status(400);
+        expect(response).to.have.status(422);
         expect(response.body.message).to
-          .equal('Not allowed, requests has been processed');
+          .equal('Not allowed, request has been processed');
         done();
       });
   });

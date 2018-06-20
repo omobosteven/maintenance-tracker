@@ -7,24 +7,27 @@ const adminEmail = process.env.ADMIN_EMAIL;
 
 const users = (client) => {
   const queryString = `
-  DROP TABLE IF EXISTS Users CASCADE;
-  DROP TYPE IF EXISTS role_allowed;
-  CREATE TYPE role_allowed AS ENUM (
-    'admin',
-    'user'
+  DROP TABLE IF EXISTS "Roles" CASCADE;
+  CREATE TABLE "Roles" (
+    "roleId" serial PRIMARY KEY,
+    "roleName" VARCHAR (50) NOT NULL
   );
 
-  CREATE TABLE Users (
-      userId serial PRIMARY KEY,
-      email VARCHAR(255) UNIQUE NOT NULL,
-      password VARCHAR(255) NOT NULL,
-      role role_allowed NOT NULL DEFAULT 'user',
-      createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  INSERT INTO "Roles" ("roleName")
+  VALUES ('admin'), ('user');
+
+  DROP TABLE IF EXISTS "Users" CASCADE;
+  CREATE TABLE "Users" (
+      "userId" serial PRIMARY KEY,
+      "roleId" INTEGER REFERENCES "Roles" ("roleId") DEFAULT 2 NOT NULL,
+      email VARCHAR(50) UNIQUE NOT NULL,
+      password VARCHAR(100) NOT NULL,
+      "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
   );
 
-  INSERT INTO Users (email, password, role)
+  INSERT INTO "Users" (email, password, "roleId")
   VALUES
-  ('${adminEmail}', '${hash}' , 'admin');`;
+  ('${adminEmail}', '${hash}', 1);`;
 
   client.query(queryString)
     .then(res => res)
