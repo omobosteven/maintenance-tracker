@@ -16,17 +16,54 @@ const requestDescription = document.getElementById('reqDes');
 const id = localStorage.getItem('id');
 const token = localStorage.getItem('token');
 
+const showRequestType = (typeId) => {
+  let type;
+  if (typeId === 1) {
+    type = 'repair';
+  } else {
+    type = 'maintenance';
+  }
+
+  return type;
+};
+
+const showRequestStatus = (statusId) => {
+  let status;
+  switch (statusId) {
+    case 1:
+      status = 'pending';
+      break;
+    case 2:
+      status = 'approved';
+      break;
+    case 3:
+      status = 'disapproved';
+      break;
+    case 4:
+      status = 'resolved';
+      break;
+    default:
+  }
+
+  return status;
+};
+
 const generateRequestDetails = (request) => {
+  const type = request.type ?
+    request.type : showRequestType(request.typeId);
+  const status = request.status ?
+    request.status : showRequestStatus(request.statusId);
+
   requestRefNumber.innerText = request.ref_no;
   requestUser.innerText = request.email;
-  requestType.innerText = request.type;
-  requestCategory.innerText = request.category;
-  requestItem.innerText = request.item;
-  requestDescription.innerText = request.description;
-  requestStatus.innerText = request.status;
+  requestType.innerText = capitalize(type);
+  requestCategory.innerText = capitalize(request.category);
+  requestItem.innerText = capitalize(request.item);
+  requestDescription.innerText = capitalize(request.description);
+  requestStatus.innerText = capitalize(status);
   displayCard.style.display = 'flex';
 
-  switch (request.status) {
+  switch (status) {
     case 'pending':
       btnApprove.disabled = false;
       btnDisapprove.disabled = false;

@@ -15,7 +15,7 @@ class RequestsController {
 
     const queryGetAllRequestsForUser =
     `SELECT "requestId",
-     "Requests"."userId", email, type, category,
+     "Requests"."userId", ref_no, email, type, category,
       item, description, status, "Requests"."createdAt" FROM "Requests"
     INNER JOIN "Users" ON "Requests"."userId" = "Users"."userId"
     INNER JOIN "RequestStatus" ON "Requests"."statusId" = "RequestStatus"."statusId"
@@ -67,7 +67,7 @@ class RequestsController {
 
     const queryFetchRequest =
     `SELECT  "requestId",
-    "Requests"."userId", email, type, category,
+    "Requests"."userId", ref_no, email, type, category,
      item, description, status, "Requests"."createdAt" FROM "Requests"
     INNER JOIN "Users" ON "Requests"."userId" = "Users"."userId"
     INNER JOIN "RequestStatus" ON "Requests"."statusId" = "RequestStatus"."statusId"

@@ -89,6 +89,17 @@ const modifyRequest = (e) => {
     .catch(err => err.message);
 };
 
+getTypeId = (requestType) => {
+  let typeId;
+  if (requestType === 'repair') {
+    typeId = '1';
+  } else {
+    typeId = '2';
+  }
+
+  return typeId;
+};
+
 window.onload = () => {
   const option = {
     method: 'GET',
@@ -112,10 +123,11 @@ window.onload = () => {
     .then((response) => {
       if (response.status === 'success') {
         const { request } = response.data;
-        type.value = request.type;
+        const typeId = getTypeId(request.type);
+        type.value = typeId;
         category.value = request.category;
-        requestItem.value = request.item;
-        description.value = request.description;
+        requestItem.value = capitalize(request.item);
+        description.value = capitalize(request.description);
       }
     })
     .catch(err => err.message);

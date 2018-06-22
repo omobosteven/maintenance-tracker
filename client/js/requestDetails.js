@@ -16,10 +16,10 @@ const id = localStorage.getItem('id');
 
 const generateRequestDetails = (request) => {
   requestRefNumber.innerText = request.ref_no;
-  requestType.innerText = request.type;
-  requestCategory.innerText = request.category;
-  requestItem.innerText = request.item;
-  requestDescription.innerText = request.description;
+  requestType.innerText = capitalize(request.type);
+  requestCategory.innerText = capitalize(request.category);
+  requestItem.innerText = capitalize(request.item);
+  requestDescription.innerText = capitalize(request.description);
   displayCard.style.display = 'flex';
   requestStatus.parentElement.style.display = 'block';
 
