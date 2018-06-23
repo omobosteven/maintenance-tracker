@@ -636,6 +636,7 @@ footer {
 
   .request-form {
     margin-top: 10.0rem;
+    margin-bottom: 10.0rem;
   }
 
   .section-details {
@@ -669,6 +670,10 @@ footer {
 
   .form-control {
     width: 70%;
+  }
+
+  textarea {
+    margin-left: 7.3rem;
   }
 
   .signup-form .form-info {
