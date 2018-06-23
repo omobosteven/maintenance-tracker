@@ -28,9 +28,9 @@ const createNewRequestItem = (request) => {
   requestList.addEventListener('click', saveIdOnLocalStorage, false);
 
   requestRef.innerText = `#${request.ref_no}`;
-  requestType.innerText = request.type;
-  requestItem.innerText = request.item;
-  requestStatus.innerText = request.status;
+  requestType.innerText = capitalize(request.type);
+  requestItem.innerText = capitalize(request.item);
+  requestStatus.innerText = capitalize(request.status);
 
   const { status } = request;
   switch (status) {
@@ -54,7 +54,7 @@ const createNewRequestItem = (request) => {
   }
 
   requestLink.className = ('request-item');
-  requestLink.setAttribute('id', `${request.requestid}`);
+  requestLink.setAttribute('id', `${request.requestId}`);
 
   requestLink.appendChild(requestRef);
   requestLink.appendChild(requestType);

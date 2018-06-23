@@ -13,7 +13,7 @@ class AdminRequestsController {
   static getAllRequests(request, response) {
     const queryFetchAllRequests =
     `SELECT "requestId",
-    "Requests"."userId", email, type, category,
+    "Requests"."userId", ref_no, email, type, category,
      item, description, status, "Requests"."createdAt" FROM "Requests"
     INNER JOIN "Users" ON "Requests"."userId" = "Users"."userId"
     INNER JOIN "RequestStatus" ON "Requests"."statusId" = "RequestStatus"."statusId"
@@ -65,7 +65,7 @@ class AdminRequestsController {
 
     const queryFetchRequest =
     `SELECT "requestId",
-    "Requests"."userId", email, type, category,
+    "Requests"."userId", ref_no, email, type, category,
      item, description, status, "Requests"."createdAt" FROM "Requests"
     INNER JOIN "Users" ON "Requests"."userId" = "Users"."userId"
     INNER JOIN "RequestStatus" ON "Requests"."statusId" = "RequestStatus"."statusId"
