@@ -273,9 +273,10 @@ textarea {
   margin-top: 1.6rem;
 }
 
-.signup-form .error {
+.display-error {
   background: #e84118;
   color: #fff;
+  padding: 0.3rem;
   text-align: right;
 }
 
@@ -648,7 +649,7 @@ footer {
     justify-content: space-between;
   }
 
-  .signup-form .error {
+  .display-error {
     font-size: 1.9rem;
     margin-left: 17.2rem;
     max-width: 39.6rem;

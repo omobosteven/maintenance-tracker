@@ -8,19 +8,20 @@ const { email, password } = signinForm.elements;
 const displayErrorMessages = (error) => {
   if (error.email) {
     const [emailError] = error.email;
-    errorMessage[0].style.display = 'block';
+    errorMessage[0].classList.add('display-error');
     errorMessage[0].innerHTML = emailError;
   }
 
   if (error.password) {
     const [passwordError] = error.password;
-    errorMessage[1].style.display = 'block';
+    errorMessage[1].classList.add('display-error');
     errorMessage[1].innerHTML = passwordError;
   }
 };
 
 const clearErrorMeassage = (e) => {
-  e.target.parentElement.nextElementSibling.style.display = 'none';
+  e.target.parentElement.nextElementSibling.innerText = '';
+  e.target.parentElement.nextElementSibling.classList.remove('display-error');
 };
 
 const redirectUser = (userRole) => {

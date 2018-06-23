@@ -20,27 +20,32 @@ user.innerText = localStorage.getItem('user');
 const displayErrorMessages = (error) => {
   if (error.type) {
     const [typeError] = error.type;
-    errorMessage[0].innerHTML = typeError;
+    errorMessage[0].classList.add('display-error');
+    errorMessage[0].innerText = typeError;
   }
 
   if (error.category) {
     const [categoryError] = error.category;
-    errorMessage[1].innerHTML = categoryError;
+    errorMessage[1].classList.add('display-error');
+    errorMessage[1].innerText = categoryError;
   }
 
   if (error.item) {
     const [itemError] = error.item;
-    errorMessage[2].innerHTML = itemError;
+    errorMessage[2].classList.add('display-error');
+    errorMessage[2].innerText = itemError;
   }
 
   if (error.description) {
     const [descriptionError] = error.description;
-    errorMessage[3].innerHTML = descriptionError;
+    errorMessage[3].classList.add('display-error');
+    errorMessage[3].innerText = descriptionError;
   }
 };
 
 const clearErrorMeassage = (e) => {
-  e.target.parentElement.nextElementSibling.style.display = 'none';
+  e.target.parentElement.nextElementSibling.innerText = '';
+  e.target.parentElement.nextElementSibling.classList.remove('display-error');
 };
 
 const modifyRequest = (e) => {
