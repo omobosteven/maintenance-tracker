@@ -161,18 +161,19 @@ nav .row {
 /* Forms */
 /* ----------------------------------------------- */
 .section-form {
-  margin-bottom: 5.0rem;
+  margin-bottom: 7.0rem;
   margin-top: 7.0rem;
 }
 
 .alert {
   color: white;
   display: none;
-  font-size: 1.9rem;
+  font-size: 2.0rem;
   margin-bottom: 1.5rem;
   margin-top: 1.5rem;
-  max-width: 700px;
+  max-width: 650px;
   padding: 20px;
+  text-align: center;
 }
 
 .fail {
@@ -181,22 +182,6 @@ nav .row {
 
 .success {
   background-color: #43af32;
-}
-
-.closeBtn {
-  margin-left: 15px;
-  color: white;
-  font-weight: bold;
-  float: right;
-  font-size: 22px;
-  line-height: 20px;
-  cursor: pointer;
-  transition: 0.3s;
-  text-align: center;
-}
-
-.closeBtn:hover {
-  color: black;
 }
 
 .signup-form {
@@ -363,29 +348,6 @@ textarea {
 
 .request-item .status-new {
   background-color: #dcdde1;
-  color: #555;
-}
-
-.pagination {
-  text-align: center;
-  margin-bottom: 5.0rem; 
-  margin-top: 5.0rem; 
-}
-
-.pagination a {
-  color: #fff;
-  padding: 8px 12px;
-  text-decoration: none;
-  transition: background-color .3s;
-}
-
-.pagination a.active {
-  background-color: dodgerblue;
-  color: white;
-}
-
-.pagination a:hover:not(.active) {
-  background-color: #ddd;
   color: #555;
 }
 
@@ -591,7 +553,7 @@ footer p {
 }
 
 footer {
-  flex-shrink: 0;
+  flex-shrink: 0; 
 }
 
 /* ----------------------------------------------- */
@@ -632,12 +594,11 @@ footer {
   }
 
   .section-form {
-    margin-top: 16.0rem;
+    margin-top: 18.0rem;
   }
 
   .request-form {
-    margin-top: 10.0rem;
-    margin-bottom: 10.0rem;
+    margin-top: 12.0rem;
   }
 
   .section-details {

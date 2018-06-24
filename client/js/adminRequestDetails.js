@@ -105,6 +105,7 @@ window.onload = () => {
       alertLog.style.display = 'block';
       alertLog.classList.add('fail');
       alertMessage.innerText = 'Request not found';
+      clearMessage();
     }
     return response.json();
   })
