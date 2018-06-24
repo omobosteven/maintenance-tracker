@@ -70,6 +70,7 @@ const createRequest = (e) => {
       alertLog.style.display = 'block';
       alertLog.classList.add('fail');
       alertMessage.innerText = 'request already exist';
+      clearMessage();
     }
 
     return response.json();
@@ -80,6 +81,7 @@ const createRequest = (e) => {
         alertLog.classList.remove('fail');
         alertLog.classList.add('success');
         alertMessage.innerText = response.message;
+        clearMessage();
         window.location.href =
         'https://maintenance-tracker-stv.herokuapp.com/user-view-requests.html';
       }

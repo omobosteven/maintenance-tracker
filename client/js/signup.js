@@ -15,6 +15,7 @@ const checkPassword = () => {
 
   if (confirmPassword.value === password.value) {
     errorMessage[2].innerHTML = '';
+    errorMessage[2].remove('display-error');
     signupBtn.disabled = false;
   }
 };
@@ -78,6 +79,7 @@ const createAccount = (e) => {
       alertLog.style.display = 'block';
       alertLog.classList.add('fail');
       alertMessage.innerText = 'User with this email already exist';
+      clearMessage();
     }
     return response.json();
   })
@@ -87,9 +89,9 @@ const createAccount = (e) => {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', username.slice(0, username.indexOf('@')));
         alertLog.style.display = 'block';
-        alertLog.classList.remove('fail');
         alertLog.classList.add('success');
         alertMessage.innerText = response.message;
+        clearMessage();
       }
 
       redirectUser(response.data.role);

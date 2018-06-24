@@ -99,6 +99,7 @@ window.onload = () => {
       alertLog.style.display = 'block';
       alertLog.classList.add('fail');
       alertMessage.innerText = 'No request was found';
+      clearMessage();
     }
     return response.json();
   })

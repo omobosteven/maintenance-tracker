@@ -5,6 +5,14 @@ const navCollapse = document.getElementById('navbar-collapse');
 
 const capitalize = text => text[0].toUpperCase().concat(text.slice(1));
 
+const clearMessage = () => {
+  window.setTimeout(() => {
+    alertLog.classList.remove('fail');
+    alertLog.classList.remove('success');
+    alertLog.style.display = 'none';
+  }, 3000);
+};
+
 const toggleNav = () => {
   navCollapse.classList.toggle('navbar-show');
 };

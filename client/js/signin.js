@@ -64,6 +64,7 @@ const siginUser = (e) => {
       alertLog.style.display = 'block';
       alertLog.classList.add('fail');
       alertMessage.innerText = 'User not found';
+      clearMessage();
     }
     return response.json();
   })
@@ -82,6 +83,7 @@ const siginUser = (e) => {
         alertLog.classList.remove('fail');
         alertLog.classList.add('success');
         alertMessage.innerText = response.message;
+        clearMessage();
       }
 
       redirectUser(response.data.role);

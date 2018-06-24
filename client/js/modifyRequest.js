@@ -74,6 +74,7 @@ const modifyRequest = (e) => {
       alertLog.style.display = 'block';
       alertLog.classList.add('fail');
       alertMessage.innerText = 'request already exist';
+      clearMessage();
     }
 
     return response.json();
@@ -84,6 +85,7 @@ const modifyRequest = (e) => {
         alertLog.classList.remove('fail');
         alertLog.classList.add('success');
         alertMessage.innerText = response.message;
+        clearMessage();
         window.location.href = detailUrl;
       }
 
