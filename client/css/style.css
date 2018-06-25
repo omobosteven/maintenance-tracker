@@ -4,16 +4,6 @@
   padding: 0;
 }
 
-html, 
-body {
-  height: 100%;
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-}
-
 html {
   background-attachment: fixed;
   background-image: linear-gradient(#000000b4, #000000b4), url(../img/repairs2.jpg);
@@ -70,8 +60,11 @@ input[type=button]:active {
 }
 
 .content {
-  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
   font-size: 1.6rem;
+  height: 100vh;
+  justify-content: space-between;
 }
 
 .row {
@@ -104,6 +97,67 @@ header {
   padding-top: 0.5rem;
   width: auto;
 }
+
+.main-content,
+.section-form,
+.section-requests,
+.section-details {
+  margin-bottom: 10.0rem;
+  margin-top: 10.0rem;
+}
+
+/* ----------------------------------------------- */
+/* Index Page */
+/* ----------------------------------------------- */
+.main-content {
+  background-color:#6c9a9e91;
+  color: #fff;
+  padding: 5.0rem 2.0rem;
+  text-align: center;
+  width: 95%;
+}
+
+.main-heading {
+  font-size: 3.1rem;
+  margin: 0;
+  text-decoration: underline overline #e1b12c;
+}
+
+.main-text {
+  font-size: 1.6rem;
+  margin-top: 0.5rem;
+}
+
+.main-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 2.0rem;
+}
+
+.main-btn {
+  align-self: center;
+  background-color: #e4f3fc;
+  border: 1px solid #ccc;
+  border-radius: 100px;
+  color: #537579;
+  font-size: 2.6rem;
+  margin-bottom: 2.0rem;
+  padding-top: 0.5rem;
+  text-decoration: none;
+  transition: background-color 0.2s;
+  width: 25.0rem;
+}
+.main-btn:last-child {
+  margin-bottom: 0;
+}
+
+.main-btn:hover {
+  background-color: #00a8bb;
+  border-color: #00a8bb;
+  color: #e4f3fc;
+}
+
 
 /* ----------------------------------------------- */
 /* Navigation */
@@ -160,11 +214,6 @@ nav .row {
 /* ----------------------------------------------- */
 /* Forms */
 /* ----------------------------------------------- */
-.section-form {
-  margin-bottom: 7.0rem;
-  margin-top: 7.0rem;
-}
-
 .alert {
   color: white;
   display: none;
@@ -268,11 +317,6 @@ textarea {
 /* ----------------------------------------------- */
 /* VIEW ALL REQUEST */
 /* ----------------------------------------------- */
-.section-requests {
-  margin-top: 4.5rem;
-  margin-bottom: 9.6rem;
-}
-
 .requests-list {
   font-size: 1.3rem;
   list-style: none;
@@ -370,11 +414,6 @@ select[name=filter] {
 /* ----------------------------------------------- */
 /* REQUEST DETAILS */
 /* ----------------------------------------------- */
-.section-details {
-  margin-bottom: 5.0rem;
-  margin-top: 4.5rem;
-}
-
 .card-details {
   background-color: #fcfcfce5;
   color: #333333;
@@ -552,10 +591,6 @@ footer p {
   text-align: center;
 }
 
-footer {
-  flex-shrink: 0; 
-}
-
 /* ----------------------------------------------- */
 /* MEDIA QUERIES */
 /* ----------------------------------------------- */
@@ -563,6 +598,14 @@ footer {
 @media (min-width: 576px) {
   .logo {
     height: 7.0rem;
+  }
+
+  .main-heading {
+    font-size: 5.0rem;
+  }
+
+  .main-text {
+    font-size: 2.5rem;
   }
 }
 
@@ -589,20 +632,26 @@ footer {
     display: none;
   }
 
-  .section-requests {
-    margin-top: 7.0rem;
+  .main-content {
+    width: 90%;
   }
 
-  .section-form {
-    margin-top: 18.0rem;
+  .main-heading {
+    font-size: 7.0rem;
+    margin: 0;
   }
 
-  .request-form {
-    margin-top: 12.0rem;
+  .main-buttons {
+    flex-direction: row;
+    justify-content: space-around;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50.0rem;
   }
 
-  .section-details {
-    margin-top: 8.5rem;
+  .main-btn {
+    margin-bottom: 0;
+    width: 20.0rem;
   }
 
   .signup-form .form-group {
@@ -646,12 +695,6 @@ footer {
     font-size: 1.6rem;
   }
 
-  .section-title {
-    margin-left: auto;    
-    margin-right: auto;
-    margin-top: -11.0rem;
-  }
-
   .admin-btn {
     flex-direction: row;
   }
@@ -683,7 +726,9 @@ footer {
 }
 
 @media (min-width: 992px) {
-
+  .main-content {
+    max-width: 85.0rem;
+  }
 }
 
 @media (min-width: 1200px) {
