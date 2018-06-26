@@ -21,10 +21,8 @@ const apiDocsUrl =
 app.get('/apidocs', (request, response) =>
   response.status(200).redirect(apiDocsUrl));
 
-app.get('/', (request, response) => response.status(200).json({
-  status: 'success',
-  message: 'Welcome to maintenanc tracker app',
-}));
+app.get('/', (request, response) => response.status(200)
+  .sendFile(path.join(__dirname, '../client/index.html')));
 app.use(routes);
 
 const port = parseInt(process.env.PORT, 10) || 3000;
