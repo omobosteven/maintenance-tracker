@@ -5,6 +5,9 @@ import app from '../app';
 
 chai.use(chaiHttp);
 
+let userToken;
+let adminToken;
+
 describe('Tests for Users API endpoint', () => {
   it('should create a new user', (done) => {
     chai.request(app)
@@ -81,11 +84,32 @@ describe('Tests for Users API endpoint', () => {
         password: 'mypassword',
       })
       .end((error, response) => {
+        userToken = response.body.data.token;
         const { token } = response.body.data;
         expect(response).to.have.status(200);
         expect(response.body.message).to.equal('Sign in successfully');
         expect(response.body.data.role).to.equal('user');
         expect(response.body.data.email).to.equal('jamesdoe@gmail.com');
+        expect(response.body.data.token).to.equal(token);
+        done();
+      });
+  });
+
+  it('should signin admin', (done) => {
+    chai.request(app)
+      .post('/api/v1/auth/login')
+      .set('Content-type', 'application/json')
+      .send({
+        email: 'admin@gmail.com',
+        password: 'adminpassword',
+      })
+      .end((error, response) => {
+        adminToken = response.body.data.token;
+        const { token } = response.body.data;
+        expect(response).to.have.status(200);
+        expect(response.body.message).to.equal('Sign in successfully');
+        expect(response.body.data.role).to.equal('admin');
+        expect(response.body.data.email).to.equal('admin@gmail.com');
         expect(response.body.data.token).to.equal(token);
         done();
       });
@@ -117,6 +141,80 @@ describe('Tests for Users API endpoint', () => {
       .end((error, response) => {
         expect(response).to.have.status(422);
         expect(response.body.message).to.equal('Wrong password entered');
+        done();
+      });
+  });
+
+  it('should return user details', (done) => {
+    chai.request(app)
+      .get('/api/v1/users/profiles/2')
+      .set('x-access-token', userToken)
+      .end((error, response) => {
+        expect(response).to.have.status(200);
+        expect(response.body.status).to.equal('success');
+        expect(response.body.data.user.userId).to.equal(2);
+        expect(response.body.data.user.email).to.equal('jamesdoe@gmail.com');
+        done();
+      });
+  });
+
+  it('should return a user details', (done) => {
+    chai.request(app)
+      .get('/api/v1/profiles/2')
+      .set('x-access-token', adminToken)
+      .end((error, response) => {
+        expect(response).to.have.status(200);
+        expect(response.body.status).to.equal('success');
+        expect(response.body.data.user.userId).to.equal(2);
+        expect(response.body.data.user.email).to.equal('jamesdoe@gmail.com');
+        done();
+      });
+  });
+
+  it('should return error if user details is not found', (done) => {
+    chai.request(app)
+      .get('/api/v1/profiles/25')
+      .set('x-access-token', adminToken)
+      .end((error, response) => {
+        expect(response).to.have.status(404);
+        expect(response.body.status).to.equal('fail');
+        expect(response.body.message).to.equal('User not found');
+        done();
+      });
+  });
+
+  it('should return all users details for admin', (done) => {
+    chai.request(app)
+      .get('/api/v1/profiles')
+      .set('x-access-token', adminToken)
+      .end((error, response) => {
+        expect(response).to.have.status(200);
+        expect(response.body.status).to.equal('success');
+        expect(response.body.data.users[1].email).to.equal('jamesdoe@gmail.com');
+        done();
+      });
+  });
+
+  it('should return error if user is not found', (done) => {
+    chai.request(app)
+      .get('/api/v1/users/profiles/8')
+      .set('x-access-token', userToken)
+      .end((error, response) => {
+        expect(response).to.have.status(404);
+        expect(response.body.status).to.equal('fail');
+        expect(response.body.message).to.equal('User not found');
+        done();
+      });
+  });
+
+  it('should not be able to get details of another user', (done) => {
+    chai.request(app)
+      .get('/api/v1/users/profiles/1')
+      .set('x-access-token', userToken)
+      .end((error, response) => {
+        expect(response).to.have.status(403);
+        expect(response.body.status).to.equal('fail');
+        expect(response.body.message).to.equal('You cannot view this profile');
         done();
       });
   });

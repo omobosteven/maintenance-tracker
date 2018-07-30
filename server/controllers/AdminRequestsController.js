@@ -12,12 +12,8 @@ class AdminRequestsController {
    */
   static getAllRequests(request, response) {
     const queryFetchAllRequests =
-    `SELECT "requestId",
-    "Requests"."userId", ref_no, email, type, category,
-     item, description, status, "Requests"."createdAt" FROM "Requests"
-    INNER JOIN "Users" ON "Requests"."userId" = "Users"."userId"
-    INNER JOIN "RequestStatus" ON "Requests"."statusId" = "RequestStatus"."statusId"
-    INNER JOIN "RequestTypes" ON "Requests"."typeId" = "RequestTypes"."typeId"
+    `SELECT "requestId", "userId", ref_no, "typeId", category,
+     item, description, "statusId", "createdAt" FROM "Requests"
     ORDER BY "requestId" DESC;`;
 
     db.connect()
@@ -65,11 +61,8 @@ class AdminRequestsController {
 
     const queryFetchRequest =
     `SELECT "requestId",
-    "Requests"."userId", ref_no, email, type, category,
-     item, description, status, "Requests"."createdAt" FROM "Requests"
-    INNER JOIN "Users" ON "Requests"."userId" = "Users"."userId"
-    INNER JOIN "RequestStatus" ON "Requests"."statusId" = "RequestStatus"."statusId"
-    INNER JOIN "RequestTypes" ON "Requests"."typeId" = "RequestTypes"."typeId"
+    "Requests"."userId", ref_no, "typeId", category,
+     item, description, "statusId", "createdAt" FROM "Requests"
     WHERE "requestId" = '${id}';`;
 
     db.connect()
@@ -132,9 +125,8 @@ class AdminRequestsController {
     const queryUpdateRequestStatus =
     `UPDATE "Requests"
     SET "statusId"=2
-    FROM "Users"
-    WHERE "Users"."userId" = "Requests"."userId" AND "requestId" = '${id}'
-    RETURNING email, "Requests".*;`;
+    WHERE "requestId" = '${id}'
+    RETURNING *;`;
 
     db.connect()
       .then((client) => {
@@ -149,12 +141,11 @@ class AdminRequestsController {
               },
             });
           })
-          .catch((error) => {
+          .catch(() => {
             client.release();
             response.status(500).json({
               status: 'error',
               message: 'Failed to update request status',
-              error: error.message,
             });
           });
       });
@@ -190,9 +181,8 @@ class AdminRequestsController {
     const queryUpdateRequestStatus =
     `UPDATE "Requests"
     SET "statusId"=3
-    FROM "Users"
-    WHERE "Requests"."userId" = "Users"."userId" AND "requestId" = '${id}'
-    RETURNING email, "Requests".*;`;
+    WHERE "requestId" = '${id}'
+    RETURNING *;`;
 
     db.connect()
       .then((client) => {
@@ -207,12 +197,11 @@ class AdminRequestsController {
               },
             });
           })
-          .catch((error) => {
+          .catch(() => {
             client.release();
             response.status(500).json({
               status: 'error',
               message: 'Failed to update request status',
-              error: error.message,
             });
           });
       });
@@ -248,9 +237,8 @@ class AdminRequestsController {
     const queryUpdateRequestStatus =
     `UPDATE "Requests"
     SET "statusId"=4
-    FROM "Users"
-    WHERE "Requests"."userId" = "Users"."userId" AND "requestId" = '${id}'
-    RETURNING email, "Requests".*;`;
+    WHERE "requestId" = '${id}'
+    RETURNING *;`;
 
     db.connect()
       .then((client) => {
@@ -265,12 +253,11 @@ class AdminRequestsController {
               },
             });
           })
-          .catch((error) => {
+          .catch(() => {
             client.release();
             response.status(500).json({
               status: 'error',
               message: 'Failed to update request status',
-              error: error.message,
             });
           });
       });

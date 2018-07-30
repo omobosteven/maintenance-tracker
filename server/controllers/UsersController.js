@@ -134,6 +134,60 @@ class UsersController {
           });
       });
   }
+
+  /**
+   * @description Method to get details of a user
+   *
+   * @param {Object} request - HTTP Request
+   * @param {Object} response - HTTP Response
+   *
+   * @return {Object} Returned object
+   */
+  static userDetails(request, response) {
+    const { id } = request.params;
+    const { userId } = request.decoded;
+
+    const queryGetUserDetails = `SELECT "userId", email, "roleId"
+    FROM "Users"
+    WHERE "userId" = '${id}';`;
+
+    db.connect()
+      .then((client) => {
+        client.query(queryGetUserDetails)
+          .then((userDetails) => {
+            if (userDetails.rows.length < 1) {
+              client.release();
+              return response.status(404).json({
+                status: 'fail',
+                message: 'User not found',
+              });
+            }
+
+            if (userDetails.rows[0].userId !== userId) {
+              client.release();
+              return response.status(403).json({
+                status: 'fail',
+                message: 'You cannot view this profile',
+              });
+            }
+
+            client.release();
+            return response.status(200).json({
+              status: 'success',
+              data: {
+                user: userDetails.rows[0],
+              },
+            });
+          })
+          .catch(() => {
+            client.release();
+            return response.status(500).json({
+              status: 'error',
+              message: 'Failed to fetch requests',
+            });
+          });
+      });
+  }
 }
 
 export default UsersController;

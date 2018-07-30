@@ -163,11 +163,11 @@ describe('Tests for requests API endpoints', () => {
         expect(response.body.data.requests[0]).to.deep.include({
           requestId: 1,
           userId: 2,
-          type: 'repair',
+          typeId: 1,
           category: 'computers',
           item: 'laptop',
           description: 'faulty battery',
-          status: 'pending',
+          statusId: 1,
         });
         done();
       });
@@ -262,7 +262,7 @@ describe('Tests for requests API endpoints', () => {
         expect(response).to.have.status(200);
         expect(response.body.data.request.item).to.equal('laptop');
         expect(response.body.data.request.category).to.equal('computers');
-        expect(response.body.data.request.status).to.equal('pending');
+        expect(response.body.data.request.statusId).to.equal(1);
         done();
       });
   });
