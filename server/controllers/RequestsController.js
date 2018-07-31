@@ -14,13 +14,9 @@ class RequestsController {
     const { userId } = request.decoded;
 
     const queryGetAllRequestsForUser =
-    `SELECT "requestId",
-     "Requests"."userId", ref_no, email, type, category,
-      item, description, status, "Requests"."createdAt" FROM "Requests"
-    INNER JOIN "Users" ON "Requests"."userId" = "Users"."userId"
-    INNER JOIN "RequestStatus" ON "Requests"."statusId" = "RequestStatus"."statusId"
-    INNER JOIN "RequestTypes" ON "Requests"."typeId" = "RequestTypes"."typeId"
-    WHERE "Requests"."userId" = '${userId}'
+    `SELECT "requestId", "userId", ref_no, "typeId", category,
+      item, description, "statusId", "createdAt" FROM "Requests"
+    WHERE "userId" = '${userId}'
     ORDER BY "requestId" DESC;`;
 
     db.connect()
@@ -67,13 +63,10 @@ class RequestsController {
 
     const queryFetchRequest =
     `SELECT  "requestId",
-    "Requests"."userId", ref_no, email, type, category,
-     item, description, status, "Requests"."createdAt" FROM "Requests"
-    INNER JOIN "Users" ON "Requests"."userId" = "Users"."userId"
-    INNER JOIN "RequestStatus" ON "Requests"."statusId" = "RequestStatus"."statusId"
-    INNER JOIN "RequestTypes" ON "Requests"."typeId" = "RequestTypes"."typeId"
+    "userId", ref_no, "typeId", category,
+     item, description, "statusId", "createdAt" FROM "Requests"
     WHERE "requestId" = '${id}' 
-    AND "Requests"."userId" = '${userId}';`;
+    AND "userId" = '${userId}';`;
 
     db.connect()
       .then((client) => {

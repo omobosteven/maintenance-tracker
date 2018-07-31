@@ -1,5 +1,8 @@
 /* eslint-disable class-methods-use-this, consistent-return */
+import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
+
+dotenv.config();
 
 const secret = process.env.JWT_SECRET;
 
@@ -25,6 +28,7 @@ class Authorization {
           return response.status(401).json({
             status: 'fail',
             message: 'Invalid credentials supplied',
+            err: err.message,
           });
         }
         request.decoded = decoded;
