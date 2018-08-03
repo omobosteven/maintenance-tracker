@@ -22,28 +22,30 @@ const createNewRequestItem = (request) => {
   const requestItem = document.createElement('p');
   const requestStatus = document.createElement('p');
 
-  requestList.addEventListener('click', saveIdOnLocalStorage, false);
+  requestList.addEventListener('click', saveIdOnLocalStorage);
+
+  const { typeId, statusId } = request;
+  const requestObject = getText(typeId, statusId);
 
   requestRef.innerText = `#${request.ref_no}`;
-  requestType.innerText = capitalize(request.type);
+  requestType.innerText = capitalize(requestObject.type);
   requestItem.innerText = capitalize(request.item);
-  requestStatus.innerText = capitalize(request.status);
+  requestStatus.innerText = capitalize(requestObject.status);
 
-  const { status } = request;
-  switch (status) {
-    case 'pending':
-      requestList.classList.add('request', 'new-request');
-      requestStatus.className = ('status-new');
-      break;
-    case 'approved':
+  switch (statusId) {
+    case 1:
       requestList.classList.add('request', 'pending');
       requestStatus.className = ('status-pending');
       break;
-    case 'disapproved':
-      requestList.classList.add('request', 'rejected');
-      requestStatus.className = ('status-rejected');
+    case 2:
+      requestList.classList.add('request', 'approved');
+      requestStatus.className = ('status-approved');
       break;
-    case 'resolved':
+    case 3:
+      requestList.classList.add('request', 'disapproved');
+      requestStatus.className = ('status-disapproved');
+      break;
+    case 4:
       requestList.classList = ('request', 'resolved');
       requestStatus.className = ('status-resolved');
       break;
@@ -63,15 +65,15 @@ const createNewRequestItem = (request) => {
 };
 
 const filterRequests = () => {
-  const filterValue = requestsFilter.value;
+  const filterValue = parseInt(requestsFilter.value, 10);
 
   requests.innerText = '';
 
-  if (filterValue === 'all') {
+  if (filterValue === 0) {
     allRequests.forEach(request => createNewRequestItem(request));
   } else {
     const filteredRequests =
-      allRequests.filter(request => request.status === filterValue);
+      allRequests.filter(request => request.statusId === filterValue);
 
     filteredRequests.forEach(request => createNewRequestItem(request));
   }

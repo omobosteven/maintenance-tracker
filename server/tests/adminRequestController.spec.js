@@ -20,7 +20,7 @@ describe('Tests for admin requests API endpoints', () => {
         userToken = response.body.data.token;
         expect(response).to.have.status(200);
         expect(response.body.message).to.equal('Sign in successfully');
-        expect(response.body.data.role).to.equal('admin');
+        expect(response.body.data.role).to.equal(1);
         expect(response.body.data.email).to.equal('admin@gmail.com');
         done();
       });

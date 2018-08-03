@@ -119,7 +119,7 @@ class UsersController {
               status: 'success',
               message: 'Sign in successfully',
               data: {
-                role: (roleId === 1) ? 'admin' : 'user',
+                role: roleId,
                 email,
                 token: authToken,
               },

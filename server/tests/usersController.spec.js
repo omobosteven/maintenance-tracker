@@ -88,7 +88,7 @@ describe('Tests for Users API endpoint', () => {
         const { token } = response.body.data;
         expect(response).to.have.status(200);
         expect(response.body.message).to.equal('Sign in successfully');
-        expect(response.body.data.role).to.equal('user');
+        expect(response.body.data.role).to.equal(2);
         expect(response.body.data.email).to.equal('jamesdoe@gmail.com');
         expect(response.body.data.token).to.equal(token);
         done();
@@ -108,7 +108,7 @@ describe('Tests for Users API endpoint', () => {
         const { token } = response.body.data;
         expect(response).to.have.status(200);
         expect(response.body.message).to.equal('Sign in successfully');
-        expect(response.body.data.role).to.equal('admin');
+        expect(response.body.data.role).to.equal(1);
         expect(response.body.data.email).to.equal('admin@gmail.com');
         expect(response.body.data.token).to.equal(token);
         done();

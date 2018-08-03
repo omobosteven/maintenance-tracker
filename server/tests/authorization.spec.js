@@ -20,7 +20,7 @@ describe('Tests for Authorization', () => {
         userToken = response.body.data.token;
         expect(response).to.have.status(200);
         expect(response.body.message).to.equal('Sign in successfully');
-        expect(response.body.data.role).to.equal('user');
+        expect(response.body.data.role).to.equal(2);
         expect(response.body.data.email).to.equal('jamesdoe@gmail.com');
         done();
       });

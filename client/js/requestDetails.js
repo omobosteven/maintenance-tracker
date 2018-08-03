@@ -15,31 +15,31 @@ user.innerText = localStorage.getItem('user');
 const id = localStorage.getItem('id');
 
 const generateRequestDetails = (request) => {
+  const { typeId, statusId } = request;
+  const requestObject = getText(typeId, statusId);
+
   requestRefNumber.innerText = request.ref_no;
-  requestType.innerText = capitalize(request.type);
+  requestType.innerText = capitalize(requestObject.type);
   requestCategory.innerText = capitalize(request.category);
   requestItem.innerText = capitalize(request.item);
   requestDescription.innerText = capitalize(request.description);
+  requestStatus.innerText = capitalize(requestObject.status);
   displayCard.style.display = 'flex';
   requestStatus.parentElement.style.display = 'block';
 
-  switch (request.status) {
-    case 'pending':
-      requestStatus.className = ('req-pending');
-      requestStatus.innerText = 'Pending';
+  switch (statusId) {
+    case 1:
+      requestStatus.className = ('request-pending');
       modifyLink.style.display = 'block';
       break;
-    case 'approved':
-      requestStatus.className = 'req-approved';
-      requestStatus.innerText = 'Approved';
+    case 2:
+      requestStatus.className = 'request-approved';
       break;
-    case 'disapproved':
-      requestStatus.className = 'req-reject';
-      requestStatus.innerText = 'Dispproved';
+    case 3:
+      requestStatus.className = 'request-disapproved';
       break;
-    case 'resolved':
-      requestStatus.className = 'req-resolved';
-      requestStatus.innerText = 'Resolved';
+    case 4:
+      requestStatus.className = 'request-resolved';
       break;
     default:
   }
