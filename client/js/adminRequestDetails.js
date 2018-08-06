@@ -16,70 +16,64 @@ const requestDescription = document.getElementById('reqDes');
 const id = localStorage.getItem('id');
 const token = localStorage.getItem('token');
 
-const showRequestType = (typeId) => {
-  let type;
-  if (typeId === 1) {
-    type = 'repair';
-  } else {
-    type = 'maintenance';
-  }
+const getUserEmail = (userId) => {
+  const option = {
+    method: 'GET',
+    headers: {
+      'Content-type': 'application/json',
+      'x-access-token': token,
+    },
+  };
 
-  return type;
-};
-
-const showRequestStatus = (statusId) => {
-  let status;
-  switch (statusId) {
-    case 1:
-      status = 'pending';
-      break;
-    case 2:
-      status = 'approved';
-      break;
-    case 3:
-      status = 'disapproved';
-      break;
-    case 4:
-      status = 'resolved';
-      break;
-    default:
-  }
-
-  return status;
+  fetch(
+    `https://maintenance-tracker-stv.herokuapp.com/api/v1/profiles/${userId}`,
+    option,
+  ).then((response) => {
+    if (response.status === 404) {
+      alertLog.style.display = 'block';
+      alertLog.classList.add('fail');
+      alertMessage.innerText = 'User not found';
+      clearMessage();
+    }
+    return response.json();
+  })
+    .then((response) => {
+      requestUser.innerText = response.data.user.email;
+      return true;
+    })
+    .catch(err => err.message);
 };
 
 const generateRequestDetails = (request) => {
-  const type = request.type ?
-    request.type : showRequestType(request.typeId);
-  const status = request.status ?
-    request.status : showRequestStatus(request.statusId);
+  const { typeId, statusId } = request;
+  const requestObject = getText(typeId, statusId);
 
+  getUserEmail(request.userId);
   requestRefNumber.innerText = request.ref_no;
-  requestUser.innerText = request.email;
-  requestType.innerText = capitalize(type);
+  requestType.innerText = capitalize(requestObject.type);
   requestCategory.innerText = capitalize(request.category);
   requestItem.innerText = capitalize(request.item);
   requestDescription.innerText = capitalize(request.description);
-  requestStatus.innerText = capitalize(status);
+  requestStatus.innerText = capitalize(requestObject.status);
   displayCard.style.display = 'flex';
 
-  switch (status) {
-    case 'pending':
+  switch (statusId) {
+    case 1:
       btnApprove.disabled = false;
       btnDisapprove.disabled = false;
       btnResolve.disabled = true;
       break;
-    case 'approved':
+    case 2:
       btnApprove.disabled = true;
       btnDisapprove.disabled = false;
       btnResolve.disabled = false;
       break;
-    case 'disapproved':
+    case 3:
       btnApprove.disabled = false;
       btnDisapprove.disabled = true;
       btnResolve.disabled = true;
       break;
-    case 'resolved':
+    case 4:
       btnApprove.disabled = true;
       btnDisapprove.disabled = true;
       btnResolve.disabled = true;

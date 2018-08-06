@@ -283,10 +283,10 @@ nav .row {
   cursor: pointer;
 }
 
-input[disabled] {
+/* input[disabled] {
   background-color: #004e77;
   cursor: not-allowed; 
-}
+} */
 
 textarea {
   resize: none;
@@ -356,22 +356,22 @@ textarea {
   border-left: 4px solid #44bd32;
 }
 
-.requests-list .pending {
+.requests-list .approved {
   border-left: 4px solid #d1a429;
 }
 
-.requests-list .rejected {
+.requests-list .disapproved {
   border-left: 4px solid #e84118;
 }
 
-.requests-list .new-request {
+.requests-list .pending {
   border-left: 4px solid #dcdde1;
 }
 
 .request-item .status-resolved,
-.request-item .status-pending,
-.request-item .status-rejected,
-.request-item .status-new {
+.request-item .status-approved,
+.request-item .status-disapproved,
+.request-item .status-pending {
   color: #fff;
   padding: 1.2rem 0;
   text-align: center;
@@ -382,15 +382,15 @@ textarea {
   background-color: #44bd32;  
 }
 
-.request-item .status-pending {
+.request-item .status-approved {
   background-color: #d1a429;
 }
 
-.request-item .status-rejected {
+.request-item .status-disapproved {
   background-color: #e84118;
 }
 
-.request-item .status-new {
+.request-item .status-pending {
   background-color: #dcdde1;
   color: #555;
 }
@@ -475,27 +475,27 @@ select[name=filter] {
   padding: 2.0rem;
 }
 
-.req-resolved, .req-pending,
-.req-approved, .req-reject {
+.request-resolved, .request-pending,
+.request-approved, .request-disapproved {
   color: #fff;
   padding: 2.0rem 5.0rem;
   font-size: 2.0rem;
 }
 
-.req-resolved {
+.request-resolved {
   background-color: #44bd32;
 }
 
-.req-pending {
+.request-pending {
   background-color: #d4d3d3;
   color: #555;
 }
 
-.req-approved {
+.request-approved {
   background-color: #d1a429;
 }
 
-.req-reject {
+.request-disapproved {
   background-color: #e84118;
 }
 
@@ -712,15 +712,15 @@ footer p {
     padding-left: 0.3rem;
   }
 
+  .status-approved {
+    padding-left: 0.6rem;
+  }
+  
+  .status-disapproved {
+    padding-left: 0.6rem;
+  }
+  
   .status-pending {
-    padding-left: 0.6rem;
-  }
-  
-  .status-rejected {
-    padding-left: 0.6rem;
-  }
-  
-  .status-new {
     padding-left: 1.9rem;
   }
 }
@@ -732,5 +732,4 @@ footer p {
 }
 
 @media (min-width: 1200px) {
-
 }

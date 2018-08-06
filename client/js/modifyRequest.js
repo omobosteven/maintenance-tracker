@@ -14,6 +14,8 @@ const id = localStorage.getItem('id');
 const token = localStorage.getItem('token');
 const detailUrl =
 'https://maintenance-tracker-stv.herokuapp.com/user-request-details.html';
+const requestUrl =
+`https://maintenance-tracker-stv.herokuapp.com/api/v1/users/requests/${id}`;
 
 user.innerText = localStorage.getItem('user');
 
@@ -67,7 +69,7 @@ const modifyRequest = (e) => {
   };
 
   fetch(
-    `https://maintenance-tracker-stv.herokuapp.com/api/v1/users/requests/${id}`,
+    requestUrl,
     option,
   ).then((response) => {
     if (response.status === 409) {
@@ -96,17 +98,6 @@ const modifyRequest = (e) => {
     .catch(err => err.message);
 };
 
-getTypeId = (requestType) => {
-  let typeId;
-  if (requestType === 'repair') {
-    typeId = '1';
-  } else {
-    typeId = '2';
-  }
-
-  return typeId;
-};
-
 window.onload = () => {
   const option = {
     method: 'GET',
@@ -117,7 +108,7 @@ window.onload = () => {
   };
 
   fetch(
-    `https://maintenance-tracker-stv.herokuapp.com/api/v1/users/requests/${id}`,
+    requestUrl,
     option,
   ).then((response) => {
     if (response.status === 404) {
@@ -130,8 +121,8 @@ window.onload = () => {
     .then((response) => {
       if (response.status === 'success') {
         const { request } = response.data;
-        const typeId = getTypeId(request.type);
-        type.value = typeId;
+
+        type.value = request.typeId;
         category.value = request.category;
         requestItem.value = capitalize(request.item);
         description.value = capitalize(request.description);

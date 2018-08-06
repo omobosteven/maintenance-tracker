@@ -112,7 +112,7 @@ class RequestsController {
     } = request.body;
 
     const { userId } = request.decoded;
-    type = type.trim().toLowerCase();
+    type = type.trim();
     category = category.trim().toLowerCase();
     item = item.trim().toLowerCase();
     description = description.trim().toLowerCase();

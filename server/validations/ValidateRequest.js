@@ -30,7 +30,7 @@ class ValidateRequest {
     };
 
     const validation = new Validator(data, rules, {
-      'in.type': ':attribute field must be either of 1:repair or 2:maintenance',
+      'in.type': ':attribute field must be either of 1 - repair or 2 - maintenance',
     });
 
     if (validation.passes()) {

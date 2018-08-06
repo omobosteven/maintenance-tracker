@@ -20,7 +20,7 @@ describe('Tests for requests API endpoints', () => {
         userToken = response.body.data.token;
         expect(response).to.have.status(200);
         expect(response.body.message).to.equal('Sign in successfully');
-        expect(response.body.data.role).to.equal('user');
+        expect(response.body.data.role).to.equal(2);
         expect(response.body.data.email).to.equal('jamesdoe@gmail.com');
         done();
       });
@@ -88,7 +88,7 @@ describe('Tests for requests API endpoints', () => {
       .end((error, response) => {
         expect(response).to.have.status(400);
         expect(response.body.data.errors.type[0]).to
-          .equal('type field must be either of 1:repair or 2:maintenance');
+          .equal('type field must be either of 1 - repair or 2 - maintenance');
         done();
       });
   });
