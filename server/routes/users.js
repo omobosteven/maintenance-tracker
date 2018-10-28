@@ -15,7 +15,7 @@ users.post(
 
 users.post(
   '/auth/login',
-  ValidateUser.userInput,
+  ValidateUser.userInputLogin,
   UsersController.login,
 );
 

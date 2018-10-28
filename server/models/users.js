@@ -21,13 +21,14 @@ const users = (client) => {
       "userId" serial PRIMARY KEY,
       "roleId" INTEGER REFERENCES "Roles" ("roleId") DEFAULT 2 NOT NULL,
       email VARCHAR(50) UNIQUE NOT NULL,
+      username VARCHAR(20) UNIQUE NOT NULL,
       password VARCHAR(100) NOT NULL,
       "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
   );
 
-  INSERT INTO "Users" (email, password, "roleId")
+  INSERT INTO "Users" (email, username, password, "roleId")
   VALUES
-  ('${adminEmail}', '${hash}', 1);`;
+  ('${adminEmail}', 'admin', '${hash}', 1);`;
 
   client.query(queryString)
     .then(res => res)
