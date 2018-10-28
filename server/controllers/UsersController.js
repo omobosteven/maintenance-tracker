@@ -15,25 +15,26 @@ class UsersController {
    */
   static create(request, response) {
     const { body } = request;
+    const username = body.username.trim().toLowerCase();
     const email = body.email.trim().toLowerCase();
     const hashPassword = bcrypt.hashSync(body.password.trim(), 10);
 
-    const queryEmailCheck = `SELECT email FROM "Users"
-                            WHERE email = '${email}';`;
-    const queryCreateUser = `INSERT INTO "Users" (email, password)
+    const queryUserCheck = `SELECT email, username FROM "Users"
+                            WHERE email = '${email}' OR username = '${username}';`;
+    const queryCreateUser = `INSERT INTO "Users" (email, username, password)
                             VALUES
-                            ('${email}', '${hashPassword}')
-                            RETURNING "userId", "roleId", email`;
+                            ('${email}', '${username}', '${hashPassword}')
+                            RETURNING "userId", "roleId", email, username`;
 
     db.connect()
       .then((client) => {
-        client.query(queryEmailCheck)
-          .then((emailExist) => {
-            if (emailExist.rows[0]) {
+        client.query(queryUserCheck)
+          .then((userExist) => {
+            if (userExist.rows[0]) {
               client.release();
               return response.status(409).json({
                 status: 'fail',
-                message: 'User with this email already exist',
+                message: 'User with this email or username already exist',
               });
             }
 
@@ -46,6 +47,7 @@ class UsersController {
                   message: 'User created successfully',
                   data: {
                     role: (savedUser.rows[0].roleId === 1) ? 'admin' : 'user',
+                    username: savedUser.rows[0].username,
                     email: savedUser.rows[0].email,
                     token: authToken,
                   },

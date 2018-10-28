@@ -15,6 +15,7 @@ describe('Tests for Users API endpoint', () => {
       .set('Content-type', 'application/json')
       .send({
         email: 'jamesdoe@gmail.com',
+        username: 'james',
         password: 'mypassword',
       })
       .end((error, response) => {
@@ -33,12 +34,13 @@ describe('Tests for Users API endpoint', () => {
       .set('Content-type', 'application/json')
       .send({
         email: 'jamesdoe@gmail.com',
+        username: 'james',
         password: 'mypassword',
       })
       .end((error, response) => {
         expect(response).to.have.status(409);
         expect(response.body.message).to
-          .equal('User with this email already exist');
+          .equal('User with this email or username already exist');
         done();
       });
   });
@@ -71,6 +73,22 @@ describe('Tests for Users API endpoint', () => {
         expect(response).to.have.status(400);
         expect(response.body.data.errors.password[0]).to
           .equal('The password must be at least 6 characters.');
+        done();
+      });
+  });
+
+  it('should return error if required field are not filled on login', (done) => {
+    chai.request(app)
+      .post('/api/v1/auth/login')
+      .set('Content-type', 'application/json')
+      .send({
+        email: '',
+        password: 'mypassword',
+      })
+      .end((error, response) => {
+        expect(response).to.have.status(400);
+        expect(response.body.data.errors.email[0]).to
+          .equal('The email field is required.');
         done();
       });
   });
