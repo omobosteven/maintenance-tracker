@@ -83,7 +83,7 @@ class UsersController {
     const { body } = request;
 
     const emailAddress = body.email.trim().toLowerCase();
-    const queryGetUser = `SELECT "userId", email, "roleId", password
+    const queryGetUser = `SELECT "userId", email, username, "roleId", password
                           FROM "Users"
                           WHERE email = '${emailAddress}'`;
 
@@ -109,10 +109,13 @@ class UsersController {
               });
             }
 
-            const { userId, roleId, email } = user.rows[0];
+            const {
+              userId, roleId, email, username,
+            } = user.rows[0];
 
             const authToken = GenerateToken.token({
               userId,
+              username,
               roleId,
               email,
             }, secret);
@@ -122,6 +125,7 @@ class UsersController {
               message: 'Sign in successfully',
               data: {
                 role: roleId,
+                username,
                 email,
                 token: authToken,
               },

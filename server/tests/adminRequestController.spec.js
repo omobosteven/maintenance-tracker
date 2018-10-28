@@ -55,7 +55,7 @@ describe('Tests for admin requests API endpoints', () => {
         expect(response).to.have.status(200);
         expect(response.body.data.request.item).to.equal('laptop');
         expect(response.body.data.request.category).to.equal('computers');
-        expect(response.body.data.request.statusId).to.equal(1);
+        expect(response.body.data.request.status).to.equal('pending');
         done();
       });
   });
@@ -93,7 +93,7 @@ describe('Tests for admin requests API endpoints', () => {
         expect(response.body.data.requests[0].requestId).to.equal(2);
         expect(response.body.data.requests[0].description).to
           .equal('faulty screen');
-        expect(response.body.data.requests[0].typeId).to.equal(2);
+        expect(response.body.data.requests[0].type).to.equal('maintenance');
         expect(response.body.data.requests[0].category).to.equal('computers');
         expect(response.body.data.requests[0].item).to.equal('laptop');
         done();
