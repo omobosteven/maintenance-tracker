@@ -65,7 +65,7 @@ class RequestsController {
     `SELECT  "requestId",
     "userId", ref_no, "typeId", category,
      item, description, "statusId", "createdAt" FROM "Requests"
-    WHERE "requestId" = '${id}' 
+    WHERE "requestId" = '${id}'
     AND "userId" = '${userId}';`;
 
     db.connect()
