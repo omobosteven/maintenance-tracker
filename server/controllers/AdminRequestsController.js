@@ -12,12 +12,9 @@ class AdminRequestsController {
    */
   static getAllRequests(request, response) {
     const queryFetchAllRequests =
-    `SELECT "requestId", "Users".username, "Requests"."userId",
-     ref_no, "RequestTypes"."type", category, item, description,
-     "RequestStatus"."status", "Requests"."createdAt" FROM "Requests"
-     LEFT JOIN "Users" ON "Users"."userId" = "Requests"."userId"
-     LEFT JOIN "RequestStatus" ON "RequestStatus"."statusId" = "Requests"."statusId"
-     LEFT JOIN "RequestTypes" ON "RequestTypes"."typeId" = "Requests"."typeId"
+    `SELECT "requestId", "Users"."email", ref_no, "typeId", category
+    item, description, "statusId", "Requests"."createdAt" FROM "Requests"
+    LEFT JOIN "Users" ON "Users"."userId" = "Requests"."userId"
     ORDER BY "requestId" DESC;`;
 
     db.connect()
@@ -64,12 +61,9 @@ class AdminRequestsController {
     const { id } = request.params;
 
     const queryFetchRequest =
-    `SELECT "requestId", "Users".username, "Requests"."userId",
-    ref_no, "RequestTypes"."type", category, item, description,
-    "RequestStatus"."status", "Requests"."createdAt" FROM "Requests"
+    `SELECT "requestId", "Users".email, ref_no, "typeId", category,
+    item, description, "statusId", "Requests"."createdAt" FROM "Requests"
     LEFT JOIN "Users" ON "Users"."userId" = "Requests"."userId"
-    LEFT JOIN "RequestStatus" ON "RequestStatus"."statusId" = "Requests"."statusId"
-    LEFT JOIN "RequestTypes" ON "RequestTypes"."typeId" = "Requests"."typeId"
     WHERE "requestId" = '${id}';`;
 
     db.connect()
